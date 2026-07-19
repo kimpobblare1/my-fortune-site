@@ -47,11 +47,55 @@ function getDailyFortune(zodiacKey, dateStr) {
     work: pickBySeed(FORTUNE_POOL.work, baseSeed + 1),
     money: pickBySeed(FORTUNE_POOL.money, baseSeed + 2),
     caution: pickBySeed(FORTUNE_POOL.caution, baseSeed + 3),
+    romance: pickBySeed(FORTUNE_POOL.romance, baseSeed + 7),
     luckyColor: pickBySeed(FORTUNE_POOL.luckyColor, baseSeed + 4),
     luckyItem: pickBySeed(FORTUNE_POOL.luckyItem, baseSeed + 5),
     luckyDirection: pickBySeed(FORTUNE_POOL.luckyDirection, baseSeed + 6),
     luckyNumber: (baseSeed % 45) + 1, // 1~45 사이 오늘의 행운 숫자
   };
+}
+
+// ---- 임의의 날짜를 "YYYY-MM-DD" 문자열로 변환 ----
+function formatDateString(d) {
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+// ---- 이번 주 월요일 날짜 구하기 ----
+function getMondayOfWeek(baseDate) {
+  const d = new Date(baseDate);
+  const day = d.getDay(); // 일=0, 월=1, ... 토=6
+  const offset = (day + 6) % 7; // 월요일까지 며칠 전인지
+  d.setDate(d.getDate() - offset);
+  return d;
+}
+
+// ---- 띠별 "이번 주 월~토 행운 숫자 모음" (로또 추천용) ----
+// 월~토 6일치 행운 숫자를 모아 겹치지 않는 6개 숫자로 만들어줍니다.
+function getWeeklyLottoNumbers(zodiacKey, referenceDate) {
+  const monday = getMondayOfWeek(referenceDate || new Date());
+  const used = new Set();
+  const numbers = [];
+
+  for (let i = 0; i < 6; i++) {
+    const d = new Date(monday);
+    d.setDate(d.getDate() + i);
+    const dateStr = formatDateString(d);
+
+    let salt = 0;
+    let num;
+    do {
+      num = (hashStringToInt(`${dateStr}-${zodiacKey}-lotto-${salt}`) % 45) + 1;
+      salt++;
+    } while (used.has(num) && salt < 60);
+
+    used.add(num);
+    numbers.push(num);
+  }
+
+  return numbers.sort((a, b) => a - b);
 }
 
 // Node.js(GitHub Actions 등)에서 require로 불러올 수 있게 함. 브라우저에선 무시됨.
@@ -63,5 +107,8 @@ if (typeof module !== "undefined" && module.exports) {
     pickBySeed,
     getZodiacByYear,
     getDailyFortune,
+    formatDateString,
+    getMondayOfWeek,
+    getWeeklyLottoNumbers,
   };
 }
