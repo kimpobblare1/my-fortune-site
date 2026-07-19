@@ -43,7 +43,7 @@ function renderCard(z, heroKey) {
           <span class="card-symbol">${z.symbol}</span>
           <div>
             <div class="card-name">${z.name}</div>
-            <div class="card-hanja">${z.hanja} · ${z.years}</div>
+            <div class="card-hanja">${z.years}</div>
           </div>
         </div>
         <p>${f.overall}</p>
