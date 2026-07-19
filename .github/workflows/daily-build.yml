@@ -1,0 +1,35 @@
+name: Daily Fortune Page Build
+
+# 매일 자동으로 실행되는 조건 (아래 둘 중 하나)
+on:
+  schedule:
+    # UTC 기준 15:05 = 한국시간(KST) 00:05
+    - cron: "5 15 * * *"
+  workflow_dispatch: # 깃허브 Actions 탭에서 수동으로도 실행 가능하게 함
+
+# 자동 커밋을 위해 쓰기 권한 부여
+permissions:
+  contents: write
+
+jobs:
+  build-daily-page:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 저장소 코드 가져오기
+        uses: actions/checkout@v4
+
+      - name: Node.js 설치
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: 오늘의 운세 페이지 생성
+        run: node scripts/generate-daily.js
+
+      - name: 변경사항 자동 커밋 & 푸시
+        run: |
+          git config user.name "fortune-bot"
+          git config user.email "actions@github.com"
+          git add daily/
+          git diff --cached --quiet || git commit -m "chore: 오늘의 운세 페이지 자동 생성"
+          git push
