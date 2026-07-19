@@ -21,9 +21,13 @@
     </nav>
   </header>
 
+  <div class="lotto-update-note">
+    🎱 로또 추첨은 매주 <strong>토요일</strong>에 진행돼요. 이번 주(월~토) 조합은 이번 주 내내 유지되고, <strong>다음 주 월요일</strong>에 다음 주 조합으로 새로 열립니다.
+  </div>
+
   <p class="lotto-week-label" id="week-label"></p>
 
-  <section class="fortune-grid" id="lotto-grid"></section>
+  <section class="fortune-grid lotto-grid" id="lotto-grid"></section>
 
   <p class="lotto-disclaimer">
     본 번호는 각 띠의 월~토 행운의 숫자를 재미로 조합한 것으로, 실제 당첨을 보장하지 않습니다.
@@ -45,7 +49,7 @@
   saturday.setDate(saturday.getDate() + 5);
   const fmt = (d) => `${d.getMonth() + 1}.${d.getDate()}`;
   document.getElementById("week-label").textContent =
-    `이번 주 ${fmt(monday)}(월) ~ ${fmt(saturday)}(토) 기준 조합입니다`;
+    `이번 주 ${fmt(monday)}(월) ~ ${fmt(saturday)}(토·추첨일) 기준 조합입니다`;
 
   // 로또볼 색상 클래스 (실제 로또 색 구간과 동일하게: 1-10 노랑, 11-20 파랑, 21-30 빨강, 31-40 회색, 41-45 초록)
   function ballClass(n) {
