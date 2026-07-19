@@ -1,6 +1,6 @@
 // 12지신 기본 데이터
 // order는 원형 휠에 배치할 순서 (시계방향), yearMod는 (year % 12) 계산용 기준값
-const ZODIAC_DATA = [
+var ZODIAC_DATA = [
   { key: "rat",     name: "쥐띠",   hanja: "子", symbol: "🐀", yearMod: 4,  years: "2020, 2008, 1996, 1984, 1972" },
   { key: "ox",      name: "소띠",   hanja: "丑", symbol: "🐂", yearMod: 5,  years: "2021, 2009, 1997, 1985, 1973" },
   { key: "tiger",   name: "호랑이띠", hanja: "寅", symbol: "🐅", yearMod: 6,  years: "2022, 2010, 1998, 1986, 1974" },
@@ -16,7 +16,7 @@ const ZODIAC_DATA = [
 ];
 
 // 운세 문구 풀 (카테고리별로 여러개씩 두고 시드로 하나씩 골라 씀)
-const FORTUNE_POOL = {
+var FORTUNE_POOL = {
   overall: [
     "오늘은 그동안 미뤄왔던 일을 매듭짓기 좋은 날입니다. 작은 결단이 큰 흐름을 바꿉니다.",
     "주변 사람과의 관계에서 뜻밖의 좋은 소식이 들려올 수 있습니다. 마음을 열어두세요.",
@@ -50,3 +50,8 @@ const FORTUNE_POOL = {
   luckyItem: ["손수건", "만년필", "동전 지갑", "책 한 권", "머그컵", "작은 화분", "우산", "열쇠고리"],
   luckyDirection: ["동쪽", "서쪽", "남쪽", "북쪽", "동남쪽", "서북쪽"],
 };
+
+// Node.js(GitHub Actions 등)에서 require로 불러올 수 있게 함. 브라우저에선 무시됨.
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { ZODIAC_DATA, FORTUNE_POOL };
+}
