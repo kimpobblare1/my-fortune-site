@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>오늘의 12띠 운세 | 매일 새로 보는 띠별 사주풀이</title>
+<meta name="description" content="쥐띠부터 돼지띠까지, 오늘의 12띠 운세와 행운의 숫자·색·아이템을 매일 확인하세요.">
+<link rel="stylesheet" href="assets/css/style.css">
+
+<!-- ============================================
+  애드센스 광고 삽입 위치 (승인 후 아래 자리에 실제 코드 삽입)
+  1. 헤더 아래 (상단 배너)
+  2. 카드 그리드 중간 (인피드 광고)
+  3. 푸터 위 (하단 배너)
+============================================= -->
+</head>
+<body>
+
+<div class="container">
+  <header class="site-header">
+    <h1 class="site-title">오늘의 12띠 운세</h1>
+    <p class="site-subtitle">쥐띠부터 돼지띠까지, 매일 아침 새로 열리는 오늘의 운</p>
+    <span class="today-label" id="today-label"></span>
+    <nav class="site-nav">
+      <a href="index.html" class="active">오늘의 전체 운세</a>
+      <a href="my-fortune.html">내 띠 운세 보기</a>
+    </nav>
+  </header>
+
+  <div class="zodiac-wheel-wrap">
+    <div class="zodiac-wheel" id="zodiac-wheel">
+      <div class="zodiac-wheel-center">
+        <span class="label">오늘의 주인공</span>
+        <span class="symbol" id="center-symbol">🐎</span>
+        <span class="name" id="center-name">말띠</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 광고 슬롯 1: 상단 배너 -->
+  <div class="ad-slot">광고 영역 (상단 배너)</div>
+
+  <section class="fortune-grid" id="fortune-grid"></section>
+
+  <!-- 광고 슬롯 2: 하단 배너 -->
+  <div class="ad-slot">광고 영역 (하단 배너)</div>
+
+  <footer>
+    &copy; 2026 오늘의 12띠 운세. 본 콘텐츠는 재미로 즐기는 오락 정보입니다.
+  </footer>
+</div>
+
+<script src="assets/js/fortune-data.js"></script>
+<script src="assets/js/fortune-logic.js"></script>
+<script>
+  // 오늘 날짜 표시
+  document.getElementById("today-label").textContent = getTodayKoreanLabel();
+
+  // 오늘 날짜 기준 "오늘의 주인공 띠"를 하나 정함 (날짜 시드로 12개 중 하나 고정)
+  const todayStr = getTodayString();
+  const heroSeed = hashStringToInt(todayStr + "-hero");
+  const heroZodiac = ZODIAC_DATA[heroSeed % 12];
+
+  document.getElementById("center-symbol").textContent = heroZodiac.symbol;
+  document.getElementById("center-name").textContent = heroZodiac.name;
+
+  // ---- 12지신 원형 휠 그리기 ----
+  const wheel = document.getElementById("zodiac-wheel");
+  const radius = 130; // px, .zodiac-wheel 크기에 맞춰 조정됨(반응형은 CSS %로 보정)
+  ZODIAC_DATA.forEach((z, i) => {
+    const angle = (i / 12) * 2 * Math.PI - Math.PI / 2; // 12시 방향부터 시계방향
+    const node = document.createElement("a");
+    node.href = `#card-${z.key}`;
+    node.className = "zodiac-node" + (z.key === heroZodiac.key ? " today" : "");
+    node.style.left = `calc(50% + ${Math.cos(angle) * 42}%)`;
+    node.style.top = `calc(50% + ${Math.sin(angle) * 42}%)`;
+    node.textContent = z.symbol;
+    node.title = z.name;
+    wheel.appendChild(node);
+  });
+
+  // ---- 12띠 카드 렌더링 ----
+  const grid = document.getElementById("fortune-grid");
+  ZODIAC_DATA.forEach((z) => {
+    const fortune = getDailyFortune(z.key, todayStr);
+    const card = document.createElement("div");
+    card.className = "fortune-card";
+    card.id = `card-${z.key}`;
+    card.innerHTML = `
+      <div class="card-head">
+        <span class="card-symbol">${z.symbol}</span>
+        <div>
+          <div class="card-name">${z.name}</div>
+          <div class="card-hanja">${z.hanja} · ${z.years}</div>
+        </div>
+      </div>
+      <p>${fortune.overall}</p>
+      <p><strong>업무:</strong> ${fortune.work}</p>
+      <p><strong>주의:</strong> ${fortune.caution}</p>
+      <div class="lucky-row">
+        <span class="lucky-tag">행운숫자 ${fortune.luckyNumber}</span>
+        <span class="lucky-tag">행운색 ${fortune.luckyColor}</span>
+        <span class="lucky-tag">행운아이템 ${fortune.luckyItem}</span>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+</script>
+</body>
+</html>
