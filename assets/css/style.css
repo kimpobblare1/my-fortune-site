@@ -175,6 +175,9 @@ nav.site-nav a:hover {
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 22px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .fortune-card.today {
@@ -214,7 +217,9 @@ nav.site-nav a:hover {
 
 .fortune-card .card-hanja {
   color: var(--cream-dim);
-  font-size: 13px;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow-x: auto;
 }
 
 .fortune-card p {
@@ -225,9 +230,11 @@ nav.site-nav a:hover {
 
 .fortune-card .lucky-row {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 8px;
-  margin-top: 14px;
+  margin-top: auto;
+  padding-top: 14px;
 }
 
 .lucky-tag {
