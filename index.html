@@ -7,12 +7,6 @@
 <meta name="description" content="쥐띠부터 돼지띠까지, 오늘의 12띠 운세와 행운의 숫자·색·아이템을 매일 확인하세요.">
 <link rel="stylesheet" href="assets/css/style.css">
 
-<!-- ============================================
-  애드센스 광고 삽입 위치 (승인 후 아래 자리에 실제 코드 삽입)
-  1. 헤더 아래 (상단 배너)
-  2. 카드 그리드 중간 (인피드 광고)
-  3. 푸터 위 (하단 배너)
-============================================= -->
 </head>
 <body>
 
@@ -37,13 +31,7 @@
     </div>
   </div>
 
-  <!-- 광고 슬롯 1: 상단 배너 -->
-  <div class="ad-slot">광고 영역 (상단 배너)</div>
-
   <section class="fortune-grid" id="fortune-grid"></section>
-
-  <!-- 광고 슬롯 2: 하단 배너 -->
-  <div class="ad-slot">광고 영역 (하단 배너)</div>
 
   <footer>
     &copy; 2026 오늘의 12띠 운세. 본 콘텐츠는 재미로 즐기는 오락 정보입니다.
@@ -83,10 +71,12 @@
   const grid = document.getElementById("fortune-grid");
   ZODIAC_DATA.forEach((z) => {
     const fortune = getDailyFortune(z.key, todayStr);
+    const isHero = z.key === heroZodiac.key;
     const card = document.createElement("div");
-    card.className = "fortune-card";
+    card.className = "fortune-card" + (isHero ? " today" : "");
     card.id = `card-${z.key}`;
     card.innerHTML = `
+      ${isHero ? '<span class="today-badge">오늘의 주인공</span>' : ""}
       <div class="card-head">
         <span class="card-symbol">${z.symbol}</span>
         <div>
