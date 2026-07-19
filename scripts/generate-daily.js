@@ -33,10 +33,12 @@ const days = ["일", "월", "화", "수", "목", "금", "토"];
 const todayLabel = `${yyyy}년 ${kst.getUTCMonth() + 1}월 ${kst.getUTCDate()}일 (${days[kst.getUTCDay()]}요일)`;
 
 // ---- 3. 12띠 카드 HTML 생성 ----
-function renderCard(z) {
+function renderCard(z, heroKey) {
   const f = getDailyFortune(z.key, todayStr);
+  const isHero = z.key === heroKey;
   return `
-      <div class="fortune-card" id="card-${z.key}">
+      <div class="fortune-card${isHero ? " today" : ""}" id="card-${z.key}">
+        ${isHero ? '<span class="today-badge">오늘의 주인공</span>' : ""}
         <div class="card-head">
           <span class="card-symbol">${z.symbol}</span>
           <div>
@@ -55,11 +57,11 @@ function renderCard(z) {
       </div>`;
 }
 
-const cardsHtml = ZODIAC_DATA.map(renderCard).join("\n");
-
 // ---- 4. 오늘의 주인공 띠 (index.html과 같은 방식) ----
 const heroSeed = sandbox.hashStringToInt(todayStr + "-hero");
 const heroZodiac = ZODIAC_DATA[heroSeed % 12];
+
+const cardsHtml = ZODIAC_DATA.map((z) => renderCard(z, heroZodiac.key)).join("\n");
 
 // ---- 5. 최종 HTML 조립 ----
 const html = `<!DOCTYPE html>
@@ -83,13 +85,9 @@ const html = `<!DOCTYPE html>
     </nav>
   </header>
 
-  <div class="ad-slot">광고 영역 (상단 배너)</div>
-
   <section class="fortune-grid">
 ${cardsHtml}
   </section>
-
-  <div class="ad-slot">광고 영역 (하단 배너)</div>
 
   <footer>
     &copy; 2026 오늘의 12띠 운세. 본 콘텐츠는 재미로 즐기는 오락 정보입니다.
