@@ -83,7 +83,6 @@ const html = `<!DOCTYPE html>
     <span class="today-label">${todayLabel}</span>
     <nav class="site-nav">
       <a href="../index.html">오늘의 전체 운세</a>
-      <a href="../my-fortune.html">내 띠 운세 보기</a>
       <a href="../saju-fortune.html">내 사주 운세(베타)</a>
       <a href="../lotto.html">띠별 로또번호 추천</a>
     </nav>
@@ -128,7 +127,6 @@ const listHtml = `<!DOCTYPE html>
     <h1 class="site-title">날짜별 운세 모아보기</h1>
     <nav class="site-nav">
       <a href="../index.html">오늘의 전체 운세</a>
-      <a href="../my-fortune.html">내 띠 운세 보기</a>
       <a href="../saju-fortune.html">내 사주 운세(베타)</a>
       <a href="../lotto.html">띠별 로또번호 추천</a>
     </nav>
