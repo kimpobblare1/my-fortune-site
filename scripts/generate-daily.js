@@ -84,6 +84,7 @@ const html = `<!DOCTYPE html>
     <nav class="site-nav">
       <a href="../index.html">오늘의 전체 운세</a>
       <a href="../my-fortune.html">내 띠 운세 보기</a>
+      <a href="../saju-fortune.html">내 사주 운세(베타)</a>
       <a href="../lotto.html">띠별 로또번호 추천</a>
     </nav>
   </header>
@@ -128,6 +129,7 @@ const listHtml = `<!DOCTYPE html>
     <nav class="site-nav">
       <a href="../index.html">오늘의 전체 운세</a>
       <a href="../my-fortune.html">내 띠 운세 보기</a>
+      <a href="../saju-fortune.html">내 사주 운세(베타)</a>
       <a href="../lotto.html">띠별 로또번호 추천</a>
     </nav>
   </header>
