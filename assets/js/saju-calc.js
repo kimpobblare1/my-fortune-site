@@ -166,8 +166,8 @@ function calculateSaju(year, month, day, hour) {
     .map((p) => p.labelHangul)
     .join("");
 
-  // 일지(日支) 기준 띠 (통상 "띠"는 태어난 해의 지지를 쓰지만, 사주학에서 일부 분석은 일지도 참고함)
-  const yearAnimalIdx = pillars.year.branchIdx;
+  // 일지(日支) 기준 띠 (통상 "띠"는 태어난 해의 지지를 씀)
+  const yearAnimalIdx = yearPillar.branchIdx;
 
   return {
     pillars,
