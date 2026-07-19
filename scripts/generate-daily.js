@@ -47,7 +47,9 @@ function renderCard(z, heroKey) {
           </div>
         </div>
         <p>${f.overall}</p>
-        <p><strong>업무:</strong> ${f.work}</p>
+        <p><strong>금전운:</strong> ${f.money}</p>
+        <p><strong>애정운:</strong> ${f.romance}</p>
+        <p><strong>학업/업무:</strong> ${f.work}</p>
         <p><strong>주의:</strong> ${f.caution}</p>
         <div class="lucky-row">
           <span class="lucky-tag">행운숫자 ${f.luckyNumber}</span>
@@ -82,6 +84,7 @@ const html = `<!DOCTYPE html>
     <nav class="site-nav">
       <a href="../index.html">오늘의 전체 운세</a>
       <a href="../my-fortune.html">내 띠 운세 보기</a>
+      <a href="../lotto.html">띠별 로또번호 추천</a>
     </nav>
   </header>
 
@@ -125,6 +128,7 @@ const listHtml = `<!DOCTYPE html>
     <nav class="site-nav">
       <a href="../index.html">오늘의 전체 운세</a>
       <a href="../my-fortune.html">내 띠 운세 보기</a>
+      <a href="../lotto.html">띠별 로또번호 추천</a>
     </nav>
   </header>
   <section class="fortune-grid">
