@@ -177,6 +177,9 @@ function calculateSaju(year, month, day, hour) {
     yearAnimal: BRANCH_ANIMAL[yearAnimalIdx],
     yearAnimalSymbol: BRANCH_ANIMAL_SYMBOL[yearAnimalIdx],
     effectiveYear: yearPillar.effectiveYear,
+    rawYear: year,
+    rawMonth: month,
+    rawDay: day,
   };
 }
 
