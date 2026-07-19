@@ -16,7 +16,7 @@
     <span class="today-label" id="today-label"></span>
     <nav class="site-nav">
       <a href="index.html">오늘의 전체 운세</a>
-      <a href="saju-fortune.html" class="active">내 사주 운세(베타)</a>
+      <a href="saju-fortune.html" class="active">내 사주 운세</a>
       <a href="lotto.html">띠별 로또번호 추천</a>
     </nav>
   </header>
@@ -68,6 +68,13 @@
           <option value="23">23시대 (자시)</option>
         </select>
       </div>
+      <div>
+        <label for="s-gender">성별 (대운 방향 계산용)</label>
+        <select id="s-gender">
+          <option value="male">남자</option>
+          <option value="female">여자</option>
+        </select>
+      </div>
     </div>
     <div class="saju-submit-row">
       <button id="s-submit">내 사주 계산하기</button>
@@ -75,7 +82,8 @@
     <div class="error-msg" id="s-error">년월일을 올바르게 입력해주세요</div>
     <p class="saju-note">
       ⚠️ 절기(태양 기준 경계)는 다년 평균값을 사용해 실제 절입시각과 ±1일 오차가 있을 수 있어요.<br>
-      양력 생년월일 기준으로 계산되며, 재미로 즐기는 콘텐츠예요.
+      십성은 지지의 숨은 천간(지장간)까지는 반영하지 않은 간략 버전이고, 신강/신약과 대운수도 단순화된 계산이에요.<br>
+      양력 생년월일 기준으로 계산되며, 정통 만세력과는 세부적으로 다를 수 있는 재미 목적의 콘텐츠예요.
     </p>
   </div>
 
@@ -90,11 +98,35 @@
     <!-- 사주팔자 4기둥 -->
     <div class="saju-pillars" id="saju-pillars"></div>
 
+    <!-- 신강/신약 -->
+    <div class="result-section">
+      <span class="section-label">신강 · 신약 (참고용)</span>
+      <div class="sinkang-bar-wrap">
+        <div class="sinkang-labels">
+          <span id="sinkang-level"></span>
+          <span id="sinkang-ratio"></span>
+        </div>
+        <div class="sinkang-track">
+          <div class="sinkang-fill-helper" id="sinkang-fill"></div>
+        </div>
+      </div>
+      <p id="sinkang-desc" style="font-size:13px; color:var(--cream-dim);"></p>
+    </div>
+
     <!-- 오행 분포 -->
     <div class="result-section">
       <span class="section-label">오행 분포</span>
       <div class="oheng-bar-wrap" id="oheng-bars"></div>
       <p id="oheng-desc" style="font-size:13px; color:var(--cream-dim);"></p>
+    </div>
+
+    <!-- 대운 -->
+    <div class="result-section">
+      <span class="section-label">대운(大運) - 10년 단위 흐름</span>
+      <p id="daeun-intro" style="font-size:13px; color:var(--cream-dim); margin-bottom:6px;"></p>
+      <div class="daeun-table-wrap">
+        <table class="daeun-table" id="daeun-table"></table>
+      </div>
     </div>
 
     <div class="result-section">
@@ -137,25 +169,30 @@
 <script src="assets/js/fortune-logic.js"></script>
 <script src="assets/js/saju-data.js"></script>
 <script src="assets/js/saju-calc.js"></script>
+<script src="assets/js/saju-advanced.js"></script>
 <script>
   document.getElementById("today-label").textContent = getTodayKoreanLabel();
 
   const errorMsg = document.getElementById("s-error");
   const resultPanel = document.getElementById("result-panel");
 
-  function renderPillarCard(label, pillar) {
+  function renderPillarCard(label, pillar, god) {
     if (!pillar) {
       return `
         <div class="saju-pillar-card empty">
           <div class="pillar-label">${label}</div>
-          <div class="pillar-hanja">?</div>
+          <div class="pillar-hanja-single">?</div>
+          <div class="pillar-hanja-single">?</div>
           <div class="pillar-hangul">모름</div>
         </div>`;
     }
     return `
       <div class="saju-pillar-card">
         <div class="pillar-label">${label}</div>
-        <div class="pillar-hanja">${pillar.label}</div>
+        <div class="pillar-god">${god ? (god.stemGod === "일간(나)" ? "일간" : god.stemGod) : ""}</div>
+        <div class="pillar-hanja-single">${pillar.stemHanja}</div>
+        <div class="pillar-hanja-single">${pillar.branchHanja}</div>
+        <div class="pillar-god">${god ? god.branchGod : ""}</div>
         <div class="pillar-hangul">${pillar.labelHangul}</div>
       </div>`;
   }
@@ -170,11 +207,40 @@
         .filter(Boolean).map(p => p.label).join(" ")}`;
 
     // 4기둥 카드 (연주 월주 일주 시주 순, 만세력 표기 순서는 보통 이렇게 나열)
+    const tenGods = getTenGodsForSaju(saju);
     document.getElementById("saju-pillars").innerHTML =
-      renderPillarCard("연주(年)", saju.pillars.year) +
-      renderPillarCard("월주(月)", saju.pillars.month) +
-      renderPillarCard("일주(日)", saju.pillars.day) +
-      renderPillarCard("시주(時)", saju.pillars.hour);
+      renderPillarCard("연주(年)", saju.pillars.year, tenGods.year) +
+      renderPillarCard("월주(月)", saju.pillars.month, tenGods.month) +
+      renderPillarCard("일주(日)", saju.pillars.day, tenGods.day) +
+      renderPillarCard("시주(時)", saju.pillars.hour, tenGods.hour);
+
+    // 신강/신약 (참고용, 단순화된 계산)
+    const strength = getSinStrength(tenGods);
+    document.getElementById("sinkang-level").textContent = strength.level;
+    document.getElementById("sinkang-ratio").textContent = `일간을 돕는 기운 ${strength.ratio}%`;
+    document.getElementById("sinkang-fill").style.width = `${strength.ratio}%`;
+    document.getElementById("sinkang-desc").textContent =
+      strength.level.startsWith("신강")
+        ? "일간을 돕는 비겁·인성 기운이 상대적으로 강한 편이에요. 주체적으로 밀고 나가는 힘이 좋습니다."
+        : "일간의 기운을 쓰는 식상·재성·관성 기운이 상대적으로 강한 편이에요. 유연하게 상황에 맞춰가는 힘이 좋습니다.";
+
+    // 대운(大運)
+    const gender = document.getElementById("s-gender").value;
+    const daeun = getDaeunList(saju, gender === "male", 8);
+    document.getElementById("daeun-intro").textContent =
+      `${gender === "male" ? "남자" : "여자"} · ${daeun.isForward ? "순행(順行)" : "역행(逆行)"} · 대운수 ${daeun.daeunSu} (만 ${daeun.daeunSu}세부터 첫 대운 시작)`;
+
+    const nowYear = new Date().getFullYear();
+    const currentAge = nowYear - saju.rawYear + 1; // 한국식 나이(세는 나이) 기준 근사치
+    const daeunRows = daeun.list.map((d) => {
+      const isCurrent = currentAge >= d.ageStart && currentAge <= d.ageEnd;
+      return `<td class="${isCurrent ? "current-daeun" : ""}">
+        <div>${d.ageStart}~${d.ageEnd}세</div>
+        <div class="daeun-hanja">${d.label}</div>
+        <div style="font-size:11px; color:var(--cream-dim);">${d.labelHangul} · ${d.stemGod}</div>
+      </td>`;
+    }).join("");
+    document.getElementById("daeun-table").innerHTML = `<tr>${daeunRows}</tr>`;
 
     // 오행 분포 바
     const total = Object.values(saju.elementCount).reduce((a, b) => a + b, 0) || 1;
@@ -249,6 +315,7 @@
     url.searchParams.set("m", month);
     url.searchParams.set("d", day);
     url.searchParams.set("h", hourVal);
+    url.searchParams.set("g", document.getElementById("s-gender").value);
     window.history.replaceState({}, "", url);
   }
 
@@ -261,6 +328,7 @@
     document.getElementById("s-month").value = params.get("m");
     document.getElementById("s-day").value = params.get("d");
     if (params.get("h")) document.getElementById("s-hour").value = params.get("h");
+    if (params.get("g")) document.getElementById("s-gender").value = params.get("g");
     handleSubmit();
   }
 </script>
