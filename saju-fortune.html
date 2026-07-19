@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>내 사주팔자로 보는 오늘의 운세 | 정통 사주 기반 개인 운세</title>
+<meta name="description" content="태어난 년월일시를 입력하면 연주·월주·일주·시주를 계산해 나만의 사주팔자와 오늘의 개인화된 운세를 보여드립니다.">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="container">
+  <header class="site-header">
+    <h1 class="site-title">내 사주팔자로 보는 오늘의 운세</h1>
+    <p class="site-subtitle">태어난 년월일시로 연주·월주·일주·시주를 계산해, 같은 띠라도 나만 다른 운세를 확인해요</p>
+    <span class="today-label" id="today-label"></span>
+    <nav class="site-nav">
+      <a href="index.html">오늘의 전체 운세</a>
+      <a href="my-fortune.html">내 띠 운세 보기</a>
+      <a href="saju-fortune.html" class="active">내 사주 운세(베타)</a>
+      <a href="lotto.html">띠별 로또번호 추천</a>
+    </nav>
+  </header>
+
+  <div class="saju-input-panel">
+    <label style="text-align:center; display:block; color:var(--cream-dim); font-size:14px;">
+      태어난 년월일시(양력)를 입력하세요
+    </label>
+    <div class="saju-input-grid">
+      <div>
+        <label for="s-year">태어난 년도</label>
+        <input type="number" id="s-year" placeholder="1990" min="1920" max="2026">
+      </div>
+      <div>
+        <label for="s-month">월</label>
+        <input type="number" id="s-month" placeholder="5" min="1" max="12">
+      </div>
+      <div>
+        <label for="s-day">일</label>
+        <input type="number" id="s-day" placeholder="15" min="1" max="31">
+      </div>
+      <div>
+        <label for="s-hour">태어난 시간</label>
+        <select id="s-hour">
+          <option value="unknown">모름</option>
+          <option value="0">00시대 (자시)</option>
+          <option value="1">01시대 (축시)</option>
+          <option value="2">02시대 (축시)</option>
+          <option value="3">03시대 (인시)</option>
+          <option value="4">04시대 (인시)</option>
+          <option value="5">05시대 (묘시)</option>
+          <option value="6">06시대 (묘시)</option>
+          <option value="7">07시대 (진시)</option>
+          <option value="8">08시대 (진시)</option>
+          <option value="9">09시대 (사시)</option>
+          <option value="10">10시대 (사시)</option>
+          <option value="11">11시대 (오시)</option>
+          <option value="12">12시대 (오시)</option>
+          <option value="13">13시대 (미시)</option>
+          <option value="14">14시대 (미시)</option>
+          <option value="15">15시대 (신시)</option>
+          <option value="16">16시대 (신시)</option>
+          <option value="17">17시대 (유시)</option>
+          <option value="18">18시대 (유시)</option>
+          <option value="19">19시대 (술시)</option>
+          <option value="20">20시대 (술시)</option>
+          <option value="21">21시대 (해시)</option>
+          <option value="22">22시대 (해시)</option>
+          <option value="23">23시대 (자시)</option>
+        </select>
+      </div>
+    </div>
+    <div class="saju-submit-row">
+      <button id="s-submit">내 사주 계산하기</button>
+    </div>
+    <div class="error-msg" id="s-error">년월일을 올바르게 입력해주세요</div>
+    <p class="saju-note">
+      ⚠️ 절기(태양 기준 경계)는 다년 평균값을 사용해 실제 절입시각과 ±1일 오차가 있을 수 있어요.<br>
+      양력 생년월일 기준으로 계산되며, 재미로 즐기는 콘텐츠예요.
+    </p>
+  </div>
+
+  <div class="result-panel" id="result-panel">
+
+    <div class="result-hero">
+      <span class="symbol" id="r-symbol"></span>
+      <div class="name" id="r-name"></div>
+      <div class="years" id="r-years"></div>
+    </div>
+
+    <!-- 사주팔자 4기둥 -->
+    <div class="saju-pillars" id="saju-pillars"></div>
+
+    <!-- 오행 분포 -->
+    <div class="result-section">
+      <span class="section-label">오행 분포</span>
+      <div class="oheng-bar-wrap" id="oheng-bars"></div>
+      <p id="oheng-desc" style="font-size:13px; color:var(--cream-dim);"></p>
+    </div>
+
+    <div class="result-section">
+      <span class="section-label">오늘의 총운 (나만의 사주 기반)</span>
+      <p id="r-overall"></p>
+    </div>
+    <div class="result-section">
+      <span class="section-label">금전운</span>
+      <p id="r-money"></p>
+    </div>
+    <div class="result-section">
+      <span class="section-label">애정운</span>
+      <p id="r-romance"></p>
+    </div>
+    <div class="result-section">
+      <span class="section-label">학업 / 업무운</span>
+      <p id="r-work"></p>
+    </div>
+    <div class="result-section">
+      <span class="section-label">오늘의 주의사항</span>
+      <p id="r-caution"></p>
+    </div>
+    <div class="result-section">
+      <span class="section-label">오늘의 행운</span>
+      <div class="lucky-row">
+        <span class="lucky-tag" id="r-number"></span>
+        <span class="lucky-tag" id="r-color"></span>
+        <span class="lucky-tag" id="r-item"></span>
+        <span class="lucky-tag" id="r-direction"></span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2026 오늘의 12띠 운세. 본 콘텐츠는 재미로 즐기는 오락 정보입니다.
+  </footer>
+</div>
+
+<script src="assets/js/fortune-data.js"></script>
+<script src="assets/js/fortune-logic.js"></script>
+<script src="assets/js/saju-data.js"></script>
+<script src="assets/js/saju-calc.js"></script>
+<script>
+  document.getElementById("today-label").textContent = getTodayKoreanLabel();
+
+  const errorMsg = document.getElementById("s-error");
+  const resultPanel = document.getElementById("result-panel");
+
+  function renderPillarCard(label, pillar) {
+    if (!pillar) {
+      return `
+        <div class="saju-pillar-card empty">
+          <div class="pillar-label">${label}</div>
+          <div class="pillar-hanja">?</div>
+          <div class="pillar-hangul">모름</div>
+        </div>`;
+    }
+    return `
+      <div class="saju-pillar-card">
+        <div class="pillar-label">${label}</div>
+        <div class="pillar-hanja">${pillar.label}</div>
+        <div class="pillar-hangul">${pillar.labelHangul}</div>
+      </div>`;
+  }
+
+  function showResult(year, month, day, hour) {
+    const saju = calculateSaju(year, month, day, hour);
+
+    document.getElementById("r-symbol").textContent = saju.yearAnimalSymbol;
+    document.getElementById("r-name").textContent = `${year}.${month}.${day} · ${saju.yearAnimal}띠`;
+    document.getElementById("r-years").textContent =
+      `사주 8글자: ${[saju.pillars.year, saju.pillars.month, saju.pillars.day, saju.pillars.hour]
+        .filter(Boolean).map(p => p.label).join(" ")}`;
+
+    // 4기둥 카드 (연주 월주 일주 시주 순, 만세력 표기 순서는 보통 이렇게 나열)
+    document.getElementById("saju-pillars").innerHTML =
+      renderPillarCard("연주(年)", saju.pillars.year) +
+      renderPillarCard("월주(月)", saju.pillars.month) +
+      renderPillarCard("일주(日)", saju.pillars.day) +
+      renderPillarCard("시주(時)", saju.pillars.hour);
+
+    // 오행 분포 바
+    const total = Object.values(saju.elementCount).reduce((a, b) => a + b, 0) || 1;
+    const barsHtml = Object.keys(saju.elementCount).map((el) => {
+      const count = saju.elementCount[el];
+      const pct = Math.round((count / total) * 100);
+      const info = ELEMENT_INFO[el];
+      return `
+        <div class="oheng-bar-row">
+          <div class="oheng-bar-label">${el}</div>
+          <div class="oheng-bar-track">
+            <div class="oheng-bar-fill" style="width:${pct}%; background:${info.color};"></div>
+          </div>
+          <div class="oheng-bar-count">${count}</div>
+        </div>`;
+    }).join("");
+    document.getElementById("oheng-bars").innerHTML = barsHtml;
+    document.getElementById("oheng-desc").textContent =
+      `사주 여덟 글자 중 ${saju.dominantElement} 기운이 가장 강해요. ${ELEMENT_INFO[saju.dominantElement].desc}`;
+
+    // ---- 개인화된 오늘의 운세 ----
+    // 기존 "띠 하나"가 아니라 사주 8글자 전체를 시드로 써서, 같은 띠라도 다른 결과가 나오게 함
+    const todayStr = getTodayString();
+    const personalSeed = hashStringToInt(`${todayStr}-${saju.sajuSeedString}`);
+
+    const overall = pickBySeed(FORTUNE_POOL.overall, personalSeed);
+    const money = pickBySeed(FORTUNE_POOL.money, personalSeed + 2);
+    const romance = pickBySeed(FORTUNE_POOL.romance, personalSeed + 7);
+    const work = pickBySeed(FORTUNE_POOL.work, personalSeed + 1);
+    const caution = pickBySeed(FORTUNE_POOL.caution, personalSeed + 3);
+    const luckyColor = pickBySeed(FORTUNE_POOL.luckyColor, personalSeed + 4);
+    const luckyItem = pickBySeed(FORTUNE_POOL.luckyItem, personalSeed + 5);
+    const luckyDirection = pickBySeed(FORTUNE_POOL.luckyDirection, personalSeed + 6);
+    const luckyNumber = (personalSeed % 45) + 1;
+
+    document.getElementById("r-overall").textContent = overall;
+    document.getElementById("r-money").textContent = money;
+    document.getElementById("r-romance").textContent = romance;
+    document.getElementById("r-work").textContent = work;
+    document.getElementById("r-caution").textContent = caution;
+    document.getElementById("r-number").textContent = `행운숫자 ${luckyNumber}`;
+    document.getElementById("r-color").textContent = `행운색 ${luckyColor}`;
+    document.getElementById("r-item").textContent = `행운아이템 ${luckyItem}`;
+    document.getElementById("r-direction").textContent = `행운방향 ${luckyDirection}`;
+
+    resultPanel.classList.add("show");
+  }
+
+  function handleSubmit() {
+    const year = parseInt(document.getElementById("s-year").value, 10);
+    const month = parseInt(document.getElementById("s-month").value, 10);
+    const day = parseInt(document.getElementById("s-day").value, 10);
+    const hourVal = document.getElementById("s-hour").value;
+    const hour = hourVal === "unknown" ? null : parseInt(hourVal, 10);
+
+    const valid =
+      year && year >= 1920 && year <= 2026 &&
+      month && month >= 1 && month <= 12 &&
+      day && day >= 1 && day <= 31;
+
+    if (!valid) {
+      errorMsg.classList.add("show");
+      resultPanel.classList.remove("show");
+      return;
+    }
+    errorMsg.classList.remove("show");
+    showResult(year, month, day, hour);
+
+    // 공유 및 검색엔진용 URL 파라미터 반영
+    const url = new URL(window.location);
+    url.searchParams.set("y", year);
+    url.searchParams.set("m", month);
+    url.searchParams.set("d", day);
+    url.searchParams.set("h", hourVal);
+    window.history.replaceState({}, "", url);
+  }
+
+  document.getElementById("s-submit").addEventListener("click", handleSubmit);
+
+  // URL 파라미터로 자동 결과 표시 (공유 링크 접속 시)
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("y")) {
+    document.getElementById("s-year").value = params.get("y");
+    document.getElementById("s-month").value = params.get("m");
+    document.getElementById("s-day").value = params.get("d");
+    if (params.get("h")) document.getElementById("s-hour").value = params.get("h");
+    handleSubmit();
+  }
+</script>
+</body>
+</html>
