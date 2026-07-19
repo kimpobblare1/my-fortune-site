@@ -17,6 +17,7 @@
     <nav class="site-nav">
       <a href="index.html">오늘의 전체 운세</a>
       <a href="my-fortune.html" class="active">내 띠 운세 보기</a>
+      <a href="lotto.html">띠별 로또번호 추천</a>
     </nav>
   </header>
 
@@ -41,12 +42,16 @@
       <p id="r-overall"></p>
     </div>
     <div class="result-section">
-      <span class="section-label">업무 / 학업운</span>
-      <p id="r-work"></p>
-    </div>
-    <div class="result-section">
       <span class="section-label">금전운</span>
       <p id="r-money"></p>
+    </div>
+    <div class="result-section">
+      <span class="section-label">애정운</span>
+      <p id="r-romance"></p>
+    </div>
+    <div class="result-section">
+      <span class="section-label">학업 / 업무운</span>
+      <p id="r-work"></p>
     </div>
     <div class="result-section">
       <span class="section-label">오늘의 주의사항</span>
@@ -86,8 +91,9 @@
     document.getElementById("r-years").textContent = `${zodiac.hanja} · 같은 띠 년도: ${zodiac.years}`;
 
     document.getElementById("r-overall").textContent = fortune.overall;
-    document.getElementById("r-work").textContent = fortune.work;
     document.getElementById("r-money").textContent = fortune.money;
+    document.getElementById("r-romance").textContent = fortune.romance;
+    document.getElementById("r-work").textContent = fortune.work;
     document.getElementById("r-caution").textContent = fortune.caution;
 
     document.getElementById("r-number").textContent = `행운숫자 ${fortune.luckyNumber}`;
