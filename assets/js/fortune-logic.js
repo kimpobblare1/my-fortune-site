@@ -53,3 +53,15 @@ function getDailyFortune(zodiacKey, dateStr) {
     luckyNumber: (baseSeed % 45) + 1, // 1~45 사이 오늘의 행운 숫자
   };
 }
+
+// Node.js(GitHub Actions 등)에서 require로 불러올 수 있게 함. 브라우저에선 무시됨.
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    getTodayString,
+    getTodayKoreanLabel,
+    hashStringToInt,
+    pickBySeed,
+    getZodiacByYear,
+    getDailyFortune,
+  };
+}
