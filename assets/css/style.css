@@ -551,6 +551,44 @@ nav.site-nav a:hover {
   background: rgba(212,175,106,0.1);
 }
 
+.daeun-table td.daeun-clickable {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.daeun-table td.daeun-clickable:hover {
+  background: rgba(212,175,106,0.08);
+}
+
+.daeun-table td.daeun-selected {
+  background: rgba(212,175,106,0.22) !important;
+  box-shadow: inset 0 0 0 2px var(--gold);
+}
+
+/* ---- 사주풀이 / 오늘의 운세 구분선 ---- */
+.section-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 40px 0 24px;
+  color: var(--gold);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+}
+
+.section-divider span {
+  padding: 0 16px;
+  white-space: nowrap;
+}
+
 .oheng-bar-wrap {
   margin: 24px 0;
 }
