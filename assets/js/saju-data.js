@@ -55,6 +55,30 @@ var INVESTMENT_STYLE = {
   },
 };
 
+// 오행 상징과 연결되는 "관심 가져볼 만한 섹터 테마" (재미 콘텐츠, 특정 종목 추천 아님)
+var SECTOR_MATCH = {
+  목: {
+    sectors: ["2차전지·친환경 에너지", "바이오·헬스케어", "신소재·스타트업 테마"],
+    reason: "목(木)은 위로 뻗어나가는 '성장'의 상징이라, 새싹처럼 커나가는 신산업·성장 테마와 상징적으로 잘 맞아요.",
+  },
+  화: {
+    sectors: ["IT·반도체", "미디어·콘텐츠", "단기 모멘텀 테마주"],
+    reason: "화(火)는 빠르고 뜨겁게 타오르는 기운이라, 변동성이 크고 흐름이 빠른 IT·콘텐츠 테마와 상징적으로 잘 맞아요.",
+  },
+  토: {
+    sectors: ["리츠(REITs)·부동산 관련", "필수소비재", "고배당 대형주"],
+    reason: "토(土)는 땅처럼 묵직하고 안정적인 기운이라, 현금흐름이 꾸준한 자산·배당 테마와 상징적으로 잘 맞아요.",
+  },
+  금: {
+    sectors: ["금융·은행", "방위산업·중공업", "가치주(저평가 우량주)"],
+    reason: "금(金)은 단단하고 정돈된 기운이라, 원칙과 재무 안정성이 중요한 금융·중후장대 산업과 상징적으로 잘 맞아요.",
+  },
+  수: {
+    sectors: ["해운·물류", "수출입 관련주", "단기금융상품(MMF 등)"],
+    reason: "수(水)는 흐르고 순환하는 기운이라, 물류·유통처럼 흐름이 핵심인 섹터, 유동성 자산과 상징적으로 잘 맞아요.",
+  },
+};
+
 // ---- 절기(節氣) 평균 날짜 ----
 // 사주 월주는 절기(태양 기준) 경계로 바뀝니다. 아래는 다년 평균값으로,
 // 실제 절입 시각은 해마다 ±1일 정도 차이가 날 수 있습니다.
@@ -96,6 +120,6 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     STEMS, STEM_HANJA, STEM_ELEMENT,
     BRANCHES, BRANCH_HANJA, BRANCH_ELEMENT, BRANCH_ANIMAL, BRANCH_ANIMAL_SYMBOL,
-    ELEMENT_INFO, INVESTMENT_STYLE, SOLAR_TERMS, HOUR_BRANCH_RANGES,
+    ELEMENT_INFO, INVESTMENT_STYLE, SECTOR_MATCH, SOLAR_TERMS, HOUR_BRANCH_RANGES,
   };
 }
