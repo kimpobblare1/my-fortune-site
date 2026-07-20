@@ -160,7 +160,7 @@
       <span class="section-label">💰 오행으로 보는 내 투자 성향</span>
       <div id="invest-style-box"></div>
       <p style="font-size:11px; color:var(--cream-dim); margin-top:10px;">
-        ※ 재미로 보는 콘텐츠이며, 실제 투자 조언이나 추천이 아닙니다. 투자 판단과 책임은 본인에게 있습니다.
+        ※ 섹터 테마는 오행의 상징적 의미와 연결한 재미 콘텐츠이며, 특정 종목 추천이 아닙니다. 실제 투자 조언이 아니며, 투자 판단과 책임은 본인에게 있습니다.
       </p>
     </div>
 
@@ -353,12 +353,20 @@
     const subEl = sortedElements[1];
     const mainStyle = INVESTMENT_STYLE[mainEl];
     const subStyle = INVESTMENT_STYLE[subEl];
+    const mainSector = SECTOR_MATCH[mainEl];
 
     document.getElementById("invest-style-box").innerHTML = `
       <p style="font-size:18px; font-weight:700; color:var(--gold); margin:8px 0;">${mainStyle.title}</p>
       <p style="font-size:13px; margin-bottom:10px;">${mainStyle.style}</p>
       <p style="font-size:13px; margin-bottom:6px;"><strong style="color:var(--gold);">강점:</strong> ${mainStyle.strength}</p>
       <p style="font-size:13px; margin-bottom:14px;"><strong style="color:#C84B2F;">주의할 점:</strong> ${mainStyle.caution}</p>
+      <p style="font-size:13px; color:var(--cream-dim); border-top:1px solid var(--line); padding-top:14px; margin-bottom:6px;">
+        <strong style="color:var(--gold);">관심 가져볼 만한 섹터 테마</strong>
+      </p>
+      <div class="sector-chip-row">
+        ${mainSector.sectors.map((s) => `<span class="sector-chip">${s}</span>`).join("")}
+      </div>
+      <p style="font-size:12px; color:var(--cream-dim); margin-bottom:14px;">${mainSector.reason}</p>
       <p style="font-size:12px; color:var(--cream-dim); border-top:1px solid var(--line); padding-top:12px;">
         보조 성향(${subEl}) — <strong style="color:var(--gold);">${subStyle.title}</strong> 기운도 함께 갖고 있어서,
         상황에 따라 ${subStyle.style.replace(/\.$/, "")} 면모가 같이 나타날 수 있어요.
