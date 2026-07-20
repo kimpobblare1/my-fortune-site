@@ -677,6 +677,22 @@ nav.site-nav a:hover {
   .wealth-score-wrap { width: 90px; }
 }
 
+.sector-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.sector-chip {
+  font-size: 12px;
+  color: var(--gold);
+  background: rgba(212,175,106,0.1);
+  border: 1px solid var(--gold-dim);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
 /* ---- 로또번호 볼 ---- */
 .lotto-grid {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
