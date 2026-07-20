@@ -21,6 +21,40 @@ var ELEMENT_INFO = {
   수: { color: "#3D6FA5", desc: "지혜와 유연함, 깊이를 상징합니다." },
 };
 
+// 오행별 투자 성향 매칭 (재미로 보는 콘텐츠, 실제 투자 조언이 아님)
+var INVESTMENT_STYLE = {
+  목: {
+    title: "성장·확장형 투자자",
+    style: "새로운 것에 대한 확신이 서면 과감하게 베팅하는 성장주·테마주 스타일에 가까워요.",
+    strength: "트렌드를 빠르게 캐치하고 확신이 들면 망설이지 않아요.",
+    caution: "확장 욕구가 앞서 손절 타이밍을 놓치기 쉬우니, 미리 정한 원칙을 지키는 습관이 중요해요.",
+  },
+  화: {
+    title: "단기 트레이딩형 투자자",
+    style: "빠르게 진입하고 빠르게 정리하는 모멘텀·단기 매매 스타일에 가까워요.",
+    strength: "순간적인 판단력과 실행력이 좋아서 타이밍을 잘 잡아요.",
+    caution: "감정적으로 뜨거워지면 과매매로 이어지기 쉬우니, 매매 횟수에 스스로 제한을 두는 게 좋아요.",
+  },
+  토: {
+    title: "안정·배당형 투자자",
+    style: "꾸준한 현금흐름을 주는 배당주나 안정적인 자산에 강한 스타일이에요.",
+    strength: "묵직하게 오래 들고 가는 힘이 좋아서 복리 효과를 잘 누려요.",
+    caution: "변화가 필요한 순간에도 익숙한 걸 고수하려는 경향이 있으니, 가끔은 포트폴리오 점검이 필요해요.",
+  },
+  금: {
+    title: "가치·원칙 매매형 투자자",
+    style: "재무제표와 기준을 꼼꼼히 따지는 가치투자 스타일에 가까워요.",
+    strength: "원칙이 뚜렷해서 시장이 흔들려도 기준 없이 흔들리지 않아요.",
+    caution: "너무 엄격한 기준 때문에 좋은 기회를 놓치는 경우가 있으니, 약간의 유연함도 필요해요.",
+  },
+  수: {
+    title: "유동성·기회 대기형 투자자",
+    style: "현금 비중을 넉넉히 쥐고 있다가 좋은 기회에 움직이는 스타일이에요.",
+    strength: "관망하는 인내심이 좋아서 급하게 잘못된 판단을 하는 일이 적어요.",
+    caution: "너무 오래 기다리다 좋은 타이밍을 놓치는 경우가 있으니, 원칙적인 진입 시점을 정해두는 게 좋아요.",
+  },
+};
+
 // ---- 절기(節氣) 평균 날짜 ----
 // 사주 월주는 절기(태양 기준) 경계로 바뀝니다. 아래는 다년 평균값으로,
 // 실제 절입 시각은 해마다 ±1일 정도 차이가 날 수 있습니다.
@@ -62,6 +96,6 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     STEMS, STEM_HANJA, STEM_ELEMENT,
     BRANCHES, BRANCH_HANJA, BRANCH_ELEMENT, BRANCH_ANIMAL, BRANCH_ANIMAL_SYMBOL,
-    ELEMENT_INFO, SOLAR_TERMS, HOUR_BRANCH_RANGES,
+    ELEMENT_INFO, INVESTMENT_STYLE, SOLAR_TERMS, HOUR_BRANCH_RANGES,
   };
 }
