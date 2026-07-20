@@ -71,19 +71,32 @@ const html = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${todayLabel} 12띠 운세 | 오늘의 12띠 운세</title>
+<title>${todayLabel} 12띠 운세 | 운세연구소</title>
 <meta name="description" content="${todayLabel} 기준, 쥐띠부터 돼지띠까지 오늘의 운세와 행운의 숫자·색·아이템을 확인하세요.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="${todayLabel} 12띠 운세 | 운세연구소">
+<meta property="og:description" content="${todayLabel} 기준, 쥐띠부터 돼지띠까지 오늘의 운세와 행운의 숫자·색·아이템을 확인하세요.">
+<meta property="og:image" content="https://kimpobblare1.github.io/my-fortune-site/assets/images/og-image.png">
+<meta property="og:site_name" content="운세연구소">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://kimpobblare1.github.io/my-fortune-site/assets/images/og-image.png">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 <div class="container">
   <header class="site-header">
+    <a href="../index.html" class="brand-bar">
+      <span class="brand-mark">運</span>
+      <span class="brand-word">운세연구소</span>
+    </a>
     <h1 class="site-title">${todayLabel} 12띠 운세</h1>
     <p class="site-subtitle">오늘의 주인공은 ${heroZodiac.symbol} ${heroZodiac.name}입니다</p>
     <span class="today-label">${todayLabel}</span>
     <nav class="site-nav">
       <a href="../index.html">오늘의 전체 운세</a>
-      <a href="../saju-fortune.html">내 사주 운세(베타)</a>
+      <a href="../saju-fortune.html">내 사주 운세</a>
+      <a href="../wealth-index.html">오늘의 재물운 랭킹</a>
       <a href="../lotto.html">띠별 로또번호 추천</a>
     </nav>
   </header>
@@ -93,7 +106,12 @@ ${cardsHtml}
   </section>
 
   <footer>
-    &copy; 2026 오늘의 12띠 운세. 본 콘텐츠는 재미로 즐기는 오락 정보입니다.
+    <div class="footer-links">
+      <a href="../about.html">사이트 소개</a>
+      <a href="../privacy.html">개인정보처리방침</a>
+      <a href="../contact.html">문의하기</a>
+    </div>
+    &copy; 2026 운세연구소. 본 콘텐츠는 재미로 즐기는 오락 정보입니다.
   </footer>
 </div>
 </body>
@@ -118,16 +136,22 @@ const listHtml = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>날짜별 12띠 운세 모아보기</title>
+<title>날짜별 12띠 운세 모아보기 | 운세연구소</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
 <div class="container">
   <header class="site-header">
+    <a href="../index.html" class="brand-bar">
+      <span class="brand-mark">運</span>
+      <span class="brand-word">운세연구소</span>
+    </a>
     <h1 class="site-title">날짜별 운세 모아보기</h1>
     <nav class="site-nav">
       <a href="../index.html">오늘의 전체 운세</a>
-      <a href="../saju-fortune.html">내 사주 운세(베타)</a>
+      <a href="../saju-fortune.html">내 사주 운세</a>
+      <a href="../wealth-index.html">오늘의 재물운 랭킹</a>
       <a href="../lotto.html">띠별 로또번호 추천</a>
     </nav>
   </header>
