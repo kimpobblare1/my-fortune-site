@@ -124,6 +124,13 @@
       <div class="years" id="r-years"></div>
     </div>
 
+    <div style="text-align:center; margin-bottom:24px;" class="no-pdf">
+      <button id="pdf-download-btn" style="background:transparent; border:1px solid var(--gold); color:var(--gold); padding:10px 22px; border-radius:8px; font-size:13px; cursor:pointer;">
+        📄 이 결과 PDF로 저장하기
+      </button>
+      <p id="pdf-status" style="font-size:12px; color:var(--cream-dim); margin-top:8px;"></p>
+    </div>
+
     <!-- 사주팔자 4기둥 -->
     <div class="saju-pillars" id="saju-pillars"></div>
 
@@ -168,10 +175,15 @@
     <div class="result-section">
       <span class="section-label">대운(大運) - 10년 단위 흐름</span>
       <p id="daeun-intro" style="font-size:13px; color:var(--cream-dim); margin-bottom:6px;"></p>
+      <p style="font-size:12px; color:var(--gold-dim); margin-bottom:10px;">👆 궁금한 나이 구간을 눌러보세요 (기본은 현재 나이 기준)</p>
       <div class="daeun-table-wrap">
         <table class="daeun-table" id="daeun-table"></table>
       </div>
       <div id="daeun-highlight" style="margin-top:16px; padding:14px; background:rgba(212,175,106,0.08); border:1px solid var(--gold-dim); border-radius:10px; font-size:13px; line-height:1.7;"></div>
+    </div>
+
+    <div class="section-divider">
+      <span>🔮 오늘의 운세 (매일 갱신)</span>
     </div>
 
     <div class="result-section">
@@ -215,6 +227,8 @@
   </footer>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="assets/js/fortune-data.js"></script>
 <script src="assets/js/fortune-logic.js"></script>
 <script src="assets/js/saju-data.js"></script>
@@ -225,6 +239,25 @@
 
   const errorMsg = document.getElementById("s-error");
   const resultPanel = document.getElementById("result-panel");
+
+  // 대운 표 클릭 상호작용용 전역 상태
+  let currentDaeunList = null;
+  let currentIsSingang = null;
+
+  function selectDaeun(idx) {
+    if (!currentDaeunList || !currentDaeunList[idx]) return;
+    const d = currentDaeunList[idx];
+    const group = TEN_GOD_GROUP[d.stemGod];
+    const fav = getDaeunFavorability(group, currentIsSingang);
+
+    document.getElementById("daeun-highlight").innerHTML =
+      `<strong style="color:var(--gold);">${d.ageStart}~${d.ageEnd}세 (${d.labelHangul}) · ${fav.tag}</strong><br>` +
+      `<span style="color:var(--cream-dim);">${TEN_GOD_DESC[group]} 기운이 들어오는 시기예요. ${fav.note}</span>`;
+
+    document.querySelectorAll("#daeun-table td").forEach((td) => td.classList.remove("daeun-selected"));
+    const cell = document.querySelector(`#daeun-table td[data-idx="${idx}"]`);
+    if (cell) cell.classList.add("daeun-selected");
+  }
 
   function renderPillarCard(label, pillar, god) {
     if (!pillar) {
@@ -304,12 +337,12 @@
 
     const nowYear = new Date().getFullYear();
     const currentAge = nowYear - saju.rawYear + 1; // 한국식 나이(세는 나이) 기준 근사치
-    const daeunRows = daeun.list.map((d) => {
+    const daeunRows = daeun.list.map((d, idx) => {
       const isCurrent = currentAge >= d.ageStart && currentAge <= d.ageEnd;
       const group = TEN_GOD_GROUP[d.stemGod];
       const fav = getDaeunFavorability(group, isSingang);
       const tagColor = fav.tag === "순탄" ? "var(--gold)" : "#4A6FA5";
-      return `<td class="${isCurrent ? "current-daeun" : ""}">
+      return `<td class="daeun-clickable ${isCurrent ? "current-daeun" : ""}" data-idx="${idx}" onclick="selectDaeun(${idx})">
         <div>${d.ageStart}~${d.ageEnd}세</div>
         <div class="daeun-hanja">${d.label}</div>
         <div style="font-size:11px; color:var(--cream-dim);">${d.labelHangul} · ${d.stemGod}</div>
@@ -318,13 +351,11 @@
     }).join("");
     document.getElementById("daeun-table").innerHTML = `<tr>${daeunRows}</tr>`;
 
-    // 현재(또는 가장 가까운) 대운 상세 해설
-    const highlightDaeun = daeun.list.find((d) => currentAge >= d.ageStart && currentAge <= d.ageEnd) || daeun.list[0];
-    const highlightGroup = TEN_GOD_GROUP[highlightDaeun.stemGod];
-    const highlightFav = getDaeunFavorability(highlightGroup, isSingang);
-    document.getElementById("daeun-highlight").innerHTML =
-      `<strong style="color:var(--gold);">${highlightDaeun.ageStart}~${highlightDaeun.ageEnd}세 (${highlightDaeun.labelHangul}) · ${highlightFav.tag}</strong><br>` +
-      `<span style="color:var(--cream-dim);">${TEN_GOD_DESC[highlightGroup]} 기운이 들어오는 시기예요. ${highlightFav.note}</span>`;
+    // 클릭 상호작용을 위해 전역에 저장 (기본 선택: 현재 나이가 속한 구간)
+    currentDaeunList = daeun.list;
+    currentIsSingang = isSingang;
+    const defaultIdx = daeun.list.findIndex((d) => currentAge >= d.ageStart && currentAge <= d.ageEnd);
+    selectDaeun(defaultIdx >= 0 ? defaultIdx : 0);
 
     // 오행 분포 바
     const total = Object.values(saju.elementCount).reduce((a, b) => a + b, 0) || 1;
@@ -432,6 +463,51 @@
   }
 
   document.getElementById("s-submit").addEventListener("click", handleSubmit);
+
+  // ---- PDF 다운로드 ----
+  document.getElementById("pdf-download-btn").addEventListener("click", async () => {
+    const statusEl = document.getElementById("pdf-status");
+    statusEl.textContent = "PDF 생성 중이에요, 잠시만 기다려주세요...";
+
+    try {
+      const target = document.getElementById("result-panel");
+      const canvas = await html2canvas(target, {
+        backgroundColor: "#161C2E",
+        scale: 2,
+        useCORS: true,
+        ignoreElements: (el) => el.classList && el.classList.contains("no-pdf"),
+      });
+
+      const imgData = canvas.toDataURL("image/png");
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF("p", "mm", "a4");
+      const pageWidth = 210;
+      const pageHeight = 297;
+      const imgWidth = pageWidth;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      let heightLeft = imgHeight;
+      let position = 0;
+      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      const y = document.getElementById("s-year").value || "saju";
+      const m = document.getElementById("s-month").value || "";
+      const d = document.getElementById("s-day").value || "";
+      pdf.save(`saju_${y}${m}${d}.pdf`);
+      statusEl.textContent = "PDF 저장 완료!";
+    } catch (err) {
+      statusEl.textContent = "PDF 생성 중 오류가 발생했어요. 다시 시도해주세요.";
+      console.error(err);
+    }
+  });
 
   // URL 파라미터로 자동 결과 표시 (공유 링크 접속 시)
   const params = new URLSearchParams(window.location.search);
