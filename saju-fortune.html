@@ -3,23 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>내 사주팔자로 보는 오늘의 운세 | 정통 사주 기반 개인 운세</title>
+<title>내 사주팔자로 보는 오늘의 운세 | 운세연구소</title>
 <meta name="description" content="태어난 년월일시를 입력하면 연주·월주·일주·시주를 계산해 나만의 사주팔자와 오늘의 개인화된 운세를 보여드립니다.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="내 사주팔자로 보는 오늘의 운세 | 운세연구소">
+<meta property="og:description" content="태어난 년월일시를 입력하면 연주·월주·일주·시주를 계산해 나만의 사주팔자와 오늘의 개인화된 운세를 보여드립니다.">
+<meta property="og:image" content="https://kimpobblare1.github.io/my-fortune-site/assets/images/og-image.png">
+<meta property="og:url" content="https://kimpobblare1.github.io/my-fortune-site/saju-fortune.html">
+<meta property="og:site_name" content="운세연구소">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="내 사주팔자로 보는 오늘의 운세 | 운세연구소">
+<meta name="twitter:description" content="태어난 년월일시를 입력하면 연주·월주·일주·시주를 계산해 나만의 사주팔자와 오늘의 개인화된 운세를 보여드립니다.">
+<meta name="twitter:image" content="https://kimpobblare1.github.io/my-fortune-site/assets/images/og-image.png">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
 <div class="container">
   <header class="site-header">
+    <a href="index.html" class="brand-bar">
+      <span class="brand-mark">運</span>
+      <span class="brand-word">운세연구소</span>
+    </a>
     <h1 class="site-title">내 사주팔자로 보는 오늘의 운세</h1>
     <p class="site-subtitle">태어난 년월일시로 연주·월주·일주·시주를 계산해, 같은 띠라도 나만 다른 운세를 확인해요</p>
     <span class="today-label" id="today-label"></span>
     <nav class="site-nav">
       <a href="index.html">오늘의 전체 운세</a>
       <a href="saju-fortune.html" class="active">내 사주 운세</a>
+      <a href="wealth-index.html">오늘의 재물운 랭킹</a>
       <a href="lotto.html">띠별 로또번호 추천</a>
     </nav>
   </header>
+
+  <div class="saju-input-panel" style="margin-bottom:20px;">
+    <details>
+      <summary style="cursor:pointer; color:var(--gold); font-size:14px; font-weight:700;">📖 사주 처음이신가요? 용어 먼저 보고 가기</summary>
+      <div style="margin-top:16px; font-size:13px; color:var(--cream); line-height:1.8;">
+        <p><strong style="color:var(--gold);">사주팔자</strong>: 태어난 년·월·일·시를 각각 두 글자(천간+지지)로 표시한 8글자예요. 이 중 "일간"(일주의 천간)이 곧 '나 자신'을 뜻해요.</p>
+        <p><strong style="color:var(--gold);">오행</strong>: 목·화·토·금·수 다섯 가지 기운. 사주 8글자가 어떤 기운으로 치우쳐 있는지를 보여줘요.</p>
+        <p><strong style="color:var(--gold);">십성</strong>: 일간(나)을 기준으로 나머지 7글자와의 관계를 10가지로 분류한 것. "이 사람이 어떤 성향인지"를 읽는 핵심 재료예요.</p>
+        <p><strong style="color:var(--gold);">신강/신약</strong>: 일간의 힘이 상대적으로 센 편(신강)인지 약한 편(신약)인지. 대운을 해석할 때 "좋고 나쁨"의 기준이 돼요.</p>
+        <p style="margin-bottom:0;"><strong style="color:var(--gold);">대운</strong>: 10년마다 바뀌는 큰 흐름. 신강이면 힘을 '쓰는' 시기가, 신약이면 힘을 '채우는' 시기가 상대적으로 순탄한 편이에요.</p>
+      </div>
+    </details>
+  </div>
 
   <div class="saju-input-panel">
     <label style="text-align:center; display:block; color:var(--cream-dim); font-size:14px;">
@@ -113,11 +142,26 @@
       <p id="sinkang-desc" style="font-size:13px; color:var(--cream-dim);"></p>
     </div>
 
+    <!-- 십성으로 보는 성향 -->
+    <div class="result-section">
+      <span class="section-label">십성으로 보는 내 성향</span>
+      <div id="tengod-detail-list" style="font-size:13px; line-height:1.8;"></div>
+    </div>
+
     <!-- 오행 분포 -->
     <div class="result-section">
       <span class="section-label">오행 분포</span>
       <div class="oheng-bar-wrap" id="oheng-bars"></div>
       <p id="oheng-desc" style="font-size:13px; color:var(--cream-dim);"></p>
+    </div>
+
+    <!-- 오행 기반 투자 성향 -->
+    <div class="result-section" style="border:1px solid var(--gold-dim); background:rgba(212,175,106,0.05);">
+      <span class="section-label">💰 오행으로 보는 내 투자 성향</span>
+      <div id="invest-style-box"></div>
+      <p style="font-size:11px; color:var(--cream-dim); margin-top:10px;">
+        ※ 재미로 보는 콘텐츠이며, 실제 투자 조언이나 추천이 아닙니다. 투자 판단과 책임은 본인에게 있습니다.
+      </p>
     </div>
 
     <!-- 대운 -->
@@ -127,6 +171,7 @@
       <div class="daeun-table-wrap">
         <table class="daeun-table" id="daeun-table"></table>
       </div>
+      <div id="daeun-highlight" style="margin-top:16px; padding:14px; background:rgba(212,175,106,0.08); border:1px solid var(--gold-dim); border-radius:10px; font-size:13px; line-height:1.7;"></div>
     </div>
 
     <div class="result-section">
@@ -161,7 +206,12 @@
   </div>
 
   <footer>
-    &copy; 2026 오늘의 12띠 운세. 본 콘텐츠는 재미로 즐기는 오락 정보입니다.
+    <div class="footer-links">
+      <a href="about.html">사이트 소개</a>
+      <a href="privacy.html">개인정보처리방침</a>
+      <a href="contact.html">문의하기</a>
+    </div>
+    &copy; 2026 운세연구소. 본 콘텐츠는 재미로 즐기는 오락 정보입니다.
   </footer>
 </div>
 
@@ -224,23 +274,57 @@
         ? "일간을 돕는 비겁·인성 기운이 상대적으로 강한 편이에요. 주체적으로 밀고 나가는 힘이 좋습니다."
         : "일간의 기운을 쓰는 식상·재성·관성 기운이 상대적으로 강한 편이에요. 유연하게 상황에 맞춰가는 힘이 좋습니다.";
 
+    // 십성으로 보는 성향 (기둥 위치별로 하나씩 나열)
+    const positions = [
+      { label: "연간(年干)", god: tenGods.year.stemGod },
+      { label: "연지(年支)", god: tenGods.year.branchGod },
+      { label: "월간(月干)", god: tenGods.month.stemGod },
+      { label: "월지(月支)", god: tenGods.month.branchGod },
+      { label: "일지(日支)", god: tenGods.day.branchGod },
+      { label: "시간(時干)", god: tenGods.hour ? tenGods.hour.stemGod : null },
+      { label: "시지(時支)", god: tenGods.hour ? tenGods.hour.branchGod : null },
+    ].filter((p) => p.god && p.god !== "일간(나)");
+
+    document.getElementById("tengod-detail-list").innerHTML = positions.map((p) => `
+      <p style="margin-bottom:10px;">
+        <strong style="color:var(--gold);">${p.label} · ${p.god}</strong><br>
+        <span style="color:var(--cream-dim);">${TEN_GOD_DETAIL[p.god]}</span>
+      </p>
+    `).join("");
+
     // 대운(大運)
     const gender = document.getElementById("s-gender").value;
     const daeun = getDaeunList(saju, gender === "male", 8);
-    document.getElementById("daeun-intro").textContent =
-      `${gender === "male" ? "남자" : "여자"} · ${daeun.isForward ? "순행(順行)" : "역행(逆行)"} · 대운수 ${daeun.daeunSu} (만 ${daeun.daeunSu}세부터 첫 대운 시작)`;
+    const isSingang = strength.level.startsWith("신강");
+    document.getElementById("daeun-intro").innerHTML =
+      `${gender === "male" ? "남자" : "여자"} · ${daeun.isForward ? "순행(順行)" : "역행(逆行)"} · 대운수 ${daeun.daeunSu} (만 ${daeun.daeunSu}세부터 첫 대운 시작)<br>` +
+      `<span style="color:var(--cream-dim);">${strength.level}이라 ` +
+      `${isSingang ? "식상·재성·관성 기운이 들어오는 시기가 상대적으로 순탄한 편" : "비겁·인성 기운이 들어오는 시기가 상대적으로 순탄한 편"}이에요. ` +
+      `아래 표의 "순탄"은 이 기준으로 표시했어요.</span>`;
 
     const nowYear = new Date().getFullYear();
     const currentAge = nowYear - saju.rawYear + 1; // 한국식 나이(세는 나이) 기준 근사치
     const daeunRows = daeun.list.map((d) => {
       const isCurrent = currentAge >= d.ageStart && currentAge <= d.ageEnd;
+      const group = TEN_GOD_GROUP[d.stemGod];
+      const fav = getDaeunFavorability(group, isSingang);
+      const tagColor = fav.tag === "순탄" ? "var(--gold)" : "#4A6FA5";
       return `<td class="${isCurrent ? "current-daeun" : ""}">
         <div>${d.ageStart}~${d.ageEnd}세</div>
         <div class="daeun-hanja">${d.label}</div>
         <div style="font-size:11px; color:var(--cream-dim);">${d.labelHangul} · ${d.stemGod}</div>
+        <div style="font-size:11px; color:${tagColor}; font-weight:700; margin-top:4px;">${fav.tag}</div>
       </td>`;
     }).join("");
     document.getElementById("daeun-table").innerHTML = `<tr>${daeunRows}</tr>`;
+
+    // 현재(또는 가장 가까운) 대운 상세 해설
+    const highlightDaeun = daeun.list.find((d) => currentAge >= d.ageStart && currentAge <= d.ageEnd) || daeun.list[0];
+    const highlightGroup = TEN_GOD_GROUP[highlightDaeun.stemGod];
+    const highlightFav = getDaeunFavorability(highlightGroup, isSingang);
+    document.getElementById("daeun-highlight").innerHTML =
+      `<strong style="color:var(--gold);">${highlightDaeun.ageStart}~${highlightDaeun.ageEnd}세 (${highlightDaeun.labelHangul}) · ${highlightFav.tag}</strong><br>` +
+      `<span style="color:var(--cream-dim);">${TEN_GOD_DESC[highlightGroup]} 기운이 들어오는 시기예요. ${highlightFav.note}</span>`;
 
     // 오행 분포 바
     const total = Object.values(saju.elementCount).reduce((a, b) => a + b, 0) || 1;
@@ -260,6 +344,26 @@
     document.getElementById("oheng-bars").innerHTML = barsHtml;
     document.getElementById("oheng-desc").textContent =
       `사주 여덟 글자 중 ${saju.dominantElement} 기운이 가장 강해요. ${ELEMENT_INFO[saju.dominantElement].desc}`;
+
+    // ---- 오행 기반 투자 성향 진단 ----
+    const sortedElements = Object.keys(saju.elementCount).sort(
+      (a, b) => saju.elementCount[b] - saju.elementCount[a]
+    );
+    const mainEl = sortedElements[0];
+    const subEl = sortedElements[1];
+    const mainStyle = INVESTMENT_STYLE[mainEl];
+    const subStyle = INVESTMENT_STYLE[subEl];
+
+    document.getElementById("invest-style-box").innerHTML = `
+      <p style="font-size:18px; font-weight:700; color:var(--gold); margin:8px 0;">${mainStyle.title}</p>
+      <p style="font-size:13px; margin-bottom:10px;">${mainStyle.style}</p>
+      <p style="font-size:13px; margin-bottom:6px;"><strong style="color:var(--gold);">강점:</strong> ${mainStyle.strength}</p>
+      <p style="font-size:13px; margin-bottom:14px;"><strong style="color:#C84B2F;">주의할 점:</strong> ${mainStyle.caution}</p>
+      <p style="font-size:12px; color:var(--cream-dim); border-top:1px solid var(--line); padding-top:12px;">
+        보조 성향(${subEl}) — <strong style="color:var(--gold);">${subStyle.title}</strong> 기운도 함께 갖고 있어서,
+        상황에 따라 ${subStyle.style.replace(/\.$/, "")} 면모가 같이 나타날 수 있어요.
+      </p>
+    `;
 
     // ---- 개인화된 오늘의 운세 ----
     // 기존 "띠 하나"가 아니라 사주 8글자 전체를 시드로 써서, 같은 띠라도 다른 결과가 나오게 함
