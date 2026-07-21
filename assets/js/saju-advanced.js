@@ -39,6 +39,48 @@ var TEN_GOD_DESC = {
   인성: "학습력과 직관, 보호받고 채우는 힘",
 };
 
+// 기둥 위치가 전통적으로 상징하는 것 (초년~노년의 시기, 어떤 인간관계 영역인지)
+var PILLAR_MEANING = {
+  year: { label: "연주(年柱)", period: "초년기(~20대 초반)", relation: "조상·사회적 기반", desc: "내가 태어난 환경, 집안의 기운과 초년의 흐름을 보여줘요." },
+  month: { label: "월주(月柱)", period: "청년기(20~30대)", relation: "부모·형제", desc: "부모님과의 관계, 사회생활을 시작하는 시기의 흐름을 보여줘요. 사주에서 가장 비중이 큰 자리로도 여겨져요." },
+  day: { label: "일주(日柱)", period: "중년기(30~50대)", relation: "나 자신·배우자", desc: "일간(나 자신)이 위치한 자리이자, 배우자와의 관계를 함께 보는 자리예요." },
+  hour: { label: "시주(時柱)", period: "노년기(50대~)", relation: "자녀·말년", desc: "자녀와의 관계, 노후의 흐름을 보여줘요." },
+};
+
+// 십성 그룹별로 잘 맞는 직업/활동 성향 (참고용)
+var TEN_GOD_CAREER = {
+  비겁: "자영업, 창업, 프리랜서처럼 스스로 결정하고 책임지는 일",
+  식상: "기획, 마케팅, 콘텐츠 제작, 강의처럼 표현하고 만들어내는 일",
+  재성: "영업, 유통, 재무, 투자처럼 현실적인 성과와 숫자를 다루는 일",
+  관성: "공무원, 대기업, 조직 관리처럼 규율과 책임이 명확한 일",
+  인성: "연구, 교육, 상담처럼 배우고 전달하는 일",
+};
+
+/** 신강/신약 + 가장 두드러진 십성 그룹을 조합해 종합 총평 문단 생성 */
+function getOverallSummary(tenGods, strength) {
+  const groupCount = { 비겁: 0, 식상: 0, 재성: 0, 관성: 0, 인성: 0 };
+  [tenGods.year, tenGods.month, tenGods.day, tenGods.hour].forEach((p) => {
+    if (!p) return;
+    [p.stemGod, p.branchGod].forEach((god) => {
+      if (!god || god === "일간(나)") return;
+      const group = TEN_GOD_GROUP[god];
+      if (group) groupCount[group]++;
+    });
+  });
+
+  const topGroup = Object.keys(groupCount).reduce((a, b) => (groupCount[a] >= groupCount[b] ? a : b));
+  const isSingang = strength.level.startsWith("신강");
+
+  return {
+    topGroup,
+    text:
+      `사주 전체에서 ${topGroup}(${TEN_GOD_DESC[topGroup]}) 기운이 가장 두드러져요. ` +
+      `${isSingang ? "일간의 힘이 강한 편이라 스스로 판단하고 밀어붙이는 데 강점이 있고, " : "일간의 힘이 상대적으로 약한 편이라 주변과 조화를 이루며 나아가는 데 강점이 있고, "}` +
+      `${TEN_GOD_CAREER[topGroup]}과(와) 잘 맞는 편이에요.`,
+    careerHint: TEN_GOD_CAREER[topGroup],
+  };
+}
+
 // 십성 하나하나의 구체적인 의미 (결과 화면에 그대로 노출)
 var TEN_GOD_DETAIL = {
   비견: "나와 대등한 동료·경쟁자를 뜻해요. 자립심이 강하고 스스로 결정하는 걸 좋아하지만, 많으면 고집스러워지거나 협업에서 부딪힐 수 있어요.",
@@ -243,6 +285,9 @@ if (typeof module !== "undefined" && module.exports) {
     getDaeunList,
     getGanjiIndex,
     getDaeunFavorability,
+    getOverallSummary,
+    PILLAR_MEANING,
+    TEN_GOD_CAREER,
     TEN_GOD_GROUP,
     TEN_GOD_DESC,
     TEN_GOD_DETAIL,
