@@ -186,7 +186,7 @@
     <div class="result-section">
       <span class="section-label">대운(大運) - 10년 단위 흐름</span>
       <p id="daeun-intro" style="font-size:13px; color:var(--cream-dim); margin-bottom:6px;"></p>
-      <p style="font-size:12px; color:var(--gold-dim); margin-bottom:10px;">👆 궁금한 나이 구간을 눌러보세요 (기본은 현재 나이 기준)</p>
+      <p style="font-size:12px; color:var(--gold-dim); margin-bottom:10px;">👆 궁금한 나이 구간을 눌러보세요 (기본은 현재 나이 기준) · 🔗 표시는 천간·지지 오행이 같은 간여지동 조합이에요</p>
       <div class="daeun-table-wrap">
         <table class="daeun-table" id="daeun-table"></table>
       </div>
@@ -270,11 +270,19 @@
     const branchGroup = TEN_GOD_GROUP[d.branchGod];
     const fav = getDaeunFavorability(stemGroup, branchGroup, currentIsSingang);
 
+    const sameRootNote = d.isSameRoot
+      ? `<div style="margin-top:10px; padding:10px; background:rgba(255,255,255,0.04); border-radius:8px; font-size:12px; color:var(--gold-dim);">
+          💡 ${d.stemHanja}(${d.stem})와 ${d.branchHanja}(${d.branch})는 둘 다 오행이 <strong>${d.element}</strong>이라서, 일간과 비교했을 때 십성도 똑같이 "${d.stemGod}"로 나와요.
+          이렇게 천간·지지 오행이 같은 조합을 <strong>간여지동(干與支同)</strong>이라고 하는데, 겉과 속이 같은 방향으로 뜻을 강하게 밀어붙이는 시기로 봐요.
+        </div>`
+      : "";
+
     document.getElementById("daeun-highlight").innerHTML =
       `<strong style="color:var(--gold);">${d.ageStart}~${d.ageEnd}세 (${d.labelHangul}) · ${fav.tag}</strong><br>` +
       `<span style="color:var(--cream-dim);">${fav.note}</span><br><br>` +
       `<span style="color:var(--gold-dim); font-size:12px;">천간 ${d.stemGod}</span> — <span style="color:var(--cream-dim); font-size:12px;">${TEN_GOD_DETAIL[d.stemGod]}</span><br>` +
-      `<span style="color:var(--gold-dim); font-size:12px;">지지 ${d.branchGod}</span> — <span style="color:var(--cream-dim); font-size:12px;">${TEN_GOD_DETAIL[d.branchGod]}</span>`;
+      `<span style="color:var(--gold-dim); font-size:12px;">지지 ${d.branchGod}</span> — <span style="color:var(--cream-dim); font-size:12px;">${TEN_GOD_DETAIL[d.branchGod]}</span>` +
+      sameRootNote;
 
     document.querySelectorAll("#daeun-table td").forEach((td) => td.classList.remove("daeun-selected"));
     const cell = document.querySelector(`#daeun-table td[data-idx="${idx}"]`);
@@ -379,7 +387,7 @@
       const tagColor = tagColors[fav.level];
       return `<td class="daeun-clickable ${isCurrent ? "current-daeun" : ""}" data-idx="${idx}" onclick="selectDaeun(${idx})">
         <div>${d.ageStart}~${d.ageEnd}세</div>
-        <div class="daeun-hanja">${d.label}</div>
+        <div class="daeun-hanja">${d.label}${d.isSameRoot ? ' <span style="font-size:10px; color:var(--gold-dim);" title="간여지동">🔗</span>' : ""}</div>
         <div style="font-size:11px; color:var(--cream-dim);">${d.labelHangul} · ${d.stemGod}/${d.branchGod}</div>
         <div style="font-size:11px; color:${tagColor}; font-weight:700; margin-top:4px;">${fav.tag}</div>
       </td>`;
