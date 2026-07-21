@@ -291,6 +291,8 @@ function getDaeunList(saju, isMale, count) {
       stemGod: getTenGod(dayStemIdx, STEM_ELEMENT[stemIdx], stemIdx % 2 === 0),
       branchGod: getTenGod(dayStemIdx, BRANCH_ELEMENT[branchIdx], branchIdx % 2 === 0),
       element: STEM_ELEMENT[stemIdx],
+      branchElement: BRANCH_ELEMENT[branchIdx],
+      isSameRoot: STEM_ELEMENT[stemIdx] === BRANCH_ELEMENT[branchIdx], // 간여지동: 천간·지지 오행이 같은 조합
     });
   }
 
