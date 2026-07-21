@@ -71,30 +71,18 @@
         <label for="s-hour">태어난 시간</label>
         <select id="s-hour">
           <option value="unknown">모름</option>
-          <option value="0">00시대 (자시)</option>
-          <option value="1">01시대 (축시)</option>
-          <option value="2">02시대 (축시)</option>
-          <option value="3">03시대 (인시)</option>
-          <option value="4">04시대 (인시)</option>
-          <option value="5">05시대 (묘시)</option>
-          <option value="6">06시대 (묘시)</option>
-          <option value="7">07시대 (진시)</option>
-          <option value="8">08시대 (진시)</option>
-          <option value="9">09시대 (사시)</option>
-          <option value="10">10시대 (사시)</option>
-          <option value="11">11시대 (오시)</option>
-          <option value="12">12시대 (오시)</option>
-          <option value="13">13시대 (미시)</option>
-          <option value="14">14시대 (미시)</option>
-          <option value="15">15시대 (신시)</option>
-          <option value="16">16시대 (신시)</option>
-          <option value="17">17시대 (유시)</option>
-          <option value="18">18시대 (유시)</option>
-          <option value="19">19시대 (술시)</option>
-          <option value="20">20시대 (술시)</option>
-          <option value="21">21시대 (해시)</option>
-          <option value="22">22시대 (해시)</option>
-          <option value="23">23시대 (자시)</option>
+          <option value="23">자시 (23:00~00:59)</option>
+          <option value="1">축시 (01:00~02:59)</option>
+          <option value="3">인시 (03:00~04:59)</option>
+          <option value="5">묘시 (05:00~06:59)</option>
+          <option value="7">진시 (07:00~08:59)</option>
+          <option value="9">사시 (09:00~10:59)</option>
+          <option value="11">오시 (11:00~12:59)</option>
+          <option value="13">미시 (13:00~14:59)</option>
+          <option value="15">신시 (15:00~16:59)</option>
+          <option value="17">유시 (17:00~18:59)</option>
+          <option value="19">술시 (19:00~20:59)</option>
+          <option value="21">해시 (21:00~22:59)</option>
         </select>
       </div>
       <div>
@@ -124,15 +112,30 @@
       <div class="years" id="r-years"></div>
     </div>
 
-    <div style="text-align:center; margin-bottom:24px;" class="no-pdf">
-      <button id="pdf-download-btn" style="background:transparent; border:1px solid var(--gold); color:var(--gold); padding:10px 22px; border-radius:8px; font-size:13px; cursor:pointer;">
-        📄 이 결과 PDF로 저장하기
+    <div style="text-align:center; margin-bottom:24px;">
+      <button id="share-btn" style="background:transparent; border:1px solid var(--gold); color:var(--gold); padding:10px 22px; border-radius:8px; font-size:13px; cursor:pointer;">
+        🔗 이 결과 공유하기
       </button>
-      <p id="pdf-status" style="font-size:12px; color:var(--cream-dim); margin-top:8px;"></p>
+      <p id="share-status" style="font-size:12px; color:var(--cream-dim); margin-top:8px;"></p>
     </div>
+
+    <!-- 탭 -->
+    <div class="result-tabs">
+      <button class="result-tab active" id="tab-btn-saju" onclick="switchTab('saju')">🀄 사주팔자</button>
+      <button class="result-tab" id="tab-btn-today" onclick="switchTab('today')">🔮 오늘의 운세</button>
+    </div>
+
+    <div id="tab-panel-saju">
 
     <!-- 사주팔자 4기둥 -->
     <div class="saju-pillars" id="saju-pillars"></div>
+    <div class="pillar-meaning-row" id="pillar-meaning-row"></div>
+
+    <!-- 종합 총평 -->
+    <div class="result-section" style="border:1px solid var(--gold); background:rgba(212,175,106,0.06);">
+      <span class="section-label">✨ 종합 총평</span>
+      <p id="overall-summary" style="font-size:14px; line-height:1.8;"></p>
+    </div>
 
     <!-- 신강/신약 -->
     <div class="result-section">
@@ -182,9 +185,9 @@
       <div id="daeun-highlight" style="margin-top:16px; padding:14px; background:rgba(212,175,106,0.08); border:1px solid var(--gold-dim); border-radius:10px; font-size:13px; line-height:1.7;"></div>
     </div>
 
-    <div class="section-divider">
-      <span>🔮 오늘의 운세 (매일 갱신)</span>
-    </div>
+    </div><!-- /tab-panel-saju -->
+
+    <div id="tab-panel-today" style="display:none;">
 
     <div class="result-section">
       <span class="section-label">오늘의 총운 (나만의 사주 기반)</span>
@@ -215,6 +218,8 @@
         <span class="lucky-tag" id="r-direction"></span>
       </div>
     </div>
+
+    </div><!-- /tab-panel-today -->
   </div>
 
   <footer>
@@ -227,8 +232,6 @@
   </footer>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="assets/js/fortune-data.js"></script>
 <script src="assets/js/fortune-logic.js"></script>
 <script src="assets/js/saju-data.js"></script>
@@ -243,6 +246,14 @@
   // 대운 표 클릭 상호작용용 전역 상태
   let currentDaeunList = null;
   let currentIsSingang = null;
+
+  // 탭 전환
+  function switchTab(tab) {
+    document.getElementById("tab-panel-saju").style.display = tab === "saju" ? "" : "none";
+    document.getElementById("tab-panel-today").style.display = tab === "today" ? "" : "none";
+    document.getElementById("tab-btn-saju").classList.toggle("active", tab === "saju");
+    document.getElementById("tab-btn-today").classList.toggle("active", tab === "today");
+  }
 
   function selectDaeun(idx) {
     if (!currentDaeunList || !currentDaeunList[idx]) return;
@@ -282,6 +293,7 @@
 
   function showResult(year, month, day, hour) {
     const saju = calculateSaju(year, month, day, hour);
+    switchTab("saju");
 
     document.getElementById("r-symbol").textContent = saju.yearAnimalSymbol;
     document.getElementById("r-name").textContent = `${year}.${month}.${day} · ${saju.yearAnimal}띠`;
@@ -291,14 +303,24 @@
 
     // 4기둥 카드 (연주 월주 일주 시주 순, 만세력 표기 순서는 보통 이렇게 나열)
     const tenGods = getTenGodsForSaju(saju);
+    const strength = getSinStrength(tenGods);
     document.getElementById("saju-pillars").innerHTML =
       renderPillarCard("연주(年)", saju.pillars.year, tenGods.year) +
       renderPillarCard("월주(月)", saju.pillars.month, tenGods.month) +
       renderPillarCard("일주(日)", saju.pillars.day, tenGods.day) +
       renderPillarCard("시주(時)", saju.pillars.hour, tenGods.hour);
 
+    // 기둥 위치별 의미 (초년~노년 시기, 관계)
+    document.getElementById("pillar-meaning-row").innerHTML = ["year", "month", "day", "hour"].map((key) => {
+      const m = PILLAR_MEANING[key];
+      return `<div class="pm-item"><strong>${m.period}</strong>${m.relation}</div>`;
+    }).join("");
+
+    // 종합 총평
+    const summary = getOverallSummary(tenGods, strength);
+    document.getElementById("overall-summary").textContent = summary.text;
+
     // 신강/신약 (참고용, 단순화된 계산)
-    const strength = getSinStrength(tenGods);
     document.getElementById("sinkang-level").textContent = strength.level;
     document.getElementById("sinkang-ratio").textContent = `일간을 돕는 기운 ${strength.ratio}%`;
     document.getElementById("sinkang-fill").style.width = `${strength.ratio}%`;
@@ -464,48 +486,31 @@
 
   document.getElementById("s-submit").addEventListener("click", handleSubmit);
 
-  // ---- PDF 다운로드 ----
-  document.getElementById("pdf-download-btn").addEventListener("click", async () => {
-    const statusEl = document.getElementById("pdf-status");
-    statusEl.textContent = "PDF 생성 중이에요, 잠시만 기다려주세요...";
+  // ---- 공유하기 ----
+  document.getElementById("share-btn").addEventListener("click", async () => {
+    const statusEl = document.getElementById("share-status");
+    const shareUrl = window.location.href;
+    const shareData = {
+      title: "내 사주팔자로 보는 오늘의 운세 | 운세연구소",
+      text: "내 사주 결과를 확인해보세요!",
+      url: shareUrl,
+    };
 
-    try {
-      const target = document.getElementById("result-panel");
-      const canvas = await html2canvas(target, {
-        backgroundColor: "#161C2E",
-        scale: 2,
-        useCORS: true,
-        ignoreElements: (el) => el.classList && el.classList.contains("no-pdf"),
-      });
-
-      const imgData = canvas.toDataURL("image/png");
-      const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF("p", "mm", "a4");
-      const pageWidth = 210;
-      const pageHeight = 297;
-      const imgWidth = pageWidth;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-      let heightLeft = imgHeight;
-      let position = 0;
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+    if (navigator.share) {
+      // 모바일: OS 공유 시트가 뜨고 그 안에 카카오톡 등이 자동으로 포함됨
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        // 사용자가 취소한 경우는 조용히 무시
       }
-
-      const y = document.getElementById("s-year").value || "saju";
-      const m = document.getElementById("s-month").value || "";
-      const d = document.getElementById("s-day").value || "";
-      pdf.save(`saju_${y}${m}${d}.pdf`);
-      statusEl.textContent = "PDF 저장 완료!";
-    } catch (err) {
-      statusEl.textContent = "PDF 생성 중 오류가 발생했어요. 다시 시도해주세요.";
-      console.error(err);
+    } else {
+      // 데스크톱 등 지원 안 되는 환경: 링크 복사로 대체
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        statusEl.textContent = "링크가 복사되었어요! 카카오톡 등에 붙여넣기 해보세요.";
+      } catch (err) {
+        statusEl.textContent = shareUrl;
+      }
     }
   });
 
