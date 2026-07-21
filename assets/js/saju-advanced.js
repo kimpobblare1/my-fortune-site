@@ -98,21 +98,41 @@ var TEN_GOD_DETAIL = {
 // 대운 십성이 신강/신약과 만났을 때의 유불리 (간략화된 통변 원리)
 // 신강(일간이 강함) → 힘을 '쓰는' 식상·재성·관성이 들어오면 균형이 맞아 순탄한 편
 // 신약(일간이 약함) → 힘을 '채워주는' 비겁·인성이 들어오면 균형이 맞아 순탄한 편
-function getDaeunFavorability(group, isSingang) {
+// 천간(줄기)과 지지(뿌리) 두 글자를 각각 채점해서 합산하기 때문에, 같은 그룹이어도
+// 천간·지지 조합에 따라 5단계로 더 세밀하게 갈립니다.
+function scoreGroup(group, isSingang) {
   const drainGroups = ["식상", "재성", "관성"];
   const helpGroups = ["비겁", "인성"];
+  if (isSingang) return drainGroups.includes(group) ? 1 : -1;
+  return helpGroups.includes(group) ? 1 : -1;
+}
 
-  if (isSingang) {
-    if (drainGroups.includes(group)) {
-      return { tag: "순탄", note: "강한 일간의 힘을 잘 써먹는 시기라, 노력한 만큼 결과로 이어지기 좋은 흐름이에요." };
-    }
-    return { tag: "과다 주의", note: "이미 강한 기운이 더 강해지는 시기라, 고집이나 정체로 흐르지 않게 균형이 필요해요." };
-  } else {
-    if (helpGroups.includes(group)) {
-      return { tag: "순탄", note: "약했던 일간에 힘이 채워지는 시기라, 자신감 있게 추진하기 좋은 흐름이에요." };
-    }
-    return { tag: "체력 안배", note: "일간의 힘을 더 쓰는 시기라, 무리하지 않고 페이스 조절이 필요한 흐름이에요." };
-  }
+function getDaeunFavorability(stemGroup, branchGroup, isSingang) {
+  // 이전 버전과의 호환을 위해 branchGroup 없이 호출되면 천간만으로 판단
+  const bGroup = branchGroup || stemGroup;
+  const stemScore = scoreGroup(stemGroup, isSingang);
+  const branchScore = scoreGroup(bGroup, isSingang);
+  const score = stemScore + branchScore;
+
+  // ⚠️ 천간·지지 점수가 각각 +1/-1만 나오도록 설계되어 있어 합산값은
+  // 수학적으로 2, 0, -2만 가능합니다 (1과 -1은 나올 수 없음). 그래서
+  // 실제로 도달 가능한 3단계로만 명확하게 분류합니다.
+  const tagMap = { 2: "순탄", 0: "혼조", "-2": "주의" };
+  const tag = tagMap[score];
+
+  const stemPart = `천간은 ${stemGroup}(${TEN_GOD_DESC[stemGroup]}) 기운`;
+  const branchPart = `지지는 ${bGroup}(${TEN_GOD_DESC[bGroup]}) 기운`;
+
+  let closing;
+  if (score === 2) closing = "둘 다 지금 흐름에 힘을 실어주는 조합이라, 노력한 만큼 결과가 잘 따라와요.";
+  else if (score === 0) closing = "천간과 지지가 서로 다른 방향을 가리켜서, 겉과 속이 다르게 느껴지거나 상반된 상황이 같이 벌어질 수 있어요.";
+  else closing = "둘 다 지금 흐름에 부담을 주는 조합이라, 무리한 확장보다 안전하게 관리하는 게 중요해요.";
+
+  return {
+    tag,
+    level: score,
+    note: `${stemPart}이, ${branchPart}이 함께 들어오는 시기예요. ${closing}`,
+  };
 }
 
 /** 일간(day stem) 대비 대상 글자의 십성을 계산 */
@@ -144,7 +164,6 @@ function getTenGodsForSaju(saju) {
   function stemGod(pillar) {
     if (!pillar) return null;
     const idx = STEMS.indexOf(pillar.stem);
-    if (idx === STEMS.indexOf(saju.pillars.day.stem) && pillar === saju.pillars.day) return "일간(나)";
     return getTenGod(dayStemIdx, pillar.stemElement, idx % 2 === 0);
   }
   function branchGod(pillar) {
@@ -270,6 +289,7 @@ function getDaeunList(saju, isMale, count) {
       label: `${STEM_HANJA[stemIdx]}${BRANCH_HANJA[branchIdx]}`,
       labelHangul: `${STEMS[stemIdx]}${BRANCHES[branchIdx]}`,
       stemGod: getTenGod(dayStemIdx, STEM_ELEMENT[stemIdx], stemIdx % 2 === 0),
+      branchGod: getTenGod(dayStemIdx, BRANCH_ELEMENT[branchIdx], branchIdx % 2 === 0),
       element: STEM_ELEMENT[stemIdx],
     });
   }
