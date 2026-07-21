@@ -493,6 +493,56 @@ nav.site-nav a:hover {
   opacity: 0.4;
 }
 
+.result-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.result-tab {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--cream-dim);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 8px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.result-tab:hover {
+  color: var(--cream);
+}
+
+.result-tab.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+.pillar-meaning-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: -14px 0 20px;
+}
+
+.pillar-meaning-row .pm-item {
+  text-align: center;
+  font-size: 11px;
+  color: var(--cream-dim);
+  line-height: 1.5;
+}
+
+.pillar-meaning-row .pm-item strong {
+  display: block;
+  color: var(--gold-dim);
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+
 .sinkang-bar-wrap {
   margin: 12px 0;
 }
