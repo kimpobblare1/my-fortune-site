@@ -266,12 +266,15 @@
   function selectDaeun(idx) {
     if (!currentDaeunList || !currentDaeunList[idx]) return;
     const d = currentDaeunList[idx];
-    const group = TEN_GOD_GROUP[d.stemGod];
-    const fav = getDaeunFavorability(group, currentIsSingang);
+    const stemGroup = TEN_GOD_GROUP[d.stemGod];
+    const branchGroup = TEN_GOD_GROUP[d.branchGod];
+    const fav = getDaeunFavorability(stemGroup, branchGroup, currentIsSingang);
 
     document.getElementById("daeun-highlight").innerHTML =
       `<strong style="color:var(--gold);">${d.ageStart}~${d.ageEnd}세 (${d.labelHangul}) · ${fav.tag}</strong><br>` +
-      `<span style="color:var(--cream-dim);">${TEN_GOD_DESC[group]} 기운이 들어오는 시기예요. ${fav.note}</span>`;
+      `<span style="color:var(--cream-dim);">${fav.note}</span><br><br>` +
+      `<span style="color:var(--gold-dim); font-size:12px;">천간 ${d.stemGod}</span> — <span style="color:var(--cream-dim); font-size:12px;">${TEN_GOD_DETAIL[d.stemGod]}</span><br>` +
+      `<span style="color:var(--gold-dim); font-size:12px;">지지 ${d.branchGod}</span> — <span style="color:var(--cream-dim); font-size:12px;">${TEN_GOD_DETAIL[d.branchGod]}</span>`;
 
     document.querySelectorAll("#daeun-table td").forEach((td) => td.classList.remove("daeun-selected"));
     const cell = document.querySelector(`#daeun-table td[data-idx="${idx}"]`);
@@ -363,19 +366,21 @@
       `${gender === "male" ? "남자" : "여자"} · ${daeun.isForward ? "순행(順行)" : "역행(逆行)"} · 대운수 ${daeun.daeunSu} (만 ${daeun.daeunSu}세부터 첫 대운 시작)<br>` +
       `<span style="color:var(--cream-dim);">${strength.level}이라 ` +
       `${isSingang ? "식상·재성·관성 기운이 들어오는 시기가 상대적으로 순탄한 편" : "비겁·인성 기운이 들어오는 시기가 상대적으로 순탄한 편"}이에요. ` +
-      `아래 표의 "순탄"은 이 기준으로 표시했어요.</span>`;
+      `각 구간은 천간(줄기)과 지지(뿌리) 두 글자를 함께 채점해서 <strong style="color:var(--gold);">순탄 → 혼조 → 주의</strong> 3단계로 나눴어요.</span>`;
 
     const nowYear = new Date().getFullYear();
     const currentAge = nowYear - saju.rawYear + 1; // 한국식 나이(세는 나이) 기준 근사치
     const daeunRows = daeun.list.map((d, idx) => {
       const isCurrent = currentAge >= d.ageStart && currentAge <= d.ageEnd;
-      const group = TEN_GOD_GROUP[d.stemGod];
-      const fav = getDaeunFavorability(group, isSingang);
-      const tagColor = fav.tag === "순탄" ? "var(--gold)" : "#4A6FA5";
+      const stemGroup = TEN_GOD_GROUP[d.stemGod];
+      const branchGroup = TEN_GOD_GROUP[d.branchGod];
+      const fav = getDaeunFavorability(stemGroup, branchGroup, isSingang);
+      const tagColors = { 2: "var(--gold)", 0: "#8C8C99", "-2": "#C84B2F" };
+      const tagColor = tagColors[fav.level];
       return `<td class="daeun-clickable ${isCurrent ? "current-daeun" : ""}" data-idx="${idx}" onclick="selectDaeun(${idx})">
         <div>${d.ageStart}~${d.ageEnd}세</div>
         <div class="daeun-hanja">${d.label}</div>
-        <div style="font-size:11px; color:var(--cream-dim);">${d.labelHangul} · ${d.stemGod}</div>
+        <div style="font-size:11px; color:var(--cream-dim);">${d.labelHangul} · ${d.stemGod}/${d.branchGod}</div>
         <div style="font-size:11px; color:${tagColor}; font-weight:700; margin-top:4px;">${fav.tag}</div>
       </td>`;
     }).join("");
