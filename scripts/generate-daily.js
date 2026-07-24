@@ -98,6 +98,7 @@ const html = `<!DOCTYPE html>
       <a href="../saju-fortune.html">내 사주 운세</a>
       <a href="../wealth-index.html">오늘의 재물운 랭킹</a>
       <a href="../lotto.html">띠별 로또번호 추천</a>
+      <a href="../blog/index.html">블로그</a>
     </nav>
   </header>
 
@@ -153,6 +154,7 @@ const listHtml = `<!DOCTYPE html>
       <a href="../saju-fortune.html">내 사주 운세</a>
       <a href="../wealth-index.html">오늘의 재물운 랭킹</a>
       <a href="../lotto.html">띠별 로또번호 추천</a>
+      <a href="../blog/index.html">블로그</a>
     </nav>
   </header>
   <section class="fortune-grid">
