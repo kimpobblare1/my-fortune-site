@@ -60,8 +60,19 @@
 
     <div id="input-fields-wrap">
       <label style="text-align:center; display:block; color:var(--cream-dim); font-size:14px;">
-        태어난 년월일시(양력)를 입력하세요
+        태어난 년월일시를 입력하세요
       </label>
+
+      <div class="calendar-toggle-row">
+        <button type="button" class="calendar-toggle active" id="toggle-solar" onclick="setCalendarType('solar')">양력</button>
+        <button type="button" class="calendar-toggle" id="toggle-lunar" onclick="setCalendarType('lunar')">음력</button>
+      </div>
+      <div id="leap-month-row" style="display:none; text-align:center; margin-bottom:12px;">
+        <label style="font-size:13px; color:var(--cream-dim);">
+          <input type="checkbox" id="s-leap-month"> 윤달이에요
+        </label>
+      </div>
+
       <div class="saju-input-grid">
         <div>
           <label for="s-year">태어난 년도</label>
@@ -108,7 +119,7 @@
       <p class="saju-note">
         ⚠️ 절기(태양 기준 경계)는 다년 평균값을 사용해 실제 절입시각과 ±1일 오차가 있을 수 있어요.<br>
         십성은 지지의 숨은 천간(지장간)까지는 반영하지 않은 간략 버전이고, 신강/신약과 대운수도 단순화된 계산이에요.<br>
-        양력 생년월일 기준으로 계산되며, 정통 만세력과는 세부적으로 다를 수 있는 재미 목적의 콘텐츠예요.
+        음력으로 입력하시면 자동으로 양력으로 변환한 뒤 계산해요(1900~2100년 지원). 정통 만세력과는 세부적으로 다를 수 있는 재미 목적의 콘텐츠예요.
       </p>
     </div>
   </div>
@@ -243,6 +254,7 @@
 
 <script src="assets/js/fortune-data.js"></script>
 <script src="assets/js/fortune-logic.js"></script>
+<script src="assets/js/lunar-calc.js"></script>
 <script src="assets/js/saju-data.js"></script>
 <script src="assets/js/saju-calc.js"></script>
 <script src="assets/js/saju-advanced.js"></script>
@@ -476,28 +488,55 @@
     resultPanel.classList.add("show");
   }
 
+  // 양력/음력 토글 상태
+  let currentCalendarType = "solar";
+  function setCalendarType(type) {
+    currentCalendarType = type;
+    document.getElementById("toggle-solar").classList.toggle("active", type === "solar");
+    document.getElementById("toggle-lunar").classList.toggle("active", type === "lunar");
+    document.getElementById("leap-month-row").style.display = type === "lunar" ? "block" : "none";
+    document.getElementById("s-day").max = type === "lunar" ? "30" : "31";
+  }
+
   function handleSubmit() {
-    const year = parseInt(document.getElementById("s-year").value, 10);
-    const month = parseInt(document.getElementById("s-month").value, 10);
-    const day = parseInt(document.getElementById("s-day").value, 10);
+    let year = parseInt(document.getElementById("s-year").value, 10);
+    let month = parseInt(document.getElementById("s-month").value, 10);
+    let day = parseInt(document.getElementById("s-day").value, 10);
     const hourVal = document.getElementById("s-hour").value;
     const hour = hourVal === "unknown" ? null : parseInt(hourVal, 10);
+    const isLeapMonth = document.getElementById("s-leap-month").checked;
 
-    const valid =
+    const basicValid =
       year && year >= 1920 && year <= 2026 &&
       month && month >= 1 && month <= 12 &&
       day && day >= 1 && day <= 31;
 
-    if (!valid) {
+    if (!basicValid) {
+      errorMsg.textContent = "년월일을 올바르게 입력해주세요";
       errorMsg.classList.add("show");
       resultPanel.classList.remove("show");
       return;
     }
+
+    // 음력 입력이면 먼저 양력으로 변환
+    if (currentCalendarType === "lunar") {
+      const converted = lunarToSolar(year, month, day, isLeapMonth);
+      if (!converted) {
+        errorMsg.textContent = "해당 음력 날짜(윤달 여부 포함)를 찾을 수 없어요. 다시 확인해주세요.";
+        errorMsg.classList.add("show");
+        resultPanel.classList.remove("show");
+        return;
+      }
+      year = converted.year;
+      month = converted.month;
+      day = converted.day;
+    }
+
     errorMsg.classList.remove("show");
     showResult(year, month, day, hour);
     collapseInputPanel(year, month, day, hourVal);
 
-    // 공유 및 검색엔진용 URL 파라미터 반영
+    // 공유 및 검색엔진용 URL 파라미터 반영 (항상 변환된 양력 기준으로 저장)
     const url = new URL(window.location);
     url.searchParams.set("y", year);
     url.searchParams.set("m", month);
@@ -515,8 +554,9 @@
   function collapseInputPanel(year, month, day, hourVal) {
     const genderLabel = document.getElementById("s-gender").value === "male" ? "남자" : "여자";
     const hourLabel = HOUR_LABELS[hourVal] || HOUR_LABELS[hourVal === "unknown" ? "unknown" : Number(hourVal)];
+    const calendarNote = currentCalendarType === "lunar" ? " (음력→양력 변환됨)" : "";
     document.getElementById("input-summary-text").textContent =
-      `${year}.${month}.${day} · ${genderLabel} · ${hourLabel}`;
+      `${year}.${month}.${day}(양력) · ${genderLabel} · ${hourLabel}${calendarNote}`;
     document.getElementById("input-fields-wrap").style.display = "none";
     document.getElementById("input-summary-bar").style.display = "flex";
   }
