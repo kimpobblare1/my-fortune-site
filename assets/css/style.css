@@ -397,6 +397,31 @@ nav.site-nav a:hover {
   margin-bottom: 32px;
 }
 
+.calendar-toggle-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 14px 0 16px;
+}
+
+.calendar-toggle {
+  background: transparent;
+  border: 1px solid var(--gold-dim);
+  color: var(--cream-dim);
+  padding: 8px 24px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.calendar-toggle.active {
+  background: var(--gold);
+  color: var(--bg);
+  border-color: var(--gold);
+}
+
 .saju-input-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
