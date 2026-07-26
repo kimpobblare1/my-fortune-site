@@ -110,7 +110,6 @@ ${cardsHtml}
     <div class="footer-links">
       <a href="../about.html">사이트 소개</a>
       <a href="../privacy.html">개인정보처리방침</a>
-      <a href="../contact.html">문의하기</a>
     </div>
     &copy; 2026 운세연구소. 본 콘텐츠는 재미로 즐기는 오락 정보입니다.
   </footer>
