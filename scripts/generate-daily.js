@@ -76,10 +76,10 @@ const html = `<!DOCTYPE html>
 <meta property="og:type" content="website">
 <meta property="og:title" content="${todayLabel} 12띠 운세 | 운세연구소">
 <meta property="og:description" content="${todayLabel} 기준, 쥐띠부터 돼지띠까지 오늘의 운세와 행운의 숫자·색·아이템을 확인하세요.">
-<meta property="og:image" content="https://kimpobblare1.github.io/my-fortune-site/assets/images/og-image.png">
+<meta property="og:image" content="https://www.unselab.co.kr/assets/images/og-image.png">
 <meta property="og:site_name" content="운세연구소">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://kimpobblare1.github.io/my-fortune-site/assets/images/og-image.png">
+<meta name="twitter:image" content="https://www.unselab.co.kr/assets/images/og-image.png">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="stylesheet" href="../assets/css/style.css">
 </head>
