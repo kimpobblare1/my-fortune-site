@@ -11,7 +11,14 @@
     - 카테고리 페이지(category-*.html)에서 이 값으로 필터링해요.
 
   url: 같은 blog 폴더 안의 글 파일명 (예: "saju-what-is-it.html")
-  thumb: 카드에 보여줄 이모지 아이콘
+  thumb: 카드에 보여줄 이모지 아이콘 (로또 글이 아닌 경우에만 사용)
+
+  --- 로또 글(catId: "lotto")을 추가할 때만 아래 필드도 함께 넣어주세요 ---
+  isLotto: true
+  bestZodiacEmoji: 이번주 BEST 띠 이모지 (예: "🐍")
+  bestZodiacLabel: 이번주 BEST 띠 이름 (예: "뱀띠")
+  luckyNumbers: 그 띠의 로또번호 6개 배열 (예: [9, 10, 21, 29, 40, 43])
+    → 색깔은 자동으로 정해져요 (1-10 골드 / 11-20 블루 / 21-30 레드 / 31-40 브라운 / 41-45 그린)
 */
 
 const BLOG_POSTS = [
@@ -33,7 +40,11 @@ const BLOG_POSTS = [
     title: "이번주(7.20~7.25) 띠별 로또번호 추천 12선",
     excerpt: "월~토 6일치 행운숫자를 모아 만든 12띠 로또번호 조합이에요.",
     date: "2026.07.25",
-    publishDate: "2026-07-25"
+    publishDate: "2026-07-25",
+    isLotto: true,
+    bestZodiacEmoji: "🐍",
+    bestZodiacLabel: "뱀띠",
+    luckyNumbers: [9, 10, 21, 29, 40, 43]
   },
   {
     url: "saju-what-is-it.html",
@@ -92,11 +103,41 @@ function getPublishedPosts(catId) {
   return posts;
 }
 
+// 로또볼 색상 구간 (기존 lotto.html과 동일한 규칙)
+function lottoBallClass(n) {
+  if (n <= 10) return "";
+  if (n <= 20) return "n3";
+  if (n <= 30) return "n4";
+  if (n <= 40) return "n5";
+  return "n2";
+}
+
 // 카드 HTML 문자열 생성
 function renderPostCard(p) {
+  let thumbInner;
+
+  if (p.isLotto) {
+    const ballsHtml = p.luckyNumbers
+      .map(n => `<span class="lotto-ball ${lottoBallClass(n)}">${n}</span>`)
+      .join("");
+    thumbInner = `
+      <div class="thumb-date-badge">${p.date}</div>
+      <div class="thumb-lotto-zodiac">
+        <span class="thumb-lotto-emoji">${p.bestZodiacEmoji}</span>
+        <span>${p.bestZodiacLabel}</span>
+        <span class="thumb-lotto-tag">이주의 BEST</span>
+      </div>
+      <div class="thumb-lotto-balls">${ballsHtml}</div>`;
+  } else {
+    thumbInner = `
+      <div class="thumb-date-badge">${p.date}</div>
+      <div class="thumb-icon">${p.thumb}</div>`;
+  }
+
   return `
     <a href="${p.url}" class="blog-card" data-cat="${p.catId}">
-      <div class="blog-card-thumb">${p.thumb}</div>
+      <div class="blog-card-thumb${p.isLotto ? " thumb-lotto" : ""}">${thumbInner}
+      </div>
       <div class="blog-card-body">
         <div class="blog-card-category">${p.catLabel}</div>
         <div class="blog-card-title">${p.title}</div>
