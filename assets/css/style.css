@@ -1099,6 +1099,38 @@ footer {
   font-size: 12px;
 }
 
+/* 띠별 성격 전용 썸네일: 보라빛 그라데이션 + "띠별 성격" 배지로 오늘의 운세와 구분 */
+.thumb-personality {
+  background: linear-gradient(135deg, #2A2140, #1F2740);
+}
+
+.thumb-personality-tag {
+  position: absolute;
+  bottom: 14px;
+  font-size: 11px;
+  color: #C9A8FF;
+  background: rgba(42, 33, 64, 0.7);
+  border: 1px solid #6B5B95;
+  border-radius: 999px;
+  padding: 3px 12px;
+  letter-spacing: 0.02em;
+}
+
+/* 주간 운세 전용 썸네일: 이번주 BEST 띠 강조 (로또 썸네일과 유사하되 번호 없이 심플하게) */
+.thumb-weekly {
+  gap: 10px;
+  background: linear-gradient(135deg, #20301F, #161C2E);
+}
+
+.thumb-weekly-tag {
+  font-size: 12px;
+  color: #8FD98A;
+  border: 1px solid #4A6B45;
+  border-radius: 999px;
+  padding: 3px 12px;
+  letter-spacing: 0.02em;
+}
+
 .blog-card-body {
   padding: 18px 20px 20px;
   display: flex;
@@ -1316,4 +1348,3 @@ footer {
   .article-body { font-size: 15px; }
   .article-summary-box, .article-tip-box { padding: 16px 18px; }
 }
-
