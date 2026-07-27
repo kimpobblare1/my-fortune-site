@@ -42,19 +42,10 @@
     <a href="category-lotto.html" class="blog-category-tab">띠별 로또번호 추천</a>
   </div>
 
-  <div class="blog-list">
+  <div class="blog-list" id="blog-list"></div>
 
-    <a href="weekly-top3-0720.html" class="blog-card">
-      <div class="blog-card-thumb">🐍</div>
-      <div class="blog-card-body">
-        <div class="blog-card-category">주간 운세</div>
-        <div class="blog-card-title">이번주(7.20~7.25) 띠별 운세 TOP3</div>
-        <div class="blog-card-excerpt">이번 주 종합 운세 지수 TOP3와 주의할 띠 체크포인트를 정리했어요.</div>
-        <div class="blog-card-meta">2026.07.20</div>
-      </div>
-    </a>
-
-  </div>
+  <script src="posts-data.js"></script>
+  <script>renderBlogList("blog-list", "weekly");</script>
 
   <footer>
     <div class="footer-links">
