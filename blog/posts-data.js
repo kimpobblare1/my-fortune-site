@@ -23,6 +23,20 @@
 
 const BLOG_POSTS = [
   {
+    url: "lotto-0801.html",
+    thumb: "🎱",
+    catId: "lotto",
+    catLabel: "띠별 로또번호 추천",
+    title: "이번주(7.27~8.1) 띠별 로또번호 추천 12선",
+    excerpt: "이번 주 재물운 합산 1위 닭띠와 함께, 월~토 6일치 행운숫자로 만든 12띠 로또번호 조합이에요.",
+    date: "2026.08.01",
+    publishDate: "2026-07-27",
+    isLotto: true,
+    bestZodiacEmoji: "🐓",
+    bestZodiacLabel: "닭띠",
+    luckyNumbers: [5, 6, 8, 31, 35, 43]
+  },
+  {
     url: "daily-wealth-0725.html",
     thumb: "🐂",
     catId: "daily",
