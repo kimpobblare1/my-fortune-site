@@ -134,7 +134,7 @@ const BLOG_POSTS = [
   },
   {
     url: "saju-basic-02.html",
-    thumb: "🀄",
+    thumb: "☀️",
     catId: "saju-basic",
     catLabel: "사주 입문 2편",
     title: "천간(天干) 완벽정리, 10개 글자가 상징하는 것",
@@ -144,7 +144,7 @@ const BLOG_POSTS = [
   },
   {
     url: "saju-basic-03.html",
-    thumb: "🀄",
+    thumb: "🌍",
     catId: "saju-basic",
     catLabel: "사주 입문 3편",
     title: "지지(地支) 완벽정리, 12개 글자와 띠의 비밀",
@@ -154,7 +154,7 @@ const BLOG_POSTS = [
   },
   {
     url: "saju-basic-04.html",
-    thumb: "🀄",
+    thumb: "☯️",
     catId: "saju-basic",
     catLabel: "사주 입문 4편",
     title: "음양오행 상생상극, 사주 해석의 핵심 원리",
@@ -164,7 +164,7 @@ const BLOG_POSTS = [
   },
   {
     url: "saju-basic-05.html",
-    thumb: "🀄",
+    thumb: "🧮",
     catId: "saju-basic",
     catLabel: "사주 입문 5편",
     title: "내 사주팔자 세우는 법, 연주·월주·일주·시주 계산 흐름",
@@ -174,7 +174,7 @@ const BLOG_POSTS = [
   },
   {
     url: "saju-basic-06.html",
-    thumb: "🀄",
+    thumb: "⭐",
     catId: "saju-basic",
     catLabel: "사주 입문 6편",
     title: "십성(十星)이란 무엇인가, 나와 다른 글자의 관계 10가지",
@@ -184,7 +184,7 @@ const BLOG_POSTS = [
   },
   {
     url: "saju-basic-07.html",
-    thumb: "🀄",
+    thumb: "⚖️",
     catId: "saju-basic",
     catLabel: "사주 입문 7편",
     title: "신강/신약이란 무엇인가, 나의 기운은 강할까 약할까",
@@ -194,7 +194,7 @@ const BLOG_POSTS = [
   },
   {
     url: "saju-basic-08.html",
-    thumb: "🀄",
+    thumb: "🌊",
     catId: "saju-basic",
     catLabel: "사주 입문 8편",
     title: "대운(大運)이란 무엇인가, 10년마다 바뀌는 인생의 흐름",
@@ -204,7 +204,7 @@ const BLOG_POSTS = [
   },
   {
     url: "saju-basic-09.html",
-    thumb: "🀄",
+    thumb: "📈",
     catId: "saju-basic",
     catLabel: "사주 입문 9편",
     title: "오행 균형으로 보는 나의 성향과 투자 스타일",
@@ -214,7 +214,7 @@ const BLOG_POSTS = [
   },
   {
     url: "saju-basic-10.html",
-    thumb: "🀄",
+    thumb: "💰",
     catId: "saju-basic",
     catLabel: "사주 입문 10편",
     title: "사주로 보는 재물운의 원리, 재성이 다가 아니다",
@@ -224,7 +224,7 @@ const BLOG_POSTS = [
   },
   {
     url: "saju-basic-11.html",
-    thumb: "🀄",
+    thumb: "📖",
     catId: "saju-basic",
     catLabel: "사주 입문 11편",
     title: "사주 용어 헷갈리는 것들 총정리, 간여지동부터 공망까지",
@@ -234,7 +234,7 @@ const BLOG_POSTS = [
   },
   {
     url: "saju-basic-12.html",
-    thumb: "🀄",
+    thumb: "🎓",
     catId: "saju-basic",
     catLabel: "사주 입문 12편",
     title: "사주 공부 총정리 및 용어사전, 12주 완주 축하드려요",
@@ -330,7 +330,10 @@ const BLOG_POSTS = [
     title: "이번주(7.27~8.2) 띠별 운세 TOP3",
     excerpt: "이번주 종합운 1위는 닭띠, 2위 말띠, 공동 3위 소띠·개띠예요.",
     date: "2026.07.27",
-    publishDate: "2026-07-27"
+    publishDate: "2026-07-27",
+    isWeekly: true,
+    bestZodiacEmoji: "🐓",
+    bestZodiacLabel: "닭띠"
   },
   {
     url: "lotto-0801.html",
@@ -398,7 +401,10 @@ const BLOG_POSTS = [
     title: "이번주(7.20~7.25) 띠별 운세 TOP3",
     excerpt: "이번 주 종합 운세 지수 TOP3와 주의할 띠 체크포인트를 정리했어요.",
     date: "2026.07.20",
-    publishDate: "2026-07-20"
+    publishDate: "2026-07-20",
+    isWeekly: true,
+    bestZodiacEmoji: "🐍",
+    bestZodiacLabel: "뱀띠·말띠 공동1위"
   }
 ];
 
@@ -439,11 +445,13 @@ function lottoBallClass(n) {
 // 카드 HTML 문자열 생성 (featured=true면 큰 카드 클래스 적용)
 function renderPostCard(p, featured) {
   let thumbInner;
+  let thumbExtraClass = "";
 
   if (p.isLotto) {
     const ballsHtml = p.luckyNumbers
       .map(n => `<span class="lotto-ball ${lottoBallClass(n)}">${n}</span>`)
       .join("");
+    thumbExtraClass = " thumb-lotto";
     thumbInner = `
       <div class="thumb-date-badge">${p.date}</div>
       <div class="thumb-lotto-zodiac">
@@ -452,6 +460,21 @@ function renderPostCard(p, featured) {
         <span class="thumb-lotto-tag">이주의 BEST</span>
       </div>
       <div class="thumb-lotto-balls">${ballsHtml}</div>`;
+  } else if (p.isWeekly) {
+    thumbExtraClass = " thumb-weekly";
+    thumbInner = `
+      <div class="thumb-date-badge">${p.date}</div>
+      <div class="thumb-weekly-tag">📊 이번주 종합 1위</div>
+      <div class="thumb-lotto-zodiac">
+        <span class="thumb-lotto-emoji">${p.bestZodiacEmoji}</span>
+        <span>${p.bestZodiacLabel}</span>
+      </div>`;
+  } else if (p.catId === "zodiac") {
+    thumbExtraClass = " thumb-personality";
+    thumbInner = `
+      <div class="thumb-date-badge">${p.date}</div>
+      <div class="thumb-icon">${p.thumb}</div>
+      <div class="thumb-personality-tag">✨ 띠별 성격</div>`;
   } else {
     thumbInner = `
       <div class="thumb-date-badge">${p.date}</div>
@@ -462,7 +485,7 @@ function renderPostCard(p, featured) {
 
   return `
     <a href="${p.url}" class="${cardClass}" data-cat="${p.catId}">
-      <div class="blog-card-thumb${p.isLotto ? " thumb-lotto" : ""}">${thumbInner}
+      <div class="blog-card-thumb${thumbExtraClass}">${thumbInner}
       </div>
       <div class="blog-card-body">
         <div class="blog-card-category">${p.catLabel}</div>
