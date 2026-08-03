@@ -170,3 +170,21 @@ const listHtml = `<!DOCTYPE html>
 `;
 fs.writeFileSync(path.join(dailyDir, "index.html"), listHtml, "utf-8");
 console.log("daily/index.html 목록 갱신 완료");
+
+// ---- 8. sitemap.xml에 오늘의 daily 페이지 URL 자동 추가 ----
+const sitemapPath = path.join(ROOT, "sitemap.xml");
+if (fs.existsSync(sitemapPath)) {
+  let sitemapContent = fs.readFileSync(sitemapPath, "utf-8");
+  const todayUrl = `https://www.unselab.co.kr/daily/${todayStr}.html`;
+
+  if (!sitemapContent.includes(todayUrl)) {
+    const newEntry = `  <url><loc>${todayUrl}</loc><lastmod>${todayStr}</lastmod><changefreq>daily</changefreq><priority>0.5</priority></url>\n`;
+    sitemapContent = sitemapContent.replace("</urlset>", `${newEntry}</urlset>`);
+    fs.writeFileSync(sitemapPath, sitemapContent, "utf-8");
+    console.log(`sitemap.xml에 daily/${todayStr}.html 추가 완료`);
+  } else {
+    console.log("sitemap.xml에 이미 오늘 날짜 URL이 있어 건너뜀");
+  }
+} else {
+  console.log("sitemap.xml을 찾을 수 없어 건너뜀");
+}
