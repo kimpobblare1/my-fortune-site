@@ -82,6 +82,8 @@ const html = `<!DOCTYPE html>
 <meta name="twitter:image" content="https://www.unselab.co.kr/assets/images/og-image.png">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="stylesheet" href="../assets/css/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9496300145102373"
+     crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="container">
@@ -139,6 +141,8 @@ const listHtml = `<!DOCTYPE html>
 <title>날짜별 12띠 운세 모아보기 | 운세연구소</title>
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="stylesheet" href="../assets/css/style.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9496300145102373"
+     crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="container">
