@@ -1,0 +1,41 @@
+name: Generate Daily Fortune Page
+
+# 매일 자정(한국시간, KST) 자동 실행
+# KST는 UTC보다 9시간 빠르므로, UTC 기준 15:00(오후 3시)에 실행하면
+# 한국시간으로는 자정(00:00)이 됩니다.
+on:
+  schedule:
+    - cron: "0 15 * * *"
+  # 수동으로도 실행 가능하게 (Actions 탭에서 "Run workflow" 버튼으로 즉시 테스트 가능)
+  workflow_dispatch:
+
+# 워크플로가 저장소에 파일을 커밋/푸시할 수 있도록 쓰기 권한 부여
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Node.js 설치
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: 오늘의 운세 페이지 생성 (daily/YYYY-MM-DD.html + sitemap.xml 갱신)
+        run: node scripts/generate-daily.js
+
+      - name: 변경사항 커밋 및 푸시
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add daily/ sitemap.xml
+          if git diff --staged --quiet; then
+            echo "변경된 내용이 없어 커밋을 건너뜁니다."
+          else
+            git commit -m "chore: 오늘의 운세 페이지 자동 생성 ($(date -u -d '+9 hours' '+%Y-%m-%d'))"
+            git push
+          fi
