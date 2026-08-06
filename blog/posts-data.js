@@ -23,6 +23,103 @@
 
 const BLOG_POSTS = [
   {
+    url: "lotto-0822.html",
+    thumb: "🎱",
+    catId: "lotto",
+    catLabel: "띠별 로또번호 추천",
+    title: "이번주(8.17~8.22) 띠별 로또번호 추천 12선",
+    excerpt: "이번 주 재물운 합산 1위 개띠와 함께, 월~토 6일치 행운숫자로 만든 12띠 로또번호 조합이에요.",
+    date: "2026.08.22",
+    publishDate: "2026-08-22",
+    isLotto: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠",
+    luckyNumbers: [5, 10, 13, 18, 21, 26]
+  },
+  {
+    url: "daily-wealth-0822.html",
+    thumb: "🐓",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 22일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐓 닭띠(지수 98). 개띠, 쥐띠도 상위권.",
+    date: "2026.08.22",
+    publishDate: "2026-08-22"
+  },
+  {
+    url: "daily-wealth-0821.html",
+    thumb: "🐕",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 21일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐕 개띠(지수 96). 쥐띠, 닭띠도 상위권.",
+    date: "2026.08.21",
+    publishDate: "2026-08-21"
+  },
+  {
+    url: "daily-wealth-0820.html",
+    thumb: "🐅",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 20일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐅 호랑이띠·🐎 말띠(공동 지수 98). 개띠, 쥐띠도 상위권.",
+    date: "2026.08.20",
+    publishDate: "2026-08-20"
+  },
+  {
+    url: "daily-wealth-0819.html",
+    thumb: "🐍",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 19일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐍 뱀띠(지수 87). 닭띠, 양띠도 상위권.",
+    date: "2026.08.19",
+    publishDate: "2026-08-19"
+  },
+  {
+    url: "daily-wealth-0818.html",
+    thumb: "🐂",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 18일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐂 소띠(지수 97). 개띠, 호랑이띠도 상위권.",
+    date: "2026.08.18",
+    publishDate: "2026-08-18"
+  },
+  {
+    url: "weekly-top3-0817.html",
+    thumb: "🐕",
+    catId: "weekly",
+    catLabel: "주간 운세",
+    title: "이번주(8.17~8.22) 띠별 운세 TOP3 & 전체 순위",
+    excerpt: "이번주 종합운 1위는 개띠(537점), 2위 닭띠(520점), 3위 쥐띠(508점)예요.",
+    date: "2026.08.17",
+    publishDate: "2026-08-17",
+    isWeekly: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠"
+  },
+  {
+    url: "daily-wealth-0817.html",
+    thumb: "🐀",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 17일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐀 쥐띠(지수 99). 개띠, 뱀띠도 상위권.",
+    date: "2026.08.17",
+    publishDate: "2026-08-17"
+  },
+  {
+    url: "daily-wealth-0816.html",
+    thumb: "🐀",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 16일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐀 쥐띠(지수 99). 토끼띠, 뱀띠도 상위권.",
+    date: "2026.08.16",
+    publishDate: "2026-08-16"
+  },
+  {
     url: "lotto-0815.html",
     thumb: "🎱",
     catId: "lotto",
