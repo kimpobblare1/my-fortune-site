@@ -84,6 +84,7 @@ const html = `<!DOCTYPE html>
 <link rel="stylesheet" href="../assets/css/style.css">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9496300145102373"
      crossorigin="anonymous"></script>
+<meta name="robots" content="noindex, follow">
 </head>
 <body>
 <div class="container">
@@ -143,6 +144,7 @@ const listHtml = `<!DOCTYPE html>
 <link rel="stylesheet" href="../assets/css/style.css">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9496300145102373"
      crossorigin="anonymous"></script>
+<meta name="robots" content="noindex, follow">
 </head>
 <body>
 <div class="container">
@@ -175,20 +177,10 @@ const listHtml = `<!DOCTYPE html>
 fs.writeFileSync(path.join(dailyDir, "index.html"), listHtml, "utf-8");
 console.log("daily/index.html 목록 갱신 완료");
 
-// ---- 8. sitemap.xml에 오늘의 daily 페이지 URL 자동 추가 ----
-const sitemapPath = path.join(ROOT, "sitemap.xml");
-if (fs.existsSync(sitemapPath)) {
-  let sitemapContent = fs.readFileSync(sitemapPath, "utf-8");
-  const todayUrl = `https://www.unselab.co.kr/daily/${todayStr}.html`;
-
-  if (!sitemapContent.includes(todayUrl)) {
-    const newEntry = `  <url><loc>${todayUrl}</loc><lastmod>${todayStr}</lastmod><changefreq>daily</changefreq><priority>0.5</priority></url>\n`;
-    sitemapContent = sitemapContent.replace("</urlset>", `${newEntry}</urlset>`);
-    fs.writeFileSync(sitemapPath, sitemapContent, "utf-8");
-    console.log(`sitemap.xml에 daily/${todayStr}.html 추가 완료`);
-  } else {
-    console.log("sitemap.xml에 이미 오늘 날짜 URL이 있어 건너뜀");
-  }
-} else {
-  console.log("sitemap.xml을 찾을 수 없어 건너뜀");
-}
+// ---- 8. sitemap.xml 자동 추가는 하지 않음 (2026.08 정책 변경) ----
+// daily/YYYY-MM-DD.html 페이지는 다른 날짜와 구조·문구가 거의 동일한
+// 대량 생성형 콘텐츠라 애드센스 "가치가 별로 없는 콘텐츠" 판정을 유발할 수 있어,
+// 위에서 페이지 자체에 <meta name="robots" content="noindex, follow">를 넣어
+// 검색 색인에서 제외하고 있음. 색인 대상이 아니므로 sitemap에도 올리지 않음.
+// (사이트 내 daily/index.html 목록을 통해 사람은 계속 접근 가능, 링크도 유지됨)
+console.log("sitemap.xml 자동 추가는 정책상 건너뜀 (noindex 페이지)");
