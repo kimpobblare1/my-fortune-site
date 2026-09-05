@@ -1,0 +1,1204 @@
+/*
+  운세연구소 블로그 글 데이터
+  ---------------------------------------
+  새 글을 추가하려면 이 배열 맨 위에 객체 하나를 추가하면 끝이에요.
+
+  publishDate: "YYYY-MM-DD" 형식.
+    - 오늘 날짜(방문자 기기 기준)보다 미래로 넣으면 → 그 날짜가 될 때까지 자동으로 숨겨져요. (예약발행)
+    - 오늘이거나 과거 날짜면 → 바로 목록에 노출돼요.
+
+  catId: "saju-basic" | "zodiac" | "daily" | "weekly" | "lotto"
+    - 카테고리 페이지(category-*.html)에서 이 값으로 필터링해요.
+
+  url: 같은 blog 폴더 안의 글 파일명 (예: "saju-what-is-it.html")
+  thumb: 카드에 보여줄 이모지 아이콘 (로또 글이 아닌 경우에만 사용)
+
+  --- 로또 글(catId: "lotto")을 추가할 때만 아래 필드도 함께 넣어주세요 ---
+  isLotto: true
+  bestZodiacEmoji: 이번주 BEST 띠 이모지 (예: "🐍")
+  bestZodiacLabel: 이번주 BEST 띠 이름 (예: "뱀띠")
+  luckyNumbers: 그 띠의 로또번호 6개 배열 (예: [9, 10, 21, 29, 40, 43])
+    → 색깔은 자동으로 정해져요 (1-10 골드 / 11-20 블루 / 21-30 레드 / 31-40 브라운 / 41-45 그린)
+*/
+
+const BLOG_POSTS = [
+  {
+    url: "lotto-0919.html",
+    thumb: "🎱",
+    catId: "lotto",
+    catLabel: "띠별 로또번호 추천",
+    title: "[로또운세] 개띠·닭띠 공동 BEST! 이번주 로또번호 대공개",
+    excerpt: "이번 주 재물운 합산 공동 1위 개띠·닭띠(정확히 동점!)와 함께, 월~토 6일치 행운숫자로 만든 12띠 로또번호 조합이에요.",
+    date: "2026.09.19",
+    publishDate: "2026-09-19",
+    isLotto: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠·닭띠",
+    luckyNumbers: [7, 8, 15, 23, 31, 45]
+  },
+  {
+    url: "daily-wealth-0919.html",
+    thumb: "🐍",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠·닭띠 극적인 공동 1위! 5주 연속 대기록 명맥 유지",
+    excerpt: "오늘 재물운 1위는 🐍 뱀띠(지수 98). 개띠는 닭띠와 극적인 동점으로 5주 연속 1위를 지켰어요.",
+    date: "2026.09.19",
+    publishDate: "2026-09-19"
+  },
+  {
+    url: "daily-wealth-0918.html",
+    thumb: "🐇",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 닭띠 사흘 연속 상위권! 개띠와 최종 승부 초읽기",
+    excerpt: "오늘 재물운 1위는 🐇 토끼띠(지수 94). 닭띠와 개띠의 최종 대결이 내일 결정돼요.",
+    date: "2026.09.18",
+    publishDate: "2026-09-18"
+  },
+  {
+    url: "daily-wealth-0917.html",
+    thumb: "🐎",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 말띠·닭띠 동점 1위! 닭띠는 이틀 연속 상위권 강세",
+    excerpt: "오늘 재물운 1위는 🐎 말띠·🐓 닭띠(공동 지수 97). 닭띠가 강력한 우승 후보로 떠올랐어요.",
+    date: "2026.09.17",
+    publishDate: "2026-09-17"
+  },
+  {
+    url: "daily-wealth-0916.html",
+    thumb: "🐓",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 닭띠 이번 주 최고점! 개띠는 사흘 연속 상위권 유지",
+    excerpt: "오늘 재물운 1위는 🐓 닭띠(지수 97). 개띠는 사흘 연속 상위권을 유지했어요.",
+    date: "2026.09.16",
+    publishDate: "2026-09-16"
+  },
+  {
+    url: "daily-wealth-0915.html",
+    thumb: "🐓",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 닭띠·개띠 동점 접전! 개띠는 5주 연속 도전 순항",
+    excerpt: "오늘 재물운 1위는 🐓 닭띠·🐕 개띠(공동 지수 93). 5주 연속 도전이 순항 중이에요.",
+    date: "2026.09.15",
+    publishDate: "2026-09-15"
+  },
+  {
+    url: "weekly-top3-0914.html",
+    thumb: "🐕",
+    catId: "weekly",
+    catLabel: "주간 운세",
+    title: "[주간운세] 개띠·닭띠 극적인 공동 1위! 5주 연속 대기록 명맥 유지",
+    excerpt: "이번주 종합운 공동 1위는 개띠·닭띠(각 558점, 정확히 동점!), 3위 말띠(531점)예요.",
+    date: "2026.09.14",
+    publishDate: "2026-09-14",
+    isWeekly: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠·닭띠"
+  },
+  {
+    url: "daily-wealth-0914.html",
+    thumb: "🐐",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠, 5주 연속 1위 도전 시작! 오늘 1위는 양띠",
+    excerpt: "오늘 재물운 1위는 🐐 양띠(지수 98). 개띠는 3위로 5주 연속 도전을 시작했어요.",
+    date: "2026.09.14",
+    publishDate: "2026-09-14"
+  },
+  {
+    url: "daily-wealth-0913.html",
+    thumb: "🐍",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 4주 연속 1위 개띠, 5위로 숨 고르기! 오늘 진짜 1위는?",
+    excerpt: "오늘 재물운 1위는 🐍 뱀띠(지수 99). 4주 연속 1위였던 개띠는 5위로 내려왔어요.",
+    date: "2026.09.13",
+    publishDate: "2026-09-13"
+  },
+  {
+    url: "lotto-0912.html",
+    thumb: "🎱",
+    catId: "lotto",
+    catLabel: "띠별 로또번호 추천",
+    title: "[로또운세] 4주 연속 BEST 개띠 전설! 이번주 로또번호 대공개",
+    excerpt: "이번 주 재물운 합산 1위 개띠(4주 연속!)와 함께, 월~토 6일치 행운숫자로 만든 12띠 로또번호 조합이에요.",
+    date: "2026.09.12",
+    publishDate: "2026-09-12",
+    isLotto: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠",
+    luckyNumbers: [2, 10, 13, 18, 21, 29]
+  },
+  {
+    url: "daily-wealth-0912.html",
+    thumb: "🐎",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠 4주 연속 1위 대기록 완성! 오늘의 재물운 TOP3",
+    excerpt: "오늘 재물운 1위는 🐎 말띠(지수 95). 개띠는 4주 연속 종합 1위 완성.",
+    date: "2026.09.12",
+    publishDate: "2026-09-12"
+  },
+  {
+    url: "daily-wealth-0911.html",
+    thumb: "🐉",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠 엿새 연속 상위권! 내일 4주 연속 1위 확정 임박",
+    excerpt: "오늘 재물운 1위는 🐉 용띠(지수 99). 호랑이띠, 개띠도 상위권.",
+    date: "2026.09.11",
+    publishDate: "2026-09-11"
+  },
+  {
+    url: "daily-wealth-0910.html",
+    thumb: "🐒",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 원숭이띠 깜짝 1위! 개띠는 닷새 연속 상위권 유지",
+    excerpt: "오늘 재물운 1위는 🐒 원숭이띠(지수 99). 토끼띠, 개띠도 상위권.",
+    date: "2026.09.10",
+    publishDate: "2026-09-10"
+  },
+  {
+    url: "daily-wealth-0909.html",
+    thumb: "🐕",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠 나흘 연속 상위권! 4주 연속 1위 성큼",
+    excerpt: "오늘 재물운 1위는 🐕 개띠(지수 97). 닭띠, 말띠도 상위권.",
+    date: "2026.09.09",
+    publishDate: "2026-09-09"
+  },
+  {
+    url: "daily-wealth-0908.html",
+    thumb: "🐇",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 토끼띠 지수 100 만점! 개띠는 4주 연속 청신호",
+    excerpt: "오늘 재물운 1위는 🐇 토끼띠(지수 100). 개띠, 닭띠도 상위권.",
+    date: "2026.09.08",
+    publishDate: "2026-09-08"
+  },
+  {
+    url: "weekly-top3-0907.html",
+    thumb: "🐕",
+    catId: "weekly",
+    catLabel: "주간 운세",
+    title: "[주간운세] 개띠, 4주 연속 종합 1위 전무후무 대기록! 이번주 TOP3",
+    excerpt: "이번주 종합운 1위는 개띠(570점, 4주 연속 1위), 2위 토끼띠(536점), 3위 닭띠(513점)예요.",
+    date: "2026.09.07",
+    publishDate: "2026-09-07",
+    isWeekly: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠"
+  },
+  {
+    url: "daily-wealth-0907.html",
+    thumb: "🐍",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 뱀띠 깜짝 1위, 개띠는 4주 연속 도전 이어가기",
+    excerpt: "오늘 재물운 1위는 🐍 뱀띠(지수 99). 개띠, 용띠도 상위권.",
+    date: "2026.09.07",
+    publishDate: "2026-09-07"
+  },
+  {
+    url: "daily-wealth-0906.html",
+    thumb: "🐕",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠, 4주 연속 1위 도전 시작! 오늘의 재물운 TOP3",
+    excerpt: "오늘 재물운 1위는 🐕 개띠(지수 97). 말띠, 원숭이띠도 상위권.",
+    date: "2026.09.06",
+    publishDate: "2026-09-06"
+  },
+  {
+    url: "lotto-0905.html",
+    thumb: "🎱",
+    catId: "lotto",
+    catLabel: "띠별 로또번호 추천",
+    title: "[로또운세] 3주 연속 BEST 개띠! 이번주 로또번호 대공개",
+    excerpt: "이번 주 재물운 합산 1위 개띠(3주 연속!)와 함께, 월~토 6일치 행운숫자로 만든 12띠 로또번호 조합이에요.",
+    date: "2026.09.05",
+    publishDate: "2026-09-05",
+    isLotto: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠",
+    luckyNumbers: [5, 8, 13, 26, 34, 42]
+  },
+  {
+    url: "daily-wealth-0905.html",
+    thumb: "🐅",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 3주 연속 1위 개띠 신화 완성! 오늘의 재물운 TOP3",
+    excerpt: "오늘 재물운 1위는 🐅 호랑이띠·🐎 말띠(공동 지수 98). 개띠는 3주 연속 종합 1위 완성.",
+    date: "2026.09.05",
+    publishDate: "2026-09-05"
+  },
+  {
+    url: "daily-wealth-0904.html",
+    thumb: "🐕",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠 3주 연속 1위 확정! 오늘의 재물운 TOP3",
+    excerpt: "오늘 재물운 1위는 🐕 개띠(지수 97). 엿새 연속 상위권으로 3주 연속 1위 확정.",
+    date: "2026.09.04",
+    publishDate: "2026-09-04"
+  },
+  {
+    url: "daily-wealth-0903.html",
+    thumb: "🐕",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠 닷새 연속 상위권! 3주 연속 1위 초읽기",
+    excerpt: "오늘 재물운 1위는 🐕 개띠(지수 97). 원숭이띠, 토끼띠도 상위권.",
+    date: "2026.09.03",
+    publishDate: "2026-09-03"
+  },
+  {
+    url: "daily-wealth-0902.html",
+    thumb: "🐐",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 양띠·개띠 극적인 공동 1위! 오늘의 재물운 TOP3",
+    excerpt: "오늘 재물운 1위는 🐐 양띠·🐕 개띠(공동 지수 97). 토끼띠도 상위권.",
+    date: "2026.09.02",
+    publishDate: "2026-09-02"
+  },
+  {
+    url: "daily-wealth-0901.html",
+    thumb: "🐍",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 만점 행진 마감! 9월 첫날 진짜 1위는 뱀띠",
+    excerpt: "오늘 재물운 1위는 🐍 뱀띠(지수 98). 개띠는 만점 행진을 마감했지만 2위로 여전히 강세.",
+    date: "2026.09.01",
+    publishDate: "2026-09-01"
+  },
+  {
+    url: "weekly-top3-0831.html",
+    thumb: "🐕",
+    catId: "weekly",
+    catLabel: "주간 운세",
+    title: "[주간운세] 개띠, 3주 연속 종합 1위 신화 달성! 이번주 TOP3",
+    excerpt: "이번주 종합운 1위는 개띠(585점, 3주 연속 1위), 2위 토끼띠(507점), 3위 말띠(493점)예요.",
+    date: "2026.08.31",
+    publishDate: "2026-08-31",
+    isWeekly: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠"
+  },
+  {
+    url: "daily-wealth-0831.html",
+    thumb: "🐕",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠 이틀 연속 만점 신기록! 오늘의 재물운 TOP3",
+    excerpt: "오늘 재물운 1위는 🐕 개띠(지수 100). 이틀 연속 만점 달성.",
+    date: "2026.08.31",
+    publishDate: "2026-08-31"
+  },
+  {
+    url: "daily-wealth-0830.html",
+    thumb: "🐕",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠 지수 100 만점 등극! 오늘 재물운 TOP3는?",
+    excerpt: "오늘 재물운 1위는 🐕 개띠(지수 100). 닭띠, 쥐띠도 상위권.",
+    date: "2026.08.30",
+    publishDate: "2026-08-30"
+  },
+  {
+    url: "lotto-0829.html",
+    thumb: "🎱",
+    catId: "lotto",
+    catLabel: "띠별 로또번호 추천",
+    title: "이번주(8.24~8.29) 띠별 로또번호 추천 12선",
+    excerpt: "이번 주 재물운 합산 1위 개띠(2주 연속)와 함께, 월~토 6일치 행운숫자로 만든 12띠 로또번호 조합이에요.",
+    date: "2026.08.29",
+    publishDate: "2026-08-29",
+    isLotto: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠",
+    luckyNumbers: [15, 23, 31, 37, 39, 45]
+  },
+  {
+    url: "daily-wealth-0829.html",
+    thumb: "🐇",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 29일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐇 토끼띠(지수 100). 개띠, 쥐띠도 상위권.",
+    date: "2026.08.29",
+    publishDate: "2026-08-29"
+  },
+  {
+    url: "daily-wealth-0828.html",
+    thumb: "🐂",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 28일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐂 소띠(지수 97). 개띠, 쥐띠도 상위권.",
+    date: "2026.08.28",
+    publishDate: "2026-08-28"
+  },
+  {
+    url: "daily-wealth-0827.html",
+    thumb: "🐕",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 27일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐕 개띠(지수 96). 쥐띠, 양띠도 상위권.",
+    date: "2026.08.27",
+    publishDate: "2026-08-27"
+  },
+  {
+    url: "daily-wealth-0826.html",
+    thumb: "🐅",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 26일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐅 호랑이띠(지수 99). 개띠, 쥐띠도 상위권.",
+    date: "2026.08.26",
+    publishDate: "2026-08-26"
+  },
+  {
+    url: "daily-wealth-0825.html",
+    thumb: "🐐",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 25일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐐 양띠(지수 99). 말띠, 개띠도 상위권.",
+    date: "2026.08.25",
+    publishDate: "2026-08-25"
+  },
+  {
+    url: "weekly-top3-0824.html",
+    thumb: "🐕",
+    catId: "weekly",
+    catLabel: "주간 운세",
+    title: "이번주(8.24~8.29) 띠별 운세 TOP3 & 전체 순위",
+    excerpt: "이번주 종합운 1위는 개띠(576점, 2주 연속 1위), 2위 쥐띠(570점), 3위 양띠(529점)예요.",
+    date: "2026.08.24",
+    publishDate: "2026-08-24",
+    isWeekly: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠"
+  },
+  {
+    url: "daily-wealth-0824.html",
+    thumb: "🐕",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 24일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐕 개띠(지수 96). 쥐띠, 양띠도 상위권.",
+    date: "2026.08.24",
+    publishDate: "2026-08-24"
+  },
+  {
+    url: "daily-wealth-0823.html",
+    thumb: "🐓",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 23일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐓 닭띠·🐕 개띠(공동 지수 96). 쥐띠도 상위권.",
+    date: "2026.08.23",
+    publishDate: "2026-08-23"
+  },
+  {
+    url: "lotto-0822.html",
+    thumb: "🎱",
+    catId: "lotto",
+    catLabel: "띠별 로또번호 추천",
+    title: "이번주(8.17~8.22) 띠별 로또번호 추천 12선",
+    excerpt: "이번 주 재물운 합산 1위 개띠와 함께, 월~토 6일치 행운숫자로 만든 12띠 로또번호 조합이에요.",
+    date: "2026.08.22",
+    publishDate: "2026-08-22",
+    isLotto: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠",
+    luckyNumbers: [5, 10, 13, 18, 21, 26]
+  },
+  {
+    url: "daily-wealth-0822.html",
+    thumb: "🐓",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 22일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐓 닭띠(지수 98). 개띠, 쥐띠도 상위권.",
+    date: "2026.08.22",
+    publishDate: "2026-08-22"
+  },
+  {
+    url: "daily-wealth-0821.html",
+    thumb: "🐕",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 21일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐕 개띠(지수 96). 쥐띠, 닭띠도 상위권.",
+    date: "2026.08.21",
+    publishDate: "2026-08-21"
+  },
+  {
+    url: "daily-wealth-0820.html",
+    thumb: "🐅",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 20일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐅 호랑이띠·🐎 말띠(공동 지수 98). 개띠, 쥐띠도 상위권.",
+    date: "2026.08.20",
+    publishDate: "2026-08-20"
+  },
+  {
+    url: "daily-wealth-0819.html",
+    thumb: "🐍",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 19일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐍 뱀띠(지수 87). 닭띠, 양띠도 상위권.",
+    date: "2026.08.19",
+    publishDate: "2026-08-19"
+  },
+  {
+    url: "daily-wealth-0818.html",
+    thumb: "🐂",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 18일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐂 소띠(지수 97). 개띠, 호랑이띠도 상위권.",
+    date: "2026.08.18",
+    publishDate: "2026-08-18"
+  },
+  {
+    url: "weekly-top3-0817.html",
+    thumb: "🐕",
+    catId: "weekly",
+    catLabel: "주간 운세",
+    title: "이번주(8.17~8.22) 띠별 운세 TOP3 & 전체 순위",
+    excerpt: "이번주 종합운 1위는 개띠(537점), 2위 닭띠(520점), 3위 쥐띠(508점)예요.",
+    date: "2026.08.17",
+    publishDate: "2026-08-17",
+    isWeekly: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠"
+  },
+  {
+    url: "daily-wealth-0817.html",
+    thumb: "🐀",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 17일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐀 쥐띠(지수 99). 개띠, 뱀띠도 상위권.",
+    date: "2026.08.17",
+    publishDate: "2026-08-17"
+  },
+  {
+    url: "daily-wealth-0816.html",
+    thumb: "🐀",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 16일, 재물운 좋은 띠 TOP3 & 12띠 전체 순위",
+    excerpt: "오늘 재물운 1위는 🐀 쥐띠(지수 99). 토끼띠, 뱀띠도 상위권.",
+    date: "2026.08.16",
+    publishDate: "2026-08-16"
+  },
+  {
+    url: "lotto-0815.html",
+    thumb: "🎱",
+    catId: "lotto",
+    catLabel: "띠별 로또번호 추천",
+    title: "이번주(8.10~8.15) 띠별 로또번호 추천 12선",
+    excerpt: "이번 주 재물운 합산 1위 쥐띠와 함께, 월~토 6일치 행운숫자로 만든 12띠 로또번호 조합이에요.",
+    date: "2026.08.15",
+    publishDate: "2026-08-15",
+    isLotto: true,
+    bestZodiacEmoji: "🐀",
+    bestZodiacLabel: "쥐띠",
+    luckyNumbers: [6, 7, 14, 22, 35, 43]
+  },
+  {
+    url: "daily-wealth-0815.html",
+    thumb: "🐀",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 15일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐀 쥐띠(지수 99). 닭띠, 소띠·개띠도 상위권.",
+    date: "2026.08.15",
+    publishDate: "2026-08-15"
+  },
+  {
+    url: "daily-wealth-0814.html",
+    thumb: "🐅",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 14일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐅 호랑이띠(지수 100). 쥐띠, 닭띠도 상위권.",
+    date: "2026.08.14",
+    publishDate: "2026-08-14"
+  },
+  {
+    url: "daily-wealth-0813.html",
+    thumb: "🐇",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 13일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐇 토끼띠(지수 100). 쥐띠, 양띠도 상위권.",
+    date: "2026.08.13",
+    publishDate: "2026-08-13"
+  },
+  {
+    url: "daily-wealth-0812.html",
+    thumb: "🐀",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 12일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐀 쥐띠(지수 99). 양띠, 개띠도 상위권.",
+    date: "2026.08.12",
+    publishDate: "2026-08-12"
+  },
+  {
+    url: "weekly-top3-0810.html",
+    thumb: "🐀",
+    catId: "weekly",
+    catLabel: "주간 운세",
+    title: "이번주(8.10~8.15) 띠별 운세 TOP3",
+    excerpt: "이번주 종합운 1위는 쥐띠(압도적 1위), 2위 개띠, 3위 닭띠예요.",
+    date: "2026.08.10",
+    publishDate: "2026-08-10",
+    isWeekly: true,
+    bestZodiacEmoji: "🐀",
+    bestZodiacLabel: "쥐띠"
+  },
+  {
+    url: "daily-wealth-0811.html",
+    thumb: "🐀",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 11일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐀 쥐띠(지수 99). 개띠, 소띠도 상위권.",
+    date: "2026.08.11",
+    publishDate: "2026-08-11"
+  },
+  {
+    url: "daily-wealth-0810.html",
+    thumb: "🐀",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 10일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐀 쥐띠(지수 99). 개띠, 소띠도 상위권.",
+    date: "2026.08.10",
+    publishDate: "2026-08-10"
+  },
+  {
+    url: "daily-wealth-0809.html",
+    thumb: "🐀",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 9일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐀 쥐띠(지수 99). 뱀띠, 호랑이띠도 상위권.",
+    date: "2026.08.09",
+    publishDate: "2026-08-09"
+  },
+  {
+    url: "lotto-0808.html",
+    thumb: "🎱",
+    catId: "lotto",
+    catLabel: "띠별 로또번호 추천",
+    title: "이번주(8.3~8.8) 띠별 로또번호 추천 12선",
+    excerpt: "이번 주 재물운 합산 1위 개띠와 함께, 월~토 6일치 행운숫자로 만든 12띠 로또번호 조합이에요.",
+    date: "2026.08.08",
+    publishDate: "2026-08-08",
+    isLotto: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠",
+    luckyNumbers: [2, 10, 18, 26, 34, 39]
+  },
+  {
+    url: "daily-wealth-0808.html",
+    thumb: "🐀",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 8일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐀 쥐띠(지수 99). 소띠, 호랑이띠도 상위권.",
+    date: "2026.08.08",
+    publishDate: "2026-08-08"
+  },
+  {
+    url: "daily-wealth-0807.html",
+    thumb: "🐀",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 7일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐀 쥐띠(지수 99). 돼지띠, 뱀띠도 상위권.",
+    date: "2026.08.07",
+    publishDate: "2026-08-07"
+  },
+  {
+    url: "daily-wealth-0806.html",
+    thumb: "🐀",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 6일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐀 쥐띠(지수 99). 말띠, 개띠도 상위권.",
+    date: "2026.08.06",
+    publishDate: "2026-08-06"
+  },
+  {
+    url: "daily-wealth-0805.html",
+    thumb: "🐂",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 5일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐂 소띠(지수 92). 개띠, 호랑이띠도 상위권.",
+    date: "2026.08.05",
+    publishDate: "2026-08-05"
+  },
+  {
+    url: "weekly-top3-0803.html",
+    thumb: "🐕",
+    catId: "weekly",
+    catLabel: "주간 운세",
+    title: "이번주(8.3~8.8) 띠별 운세 TOP3",
+    excerpt: "이번주 종합운 1위는 개띠, 2위 뱀띠, 3위 쥐띠예요.",
+    date: "2026.08.03",
+    publishDate: "2026-08-03",
+    isWeekly: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠"
+  },
+  {
+    url: "daily-wealth-0804.html",
+    thumb: "🐍",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 4일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐍 뱀띠(지수 96). 개띠, 말띠도 상위권.",
+    date: "2026.08.04",
+    publishDate: "2026-08-04"
+  },
+  {
+    url: "daily-wealth-0803.html",
+    thumb: "🐂",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 3일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐂 소띠(지수 90). 말띠, 개띠도 상위권.",
+    date: "2026.08.03",
+    publishDate: "2026-08-03"
+  },
+  {
+    url: "zodiac-ox-personality.html",
+    thumb: "🐂",
+    catId: "zodiac",
+    catLabel: "띠별 성격 완벽정리",
+    title: "🐂 소띠 성격 완벽정리, 연애·직장·궁합까지 총정리",
+    excerpt: "묵묵하고 성실한 소띠, 연애 스타일부터 궁합까지 깊이 있게 풀어봤어요.",
+    date: "2026.07.27",
+    publishDate: "2026-07-27"
+  },
+  {
+    url: "zodiac-tiger-personality.html",
+    thumb: "🐅",
+    catId: "zodiac",
+    catLabel: "띠별 성격 완벽정리",
+    title: "🐅 호랑이띠 성격 완벽정리, 연애·직장·궁합까지 총정리",
+    excerpt: "강한 추진력의 호랑이띠, 연애 스타일부터 궁합까지 깊이 있게 풀어봤어요.",
+    date: "2026.07.28",
+    publishDate: "2026-07-28"
+  },
+  {
+    url: "zodiac-rabbit-personality.html",
+    thumb: "🐇",
+    catId: "zodiac",
+    catLabel: "띠별 성격 완벽정리",
+    title: "🐇 토끼띠 성격 완벽정리, 연애·직장·궁합까지 총정리",
+    excerpt: "온화하고 배려심 깊은 토끼띠, 연애 스타일부터 궁합까지 깊이 있게 풀어봤어요.",
+    date: "2026.07.29",
+    publishDate: "2026-07-29"
+  },
+  {
+    url: "zodiac-dragon-personality.html",
+    thumb: "🐉",
+    catId: "zodiac",
+    catLabel: "띠별 성격 완벽정리",
+    title: "🐉 용띠 성격 완벽정리, 연애·직장·궁합까지 총정리",
+    excerpt: "카리스마 넘치는 용띠, 연애 스타일부터 궁합까지 깊이 있게 풀어봤어요.",
+    date: "2026.07.30",
+    publishDate: "2026-07-30"
+  },
+  {
+    url: "zodiac-snake-personality.html",
+    thumb: "🐍",
+    catId: "zodiac",
+    catLabel: "띠별 성격 완벽정리",
+    title: "🐍 뱀띠 성격 완벽정리, 연애·직장·궁합까지 총정리",
+    excerpt: "신중하고 매력적인 뱀띠, 연애 스타일부터 궁합까지 깊이 있게 풀어봤어요.",
+    date: "2026.07.31",
+    publishDate: "2026-07-31"
+  },
+  {
+    url: "zodiac-horse-personality.html",
+    thumb: "🐎",
+    catId: "zodiac",
+    catLabel: "띠별 성격 완벽정리",
+    title: "🐎 말띠 성격 완벽정리, 연애·직장·궁합까지 총정리",
+    excerpt: "자유롭고 열정적인 말띠, 연애 스타일부터 궁합까지 깊이 있게 풀어봤어요.",
+    date: "2026.08.01",
+    publishDate: "2026-08-01"
+  },
+  {
+    url: "zodiac-goat-personality.html",
+    thumb: "🐐",
+    catId: "zodiac",
+    catLabel: "띠별 성격 완벽정리",
+    title: "🐐 양띠 성격 완벽정리, 연애·직장·궁합까지 총정리",
+    excerpt: "따뜻하고 섬세한 양띠, 연애 스타일부터 궁합까지 깊이 있게 풀어봤어요.",
+    date: "2026.08.02",
+    publishDate: "2026-08-02"
+  },
+  {
+    url: "zodiac-monkey-personality.html",
+    thumb: "🐒",
+    catId: "zodiac",
+    catLabel: "띠별 성격 완벽정리",
+    title: "🐒 원숭이띠 성격 완벽정리, 연애·직장·궁합까지 총정리",
+    excerpt: "재치 넘치는 원숭이띠, 연애 스타일부터 궁합까지 깊이 있게 풀어봤어요.",
+    date: "2026.08.03",
+    publishDate: "2026-08-03"
+  },
+  {
+    url: "zodiac-rooster-personality.html",
+    thumb: "🐓",
+    catId: "zodiac",
+    catLabel: "띠별 성격 완벽정리",
+    title: "🐓 닭띠 성격 완벽정리, 연애·직장·궁합까지 총정리",
+    excerpt: "꼼꼼하고 계획적인 닭띠, 연애 스타일부터 궁합까지 깊이 있게 풀어봤어요.",
+    date: "2026.08.04",
+    publishDate: "2026-08-04"
+  },
+  {
+    url: "zodiac-dog-personality.html",
+    thumb: "🐕",
+    catId: "zodiac",
+    catLabel: "띠별 성격 완벽정리",
+    title: "🐕 개띠 성격 완벽정리, 연애·직장·궁합까지 총정리",
+    excerpt: "의리 있고 정직한 개띠, 연애 스타일부터 궁합까지 깊이 있게 풀어봤어요.",
+    date: "2026.08.05",
+    publishDate: "2026-08-05"
+  },
+  {
+    url: "zodiac-pig-personality.html",
+    thumb: "🐖",
+    catId: "zodiac",
+    catLabel: "띠별 성격 완벽정리",
+    title: "🐖 돼지띠 성격 완벽정리, 연애·직장·궁합까지 총정리",
+    excerpt: "너그럽고 낙천적인 돼지띠, 연애 스타일부터 궁합까지 깊이 있게 풀어봤어요.",
+    date: "2026.08.06",
+    publishDate: "2026-08-06"
+  },
+  {
+    url: "saju-basic-02.html",
+    thumb: "☀️",
+    catId: "saju-basic",
+    catLabel: "사주 입문 2편",
+    title: "천간(天干) 완벽정리, 10개 글자가 상징하는 것",
+    excerpt: "사주의 재료가 되는 천간 10개(갑을병정무기경신임계)의 뜻과 오행, 음양을 초보자 눈높이로 정리했습니다.",
+    date: "2026.07.27",
+    publishDate: "2026-07-27"
+  },
+  {
+    url: "saju-basic-03.html",
+    thumb: "🌍",
+    catId: "saju-basic",
+    catLabel: "사주 입문 3편",
+    title: "지지(地支) 완벽정리, 12개 글자와 띠의 비밀",
+    excerpt: "사주의 나머지 절반, 지지 12개(자축인묘진사오미신유술해)의 뜻과 띠, 오행을 정리했습니다.",
+    date: "2026.07.28",
+    publishDate: "2026-07-28"
+  },
+  {
+    url: "saju-basic-04.html",
+    thumb: "☯️",
+    catId: "saju-basic",
+    catLabel: "사주 입문 4편",
+    title: "음양오행 상생상극, 사주 해석의 핵심 원리",
+    excerpt: "목화토금수 오행이 서로 돕고(상생) 부딪히는(상극) 원리를 사주 초보자 눈높이로 설명합니다.",
+    date: "2026.07.29",
+    publishDate: "2026-07-29"
+  },
+  {
+    url: "saju-basic-05.html",
+    thumb: "🧮",
+    catId: "saju-basic",
+    catLabel: "사주 입문 5편",
+    title: "내 사주팔자 세우는 법, 연주·월주·일주·시주 계산 흐름",
+    excerpt: "생년월일시로 연주 월주 일주 시주를 세우는 전체 흐름을 절기 기준까지 포함해 설명합니다.",
+    date: "2026.07.30",
+    publishDate: "2026-07-30"
+  },
+  {
+    url: "saju-basic-06.html",
+    thumb: "⭐",
+    catId: "saju-basic",
+    catLabel: "사주 입문 6편",
+    title: "십성(十星)이란 무엇인가, 나와 다른 글자의 관계 10가지",
+    excerpt: "일간을 기준으로 나머지 글자와의 관계를 나타내는 십성 10가지의 의미를 정리했습니다.",
+    date: "2026.07.31",
+    publishDate: "2026-07-31"
+  },
+  {
+    url: "saju-basic-07.html",
+    thumb: "⚖️",
+    catId: "saju-basic",
+    catLabel: "사주 입문 7편",
+    title: "신강/신약이란 무엇인가, 나의 기운은 강할까 약할까",
+    excerpt: "사주 8글자 안에서 일간의 힘이 강한지 약한지를 판단하는 신강 신약의 기본 개념을 설명합니다.",
+    date: "2026.08.01",
+    publishDate: "2026-08-01"
+  },
+  {
+    url: "saju-basic-08.html",
+    thumb: "🌊",
+    catId: "saju-basic",
+    catLabel: "사주 입문 8편",
+    title: "대운(大運)이란 무엇인가, 10년마다 바뀌는 인생의 흐름",
+    excerpt: "10년 단위로 바뀌는 대운의 개념과 순행 역행, 대운수 계산 방식을 정리했습니다.",
+    date: "2026.08.02",
+    publishDate: "2026-08-02"
+  },
+  {
+    url: "saju-basic-09.html",
+    thumb: "📈",
+    catId: "saju-basic",
+    catLabel: "사주 입문 9편",
+    title: "오행 균형으로 보는 나의 성향과 투자 스타일",
+    excerpt: "사주 8글자 속 오행 분포로 성향과 투자 스타일, 관심 섹터를 진단하는 방법을 정리했습니다.",
+    date: "2026.08.03",
+    publishDate: "2026-08-03"
+  },
+  {
+    url: "saju-basic-10.html",
+    thumb: "💰",
+    catId: "saju-basic",
+    catLabel: "사주 입문 10편",
+    title: "사주로 보는 재물운의 원리, 재성이 다가 아니다",
+    excerpt: "사주에서 재물운을 볼 때 재성만이 아니라 식상, 관성까지 함께 봐야 하는 이유를 설명합니다.",
+    date: "2026.08.04",
+    publishDate: "2026-08-04"
+  },
+  {
+    url: "saju-basic-11.html",
+    thumb: "📖",
+    catId: "saju-basic",
+    catLabel: "사주 입문 11편",
+    title: "사주 용어 헷갈리는 것들 총정리, 간여지동부터 공망까지",
+    excerpt: "사주 공부하며 자주 헷갈리는 용어인 간여지동, 공망 등을 알기 쉽게 정리했습니다.",
+    date: "2026.08.05",
+    publishDate: "2026-08-05"
+  },
+  {
+    url: "saju-basic-12.html",
+    thumb: "🎓",
+    catId: "saju-basic",
+    catLabel: "사주 입문 12편",
+    title: "사주 공부 총정리 및 용어사전, 12주 완주 축하드려요",
+    excerpt: "사주 입문 시리즈 12편 전체를 한눈에 정리하는 용어사전과 완주 축하 콘텐츠입니다.",
+    date: "2026.08.06",
+    publishDate: "2026-08-06"
+  },
+  {
+    url: "daily-wealth-0726.html",
+    thumb: "🐖",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 7월 26일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐖 돼지띠(지수 96). 토끼띠, 원숭이띠도 상위권.",
+    date: "2026.07.26",
+    publishDate: "2026-07-26"
+  },
+  {
+    url: "daily-wealth-0727.html",
+    thumb: "🐂",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 7월 27일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐂 소띠(지수 97). 호랑이띠, 용띠도 상위권.",
+    date: "2026.07.27",
+    publishDate: "2026-07-27"
+  },
+  {
+    url: "daily-wealth-0728.html",
+    thumb: "🐅",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 7월 28일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐅 호랑이띠(지수 100). 말띠, 용띠도 상위권.",
+    date: "2026.07.28",
+    publishDate: "2026-07-28"
+  },
+  {
+    url: "daily-wealth-0729.html",
+    thumb: "🐍",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 7월 29일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐍 뱀띠(지수 98). 토끼띠, 소띠도 상위권.",
+    date: "2026.07.29",
+    publishDate: "2026-07-29"
+  },
+  {
+    url: "daily-wealth-0730.html",
+    thumb: "🐀",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 7월 30일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐀 쥐띠(지수 94). 돼지띠, 닭띠도 상위권.",
+    date: "2026.07.30",
+    publishDate: "2026-07-30"
+  },
+  {
+    url: "daily-wealth-0731.html",
+    thumb: "🐇",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 7월 31일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐇 토끼띠(지수 100). 원숭이띠, 소띠도 상위권.",
+    date: "2026.07.31",
+    publishDate: "2026-07-31"
+  },
+  {
+    url: "daily-wealth-0801.html",
+    thumb: "🐓",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 1일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐓 닭띠(지수 97). 말띠, 소띠도 상위권.",
+    date: "2026.08.01",
+    publishDate: "2026-08-01"
+  },
+  {
+    url: "daily-wealth-0802.html",
+    thumb: "🐐",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 8월 2일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 재물운 1위는 🐐 양띠(지수 97). 말띠, 개띠도 상위권.",
+    date: "2026.08.02",
+    publishDate: "2026-08-02"
+  },
+  {
+    url: "weekly-top3-0727.html",
+    thumb: "🐓",
+    catId: "weekly",
+    catLabel: "주간 운세",
+    title: "이번주(7.27~8.2) 띠별 운세 TOP3",
+    excerpt: "이번주 종합운 1위는 닭띠, 2위 말띠, 공동 3위 소띠·개띠예요.",
+    date: "2026.07.27",
+    publishDate: "2026-07-27",
+    isWeekly: true,
+    bestZodiacEmoji: "🐓",
+    bestZodiacLabel: "닭띠"
+  },
+  {
+    url: "lotto-0801.html",
+    thumb: "🎱",
+    catId: "lotto",
+    catLabel: "띠별 로또번호 추천",
+    title: "이번주(7.27~8.1) 띠별 로또번호 추천 12선",
+    excerpt: "이번 주 재물운 합산 1위 닭띠와 함께, 월~토 6일치 행운숫자로 만든 12띠 로또번호 조합이에요.",
+    date: "2026.08.01",
+    publishDate: "2026-07-27",
+    isLotto: true,
+    bestZodiacEmoji: "🐓",
+    bestZodiacLabel: "닭띠",
+    luckyNumbers: [5, 6, 8, 31, 35, 43]
+  },
+  {
+    url: "daily-wealth-0725.html",
+    thumb: "🐂",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 7월 25일 토요일, 재물운 좋은 띠 TOP3",
+    excerpt: "오늘 12띠 중 재물운이 가장 좋은 세 띠와 주의할 띠를 정리했어요.",
+    date: "2026.07.25",
+    publishDate: "2026-07-25"
+  },
+  {
+    url: "lotto-0720.html",
+    thumb: "🎱",
+    catId: "lotto",
+    catLabel: "띠별 로또번호 추천",
+    title: "이번주(7.20~7.25) 띠별 로또번호 추천 12선",
+    excerpt: "월~토 6일치 행운숫자를 모아 만든 12띠 로또번호 조합이에요.",
+    date: "2026.07.25",
+    publishDate: "2026-07-25",
+    isLotto: true,
+    bestZodiacEmoji: "🐍",
+    bestZodiacLabel: "뱀띠",
+    luckyNumbers: [9, 10, 21, 29, 40, 43]
+  },
+  {
+    url: "saju-what-is-it.html",
+    thumb: "🀄",
+    catId: "saju-basic",
+    catLabel: "사주 입문 1편",
+    title: "사주팔자란 무엇인가, 초보자를 위한 기초 가이드",
+    excerpt: "사주가 대체 뭘 보는 건지, 여덟 글자가 왜 나오는지부터 차근차근 설명해드려요.",
+    date: "2026.07.24",
+    publishDate: "2026-07-24"
+  },
+  {
+    url: "zodiac-rat-personality.html",
+    thumb: "🐀",
+    catId: "zodiac",
+    catLabel: "띠별 성격 완벽정리",
+    title: "쥐띠 성격 완벽정리, 연애·직장·궁합까지 총정리",
+    excerpt: "영리하고 순발력 있는 쥐띠, 연애 스타일부터 궁합까지 깊이 있게 풀어봤어요.",
+    date: "2026.07.24",
+    publishDate: "2026-07-24"
+  },
+  {
+    url: "weekly-top3-0720.html",
+    thumb: "🐍",
+    catId: "weekly",
+    catLabel: "주간 운세",
+    title: "이번주(7.20~7.25) 띠별 운세 TOP3",
+    excerpt: "이번 주 종합 운세 지수 TOP3와 주의할 띠 체크포인트를 정리했어요.",
+    date: "2026.07.20",
+    publishDate: "2026-07-20",
+    isWeekly: true,
+    bestZodiacEmoji: "🐍",
+    bestZodiacLabel: "뱀띠·말띠 공동1위"
+  }
+];
+
+/*
+  아래 함수들은 blog/index.html, blog/category-*.html에서 공통으로 사용해요.
+  건드릴 필요 없어요 — 새 글 추가할 때는 위 배열만 수정하면 됩니다.
+*/
+
+// 오늘 날짜를 "YYYY-MM-DD" 문자열로 반환 (방문자 기기 시간 기준)
+function getTodayDateString() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, "0");
+  const d = String(now.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+// 공개일이 지난(오늘 포함) 글만 반환 + 최신순 정렬
+function getPublishedPosts(catId) {
+  const today = getTodayDateString();
+  let posts = BLOG_POSTS.filter(p => p.publishDate <= today);
+  if (catId) {
+    posts = posts.filter(p => p.catId === catId);
+  }
+  posts.sort((a, b) => b.publishDate.localeCompare(a.publishDate));
+  return posts;
+}
+
+// 로또볼 색상 구간 (기존 lotto.html과 동일한 규칙)
+function lottoBallClass(n) {
+  if (n <= 10) return "";
+  if (n <= 20) return "n3";
+  if (n <= 30) return "n4";
+  if (n <= 40) return "n5";
+  return "n2";
+}
+
+// 카드 HTML 문자열 생성 (featured=true면 큰 카드 클래스 적용)
+function renderPostCard(p, featured) {
+  let thumbInner;
+  let thumbExtraClass = "";
+
+  if (p.isLotto) {
+    const ballsHtml = p.luckyNumbers
+      .map(n => `<span class="lotto-ball ${lottoBallClass(n)}">${n}</span>`)
+      .join("");
+    thumbExtraClass = " thumb-lotto";
+    thumbInner = `
+      <div class="thumb-date-badge">${p.date}</div>
+      <div class="thumb-lotto-zodiac">
+        <span class="thumb-lotto-emoji">${p.bestZodiacEmoji}</span>
+        <span>${p.bestZodiacLabel}</span>
+        <span class="thumb-lotto-tag">이주의 BEST</span>
+      </div>
+      <div class="thumb-lotto-balls">${ballsHtml}</div>`;
+  } else if (p.isWeekly) {
+    thumbExtraClass = " thumb-weekly";
+    thumbInner = `
+      <div class="thumb-date-badge">${p.date}</div>
+      <div class="thumb-weekly-tag">📊 이번주 종합 1위</div>
+      <div class="thumb-lotto-zodiac">
+        <span class="thumb-lotto-emoji">${p.bestZodiacEmoji}</span>
+        <span>${p.bestZodiacLabel}</span>
+      </div>`;
+  } else if (p.catId === "zodiac") {
+    thumbExtraClass = " thumb-personality";
+    thumbInner = `
+      <div class="thumb-date-badge">${p.date}</div>
+      <div class="thumb-icon">${p.thumb}</div>
+      <div class="thumb-personality-tag">✨ 띠별 성격</div>`;
+  } else {
+    thumbInner = `
+      <div class="thumb-date-badge">${p.date}</div>
+      <div class="thumb-icon">${p.thumb}</div>`;
+  }
+
+  const cardClass = featured ? "blog-featured-card" : "blog-card";
+
+  return `
+    <a href="${p.url}" class="${cardClass}" data-cat="${p.catId}">
+      <div class="blog-card-thumb${thumbExtraClass}">${thumbInner}
+      </div>
+      <div class="blog-card-body">
+        <div class="blog-card-category">${p.catLabel}</div>
+        <div class="blog-card-title">${p.title}</div>
+        <div class="blog-card-excerpt">${p.excerpt}</div>
+        <div class="blog-card-meta">${p.date}</div>
+      </div>
+    </a>`;
+}
+
+// blog-list 엘리먼트에 카드들을 렌더링
+function renderBlogList(elementId, catId) {
+  const posts = getPublishedPosts(catId);
+  const container = document.getElementById(elementId);
+  if (!container) return;
+  if (posts.length === 0) {
+    container.innerHTML = `<p style="opacity:0.7; padding: 24px 0;">아직 등록된 글이 없어요. 곧 새로운 콘텐츠로 찾아올게요!</p>`;
+    return;
+  }
+  container.innerHTML = posts.map(p => renderPostCard(p, false)).join("\n");
+}
+
+// 블로그 메인(전체) 페이지 전용: 오늘의 띠별 운세 최신글을 상단에 크게 보여주고,
+// 나머지 글은 그 아래 일반 목록으로 렌더링
+function renderBlogListWithFeatured(featuredElementId, listElementId) {
+  const allPosts = getPublishedPosts();
+  const featuredEl = document.getElementById(featuredElementId);
+  const listEl = document.getElementById(listElementId);
+  if (allPosts.length === 0) {
+    if (listEl) listEl.innerHTML = `<p style="opacity:0.7; padding: 24px 0;">아직 등록된 글이 없어요. 곧 새로운 콘텐츠로 찾아올게요!</p>`;
+    return;
+  }
+
+  // "오늘의 띠별 운세" 카테고리의 가장 최신 글을 우선 노출, 없으면 전체 최신글로 대체
+  const dailyPosts = allPosts.filter(p => p.catId === "daily");
+  const featured = dailyPosts.length > 0 ? dailyPosts[0] : allPosts[0];
+  const rest = allPosts.filter(p => p.url !== featured.url);
+
+  if (featuredEl) {
+    featuredEl.innerHTML = `
+      <div class="blog-featured-label">🔥 오늘의 띠별 운세</div>
+      ${renderPostCard(featured, true)}`;
+  }
+  if (listEl) {
+    listEl.innerHTML = rest.map(p => renderPostCard(p, false)).join("\n");
+  }
+}
