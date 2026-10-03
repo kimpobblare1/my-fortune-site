@@ -23,6 +23,103 @@
 
 const BLOG_POSTS = [
   {
+    url: "lotto-1010.html",
+    thumb: "🎱",
+    catId: "lotto",
+    catLabel: "띠별 로또번호 추천",
+    title: "[로또운세] 4주 연속 새 챔피언! 이번주는 용띠 역전 BEST",
+    excerpt: "4주 연속 새로운 챔피언이 등장하는 흐름 속에 이번 주는 용띠(512점)가 극적인 역전으로 BEST에 올랐어요. 월~토 6일치 행운숫자로 만든 12띠 로또번호 조합이에요.",
+    date: "2026.10.10",
+    publishDate: "2026-10-10",
+    isLotto: true,
+    bestZodiacEmoji: "🐉",
+    bestZodiacLabel: "용띠",
+    luckyNumbers: [1, 10, 13, 16, 19, 25]
+  },
+  {
+    url: "daily-wealth-1010.html",
+    thumb: "🐀",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 4주 연속 새 챔피언 용띠 확정! 오늘의 재물운 TOP3",
+    excerpt: "오늘 재물운 1위는 🐀 쥐띠(지수 96). 이번 주 최종 종합 1위는 용띠(512점)로 확인됐어요.",
+    date: "2026.10.10",
+    publishDate: "2026-10-10"
+  },
+  {
+    url: "daily-wealth-1009.html",
+    thumb: "🐅",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 용띠 사흘 연속 상위권! 내일 종합 1위 유력",
+    excerpt: "오늘 재물운 1위는 🐅 호랑이띠(지수 95). 용띠는 사흘 연속 상위권으로 내일 종합 1위가 유력해졌어요.",
+    date: "2026.10.09",
+    publishDate: "2026-10-09"
+  },
+  {
+    url: "daily-wealth-1008.html",
+    thumb: "🐒",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 원숭이띠 이번 주 최고점! 용띠는 이틀 연속 상위권",
+    excerpt: "오늘 재물운 1위는 🐒 원숭이띠(지수 94). 용띠는 이틀 연속 상위권으로 종합 1위 경쟁에 합류했어요.",
+    date: "2026.10.08",
+    publishDate: "2026-10-08"
+  },
+  {
+    url: "daily-wealth-1007.html",
+    thumb: "🐐",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 양띠·닭띠 이번 주 최고점! 뱀띠는 오늘 숨 고르기",
+    excerpt: "오늘 재물운 1위는 🐐 양띠(지수 99). 초반 강세였던 뱀띠는 오늘 8위로 다소 완만한 흐름을 보였어요.",
+    date: "2026.10.07",
+    publishDate: "2026-10-07"
+  },
+  {
+    url: "daily-wealth-1006.html",
+    thumb: "🐓",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 닭띠 이번 주 최고점! 뱀띠는 이틀 연속 상위권",
+    excerpt: "오늘 재물운 1위는 🐓 닭띠(지수 94). 뱀띠는 이틀 연속 상위권으로 다크호스로 떠올랐어요.",
+    date: "2026.10.06",
+    publishDate: "2026-10-06"
+  },
+  {
+    url: "weekly-top3-1005.html",
+    thumb: "🐉",
+    catId: "weekly",
+    catLabel: "주간 운세",
+    title: "[주간운세] 4주 연속 새 챔피언! 이번주는 용띠 역전 등극",
+    excerpt: "이번주 종합운 1위는 용띠(512점, 4주 연속 새 챔피언), 2위 뱀띠(509점), 3위 원숭이띠(501점)예요.",
+    date: "2026.10.05",
+    publishDate: "2026-10-05",
+    isWeekly: true,
+    bestZodiacEmoji: "🐉",
+    bestZodiacLabel: "용띠"
+  },
+  {
+    url: "daily-wealth-1005.html",
+    thumb: "🐍",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 뱀띠 새로운 한 주 스타트! 오늘의 재물운 TOP3",
+    excerpt: "오늘 재물운 1위는 🐍 뱀띠(지수 95). 지난주 챔피언 원숭이띠는 오늘 12위로 내려왔어요.",
+    date: "2026.10.05",
+    publishDate: "2026-10-05"
+  },
+  {
+    url: "daily-wealth-1004.html",
+    thumb: "🐇",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 토끼띠 1위 등극! 새로운 한 주 앞둔 오늘의 재물운 TOP3",
+    excerpt: "오늘 재물운 1위는 🐇 토끼띠(지수 91). 3주 연속 새로운 챔피언이 등장하는 흐름이 이어지고 있어요.",
+    date: "2026.10.04",
+    publishDate: "2026-10-04"
+  },
+  {
     url: "lotto-1003.html",
     thumb: "🎱",
     catId: "lotto",
