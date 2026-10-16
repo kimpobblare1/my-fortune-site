@@ -23,6 +23,103 @@
 
 const BLOG_POSTS = [
   {
+    url: "lotto-1031.html",
+    thumb: "🎱",
+    catId: "lotto",
+    catLabel: "띠별 로또번호 추천",
+    title: "[로또운세] 용띠 막판 대역전 BEST! 이번주 로또번호 대공개",
+    excerpt: "마지막 날 99점으로 대역전한 용띠(544점)가 BEST에 올랐어요. 월~토 6일치 행운숫자로 만든 12띠 로또번호 조합이에요.",
+    date: "2026.10.31",
+    publishDate: "2026-10-31",
+    isLotto: true,
+    bestZodiacEmoji: "🐉",
+    bestZodiacLabel: "용띠",
+    luckyNumbers: [3, 27, 30, 33, 36, 45]
+  },
+  {
+    url: "daily-wealth-1031.html",
+    thumb: "🐉",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 용띠 마지막 날 99점 대역전! 이번 주 챔피언 등극",
+    excerpt: "오늘 재물운 1위는 🐉 용띠(지수 99). 이번 주 최종 종합 1위는 용띠(544점)예요.",
+    date: "2026.10.31",
+    publishDate: "2026-10-31"
+  },
+  {
+    url: "daily-wealth-1030.html",
+    thumb: "🐒",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠 열흘 만점 행진 마감! 62점 급락, 원숭이띠 1위",
+    excerpt: "오늘 재물운 1위는 🐒 원숭이띠(지수 99). 열흘 만점 행진이 끝난 개띠는 11위로 내려왔어요.",
+    date: "2026.10.30",
+    publishDate: "2026-10-30"
+  },
+  {
+    url: "daily-wealth-1029.html",
+    thumb: "🐕",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠 열흘 연속 99점 대기록! 10/20부터 이어진 질주",
+    excerpt: "오늘 재물운 1위는 🐕 개띠(지수 99). 열흘 연속 99점이라는 대기록을 세웠어요.",
+    date: "2026.10.29",
+    publishDate: "2026-10-29"
+  },
+  {
+    url: "daily-wealth-1028.html",
+    thumb: "🐕",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠 아흐레 연속 99점! 토끼띠·뱀띠 98점 공동 2위",
+    excerpt: "오늘 재물운 1위는 🐕 개띠(지수 99). 10월 20일부터 아흐레 연속 99점이에요.",
+    date: "2026.10.28",
+    publishDate: "2026-10-28"
+  },
+  {
+    url: "daily-wealth-1027.html",
+    thumb: "🐕",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 호랑이띠 12위→2위 대반전! 말띠는 정반대 추락",
+    excerpt: "오늘 재물운 1위는 🐕 개띠(지수 99). 호랑이띠가 12위에서 2위로 대반전했어요.",
+    date: "2026.10.27",
+    publishDate: "2026-10-27"
+  },
+  {
+    url: "weekly-top3-1026.html",
+    thumb: "🐉",
+    catId: "weekly",
+    catLabel: "주간 운세",
+    title: "[주간운세] 용띠 마지막 날 대역전! 개띠 열흘 연속 99점 시대 마감",
+    excerpt: "이번주 종합운 1위는 용띠(544점), 2위 원숭이띠(539점), 3위 개띠(520점)예요. 금요일까지 3위였던 용띠가 마지막 날 99점으로 대역전했어요.",
+    date: "2026.10.26",
+    publishDate: "2026-10-26",
+    isWeekly: true,
+    bestZodiacEmoji: "🐉",
+    bestZodiacLabel: "용띠"
+  },
+  {
+    url: "daily-wealth-1026.html",
+    thumb: "🐎",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠·말띠 99점 공동 1위! 호랑이띠는 12위 출발",
+    excerpt: "오늘 재물운 공동 1위는 🐎 말띠·🐕 개띠(지수 99). 호랑이띠는 12위로 출발했어요.",
+    date: "2026.10.26",
+    publishDate: "2026-10-26"
+  },
+  {
+    url: "daily-wealth-1025.html",
+    thumb: "🐕",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠 엿새 연속 99점! 일요일에도 1위 질주",
+    excerpt: "오늘 재물운 1위는 🐕 개띠(지수 99). 10월 20일부터 엿새 연속 99점을 기록했어요.",
+    date: "2026.10.25",
+    publishDate: "2026-10-25"
+  },
+  {
     url: "lotto-1024.html",
     thumb: "🎱",
     catId: "lotto",
