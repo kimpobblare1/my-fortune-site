@@ -23,6 +23,103 @@
 
 const BLOG_POSTS = [
   {
+    url: "lotto-1107.html",
+    thumb: "🎱",
+    catId: "lotto",
+    catLabel: "띠별 로또번호 추천",
+    title: "[로또운세] 개띠 철벽 BEST 탈환! 이번주 로또번호 대공개",
+    excerpt: "이번 주 합산 1위 개띠(564점)가 6일 내내 94점으로 BEST를 탈환했어요. 월~토 6일치 행운숫자로 만든 12띠 로또번호 조합이에요.",
+    date: "2026.11.07",
+    publishDate: "2026-11-07",
+    isLotto: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠",
+    luckyNumbers: [3, 9, 11, 17, 32, 40]
+  },
+  {
+    url: "daily-wealth-1107.html",
+    thumb: "🐐",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠 이레 연속 94점! 이번 주 챔피언 확정",
+    excerpt: "오늘 재물운 1위는 🐐 양띠(지수 95). 이번 주 종합 1위는 개띠(564점)로 확정됐어요.",
+    date: "2026.11.07",
+    publishDate: "2026-11-07"
+  },
+  {
+    url: "daily-wealth-1106.html",
+    thumb: "🐎",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 말띠 97점 단독 1위! 개띠는 엿새 연속 94점",
+    excerpt: "오늘 재물운 1위는 🐎 말띠(지수 97). 개띠는 엿새 연속 94점을 이어갔어요.",
+    date: "2026.11.06",
+    publishDate: "2026-11-06"
+  },
+  {
+    url: "daily-wealth-1105.html",
+    thumb: "🐎",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 말띠·개띠 94점 공동 1위! 말띠 사흘 연속 상승세",
+    excerpt: "오늘 재물운 공동 1위는 🐎 말띠·🐕 개띠(지수 94). 말띠는 사흘 연속 상승했어요.",
+    date: "2026.11.05",
+    publishDate: "2026-11-05"
+  },
+  {
+    url: "daily-wealth-1104.html",
+    thumb: "🐕",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠 나흘 연속 94점! 말띠는 이틀째 상승 2위",
+    excerpt: "오늘 재물운 1위는 🐕 개띠(지수 94). 나흘 연속 94점이고 말띠가 2위로 올라섰어요.",
+    date: "2026.11.04",
+    publishDate: "2026-11-04"
+  },
+  {
+    url: "daily-wealth-1103.html",
+    thumb: "🐕",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠 94점 1위! 뱀띠 99점에서 65점으로 급락",
+    excerpt: "오늘 재물운 1위는 🐕 개띠(지수 94). 뱀띠는 99점에서 65점으로 급락했어요.",
+    date: "2026.11.03",
+    publishDate: "2026-11-03"
+  },
+  {
+    url: "weekly-top3-1102.html",
+    thumb: "🐕",
+    catId: "weekly",
+    catLabel: "주간 운세",
+    title: "[주간운세] 개띠 이레 연속 94점 철벽! 한 주 만에 챔피언 탈환",
+    excerpt: "이번주 종합운 1위는 개띠(564점), 2위 닭띠(522점), 3위 말띠(521점)예요. 6일 내내 94점을 기록한 개띠가 한 주 만에 챔피언을 탈환했어요.",
+    date: "2026.11.02",
+    publishDate: "2026-11-02",
+    isWeekly: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠"
+  },
+  {
+    url: "daily-wealth-1102.html",
+    thumb: "🐍",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 뱀띠 99점 1위 출발! 지난주 우승 용띠는 9위",
+    excerpt: "오늘 재물운 1위는 🐍 뱀띠(지수 99). 지난주 우승 용띠는 9위에 머물렀어요.",
+    date: "2026.11.02",
+    publishDate: "2026-11-02"
+  },
+  {
+    url: "daily-wealth-1101.html",
+    thumb: "🐎",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 말띠 95점 1위! 개띠는 62점에서 94점으로 반등",
+    excerpt: "오늘 재물운 1위는 🐎 말띠(지수 95). 어제 62점이던 개띠가 94점으로 반등했어요.",
+    date: "2026.11.01",
+    publishDate: "2026-11-01"
+  },
+  {
     url: "lotto-1031.html",
     thumb: "🎱",
     catId: "lotto",
