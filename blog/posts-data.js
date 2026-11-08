@@ -23,6 +23,200 @@
 
 const BLOG_POSTS = [
   {
+    url: "lotto-1121.html",
+    thumb: "🎱",
+    catId: "lotto",
+    catLabel: "띠별 로또번호 추천",
+    title: "[로또운세] 개띠 3주 연속 BEST! 이번주 로또번호 대공개",
+    excerpt: "데일리 1위 없이 3주 연속 챔피언에 오른 개띠(532점)가 BEST예요. 월~토 6일치 행운숫자로 만든 12띠 로또번호 조합이에요.",
+    date: "2026.11.21",
+    publishDate: "2026-11-21",
+    isLotto: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠",
+    luckyNumbers: [6, 14, 25, 35, 43, 44]
+  },
+  {
+    url: "daily-wealth-1121.html",
+    thumb: "🐐",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 양띠·닭띠 100점 공동 만점! 개띠 3주 연속 챔피언",
+    excerpt: "오늘 재물운 공동 1위는 🐐 양띠·🐓 닭띠(지수 100). 이번 주 종합 1위는 개띠(532점)로 3주 연속 챔피언이에요.",
+    date: "2026.11.21",
+    publishDate: "2026-11-21"
+  },
+  {
+    url: "daily-wealth-1120.html",
+    thumb: "🐍",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 뱀띠 96점 1위! 양띠 급락, 개띠는 23점 차 선두",
+    excerpt: "오늘 재물운 1위는 🐍 뱀띠(지수 96). 양띠가 11위로 내려가며 개띠가 23점 차 선두예요.",
+    date: "2026.11.20",
+    publishDate: "2026-11-20"
+  },
+  {
+    url: "daily-wealth-1119.html",
+    thumb: "🐐",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 양띠 이틀 연속 1위! 누적 개띠·양띠 360점 동점",
+    excerpt: "오늘 재물운 1위는 🐐 양띠(지수 96). 누적은 개띠와 양띠가 360점 동점이에요.",
+    date: "2026.11.19",
+    publishDate: "2026-11-19"
+  },
+  {
+    url: "daily-wealth-1118.html",
+    thumb: "🐐",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 양띠 92점 1위! 말띠는 1위→12위 급락",
+    excerpt: "오늘 재물운 1위는 🐐 양띠(지수 92). 어제 1위 말띠는 12위로 급락했어요.",
+    date: "2026.11.18",
+    publishDate: "2026-11-18"
+  },
+  {
+    url: "daily-wealth-1117.html",
+    thumb: "🐎",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 말띠 95점 1위! 누적 선두도 말띠가 가져갔다",
+    excerpt: "오늘 재물운 1위는 🐎 말띠(지수 95). 누적 선두도 말띠가 개띠를 3점 앞섰어요.",
+    date: "2026.11.17",
+    publishDate: "2026-11-17"
+  },
+  {
+    url: "weekly-top3-1116.html",
+    thumb: "🐕",
+    catId: "weekly",
+    catLabel: "주간 운세",
+    title: "[주간운세] 개띠 3주 연속 챔피언! 또 데일리 1위 없이 우승",
+    excerpt: "이번주 종합운 1위는 개띠(532점), 2위 양띠(523점), 3위 닭띠(482점)예요. 개띠가 2주 연속 데일리 1위 없이 3주 연속 챔피언에 올랐어요.",
+    date: "2026.11.16",
+    publishDate: "2026-11-16",
+    isWeekly: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠"
+  },
+  {
+    url: "daily-wealth-1116.html",
+    thumb: "🐓",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 닭띠 2주 연속 일·월 1위! 개띠는 이레 연속 90점",
+    excerpt: "오늘 재물운 1위는 🐓 닭띠(지수 95). 지난주에 이어 2주 연속 일·월 1위예요.",
+    date: "2026.11.16",
+    publishDate: "2026-11-16"
+  },
+  {
+    url: "daily-wealth-1115.html",
+    thumb: "🐓",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 닭띠 99점 1위! 개띠는 엿새 연속 90점",
+    excerpt: "오늘 재물운 1위는 🐓 닭띠(지수 99). 개띠는 11월 10일부터 엿새 연속 90점이에요.",
+    date: "2026.11.15",
+    publishDate: "2026-11-15"
+  },
+  {
+    url: "lotto-1114.html",
+    thumb: "🎱",
+    catId: "lotto",
+    catLabel: "띠별 로또번호 추천",
+    title: "[로또운세] 개띠 2주 연속 BEST! 이번주 로또번호 대공개",
+    excerpt: "닷새 연속 90점을 기록한 개띠(517점)가 2주 연속 BEST에 올랐어요. 월~토 6일치 행운숫자로 만든 12띠 로또번호 조합이에요.",
+    date: "2026.11.14",
+    publishDate: "2026-11-14",
+    isLotto: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠",
+    luckyNumbers: [11, 19, 27, 28, 30, 38]
+  },
+  {
+    url: "daily-wealth-1114.html",
+    thumb: "🐍",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 뱀띠 100점 만점! 개띠는 2주 연속 챔피언 확정",
+    excerpt: "오늘 재물운 1위는 🐍 뱀띠(지수 100). 이번 주 종합 1위는 개띠(517점)로 2주 연속 챔피언이에요.",
+    date: "2026.11.14",
+    publishDate: "2026-11-14"
+  },
+  {
+    url: "daily-wealth-1113.html",
+    thumb: "🐎",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 말띠 60점→94점 대반전 1위! 개띠는 1점 차 누적 선두",
+    excerpt: "오늘 재물운 1위는 🐎 말띠(지수 94). 개띠가 양띠를 1점 차로 앞서며 누적 선두에 올랐어요.",
+    date: "2026.11.13",
+    publishDate: "2026-11-13"
+  },
+  {
+    url: "daily-wealth-1112.html",
+    thumb: "🐅",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 호랑이띠 95점 1위! 상위 4개 띠 5점 차 대접전",
+    excerpt: "오늘 재물운 1위는 🐅 호랑이띠(지수 95). 누적 상위 4개 띠가 단 5점 안에 몰렸어요.",
+    date: "2026.11.12",
+    publishDate: "2026-11-12"
+  },
+  {
+    url: "daily-wealth-1111.html",
+    thumb: "🐐",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 양띠 93점 1위! 뱀띠·닭띠는 4점 차 선두 경쟁",
+    excerpt: "오늘 재물운 1위는 🐐 양띠(지수 93). 누적 선두 뱀띠와 닭띠는 4점 차 접전이에요.",
+    date: "2026.11.11",
+    publishDate: "2026-11-11"
+  },
+  {
+    url: "daily-wealth-1110.html",
+    thumb: "🐉",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 용띠 99점 1위! 양띠는 12위→2위 대반전",
+    excerpt: "오늘 재물운 1위는 🐉 용띠(지수 99). 양띠가 12위에서 2위로 대반전했어요.",
+    date: "2026.11.10",
+    publishDate: "2026-11-10"
+  },
+  {
+    url: "weekly-top3-1109.html",
+    thumb: "🐕",
+    catId: "weekly",
+    catLabel: "주간 운세",
+    title: "[주간운세] 1위 한 번 없이 우승! 개띠 2주 연속 챔피언",
+    excerpt: "이번주 종합운 1위는 개띠(517점), 2위 뱀띠(505점), 3위 양띠(502점)예요. 데일리 1위 없이 닷새 연속 90점을 받은 개띠가 2주 연속 챔피언에 올랐어요.",
+    date: "2026.11.09",
+    publishDate: "2026-11-09",
+    isWeekly: true,
+    bestZodiacEmoji: "🐕",
+    bestZodiacLabel: "개띠"
+  },
+  {
+    url: "daily-wealth-1109.html",
+    thumb: "🐓",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 닭띠 이틀 연속 1위! 개띠 94점 행진은 여드레에서 마감",
+    excerpt: "오늘 재물운 1위는 🐓 닭띠(지수 96). 이틀 연속 1위이고, 개띠 94점 행진은 여드레에서 끝났어요.",
+    date: "2026.11.09",
+    publishDate: "2026-11-09"
+  },
+  {
+    url: "daily-wealth-1108.html",
+    thumb: "🐓",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 닭띠 100점 만점 1위! 개띠는 여드레 연속 94점",
+    excerpt: "오늘 재물운 1위는 🐓 닭띠(지수 100). 개띠는 11월 1일부터 여드레 연속 94점이에요.",
+    date: "2026.11.08",
+    publishDate: "2026-11-08"
+  },
+  {
     url: "lotto-1107.html",
     thumb: "🎱",
     catId: "lotto",
