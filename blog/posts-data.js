@@ -23,6 +23,103 @@
 
 const BLOG_POSTS = [
   {
+    url: "lotto-1128.html",
+    thumb: "🎱",
+    catId: "lotto",
+    catLabel: "띠별 로또번호 추천",
+    title: "[로또운세] 말띠 독주 BEST! 이번주 로또번호 대공개",
+    excerpt: "데일리 1위 다섯 번으로 한 주 내내 선두를 지킨 말띠(538점)가 BEST예요. 월~토 6일치 행운숫자로 만든 12띠 로또번호 조합이에요.",
+    date: "2026.11.28",
+    publishDate: "2026-11-28",
+    isLotto: true,
+    bestZodiacEmoji: "🐎",
+    bestZodiacLabel: "말띠",
+    luckyNumbers: [5, 24, 25, 36, 37, 39]
+  },
+  {
+    url: "daily-wealth-1128.html",
+    thumb: "🐎",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 말띠 89점 1위로 챔피언 확정! 개띠 연속 우승은 3주에서 멈춤",
+    excerpt: "오늘 재물운 1위는 🐎 말띠(지수 89). 이번 주 종합 1위는 말띠(538점)로 확정됐어요.",
+    date: "2026.11.28",
+    publishDate: "2026-11-28"
+  },
+  {
+    url: "daily-wealth-1127.html",
+    thumb: "🐕",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 개띠 23일 만에 단독 1위! 말띠와 19점 차로 좁혀",
+    excerpt: "오늘 재물운 1위는 🐕 개띠(지수 86). 11월 4일 이후 23일 만의 단독 1위예요.",
+    date: "2026.11.27",
+    publishDate: "2026-11-27"
+  },
+  {
+    url: "daily-wealth-1126.html",
+    thumb: "🐎",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 말띠 나흘 연속 1위! 개띠와 86점 공동 1위",
+    excerpt: "오늘 재물운 공동 1위는 🐎 말띠·🐕 개띠(지수 86). 말띠는 나흘 연속 1위예요.",
+    date: "2026.11.26",
+    publishDate: "2026-11-26"
+  },
+  {
+    url: "daily-wealth-1125.html",
+    thumb: "🐎",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 말띠 사흘 연속 1위! 개띠와 26점 차 독주",
+    excerpt: "오늘 재물운 1위는 🐎 말띠(지수 93). 사흘 연속 1위로 개띠와 26점 차예요.",
+    date: "2026.11.25",
+    publishDate: "2026-11-25"
+  },
+  {
+    url: "daily-wealth-1124.html",
+    thumb: "🐎",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 말띠 100점 만점! 이틀 연속 1위로 독주 시작",
+    excerpt: "오늘 재물운 1위는 🐎 말띠(지수 100). 이틀 연속 1위로 개띠를 19점 앞섰어요.",
+    date: "2026.11.24",
+    publishDate: "2026-11-24"
+  },
+  {
+    url: "weekly-top3-1123.html",
+    thumb: "🐎",
+    catId: "weekly",
+    catLabel: "주간 운세",
+    title: "[주간운세] 말띠 데일리 1위 5번 독주! 개띠 3주 연속 우승 멈췄다",
+    excerpt: "이번주 종합운 1위는 말띠(538점), 2위 개띠(516점), 3위 쥐띠(492점)예요. 말띠가 월요일부터 선두를 지키며 개띠의 3주 연속 우승 행진을 멈췄어요.",
+    date: "2026.11.23",
+    publishDate: "2026-11-23",
+    isWeekly: true,
+    bestZodiacEmoji: "🐎",
+    bestZodiacLabel: "말띠"
+  },
+  {
+    url: "daily-wealth-1123.html",
+    thumb: "🐎",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 말띠 91점 1위 출발! 개띠는 나흘 연속 86점",
+    excerpt: "오늘 재물운 1위는 🐎 말띠(지수 91). 개띠는 11월 20일부터 나흘 연속 86점이에요.",
+    date: "2026.11.23",
+    publishDate: "2026-11-23"
+  },
+  {
+    url: "daily-wealth-1122.html",
+    thumb: "🐂",
+    catId: "daily",
+    catLabel: "오늘의 띠별 운세",
+    title: "[띠별운세] 소띠·개띠 86점 공동 1위! 만점 양띠는 하루 만에 12위",
+    excerpt: "오늘 재물운 공동 1위는 🐂 소띠·🐕 개띠(지수 86). 어제 만점이던 양띠는 12위예요.",
+    date: "2026.11.22",
+    publishDate: "2026-11-22"
+  },
+  {
     url: "lotto-1121.html",
     thumb: "🎱",
     catId: "lotto",
